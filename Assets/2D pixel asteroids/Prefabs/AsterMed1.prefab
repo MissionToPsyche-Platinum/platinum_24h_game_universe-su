@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3170027746248751975}
   - component: {fileID: 4660189417732057674}
   - component: {fileID: 4948147032913169190}
+  - component: {fileID: 286181786505077473}
   m_Layer: 0
   m_Name: AsterMed1
   m_TagString: Untagged
@@ -146,3 +147,30 @@ PolygonCollider2D:
       - {x: 0.53999996, y: -0.58}
       - {x: 0.7, y: -0.32}
   m_UseDelaunayMesh: 0
+--- !u!50 &286181786505077473
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6747026704579016348}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
