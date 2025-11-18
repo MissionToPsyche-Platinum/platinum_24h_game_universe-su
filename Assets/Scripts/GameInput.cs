@@ -8,7 +8,6 @@ public class GameInput : MonoBehaviour {
 
     
     private InputSystem_Actions inputActions;
-    private bool engineActivated = false;
     
     public class EngineActivatedEventArgs : EventArgs {
         public bool activated;
