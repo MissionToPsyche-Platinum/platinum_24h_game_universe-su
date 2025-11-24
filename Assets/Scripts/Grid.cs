@@ -35,15 +35,13 @@ public class Grid {
     }
 
     public void SetValue(int x, int y, int value) {
-        if(IsInGridRange(x, y)) {
-            gridArray[x, y] = value;
-        }
-        
+        if (IsInGridRange(x, y)) gridArray[x, y] = value;
     }
 
     public void SetValue(Vector3 worldPosition, int value) {
         int x;
         int y;
+        
         GetXY(worldPosition, out x, out y);
         SetValue(x, y, value);
     }
@@ -64,6 +62,4 @@ public class Grid {
     }
     
     private bool IsInGridRange(int x, int y) => (x >= 0 && y >= 0 && x < width && y < height);
-
-
 }
