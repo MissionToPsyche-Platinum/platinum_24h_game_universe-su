@@ -10,7 +10,7 @@ public class Spacecraft : MonoBehaviour {
         gameInput.OnActivateEngineCanceledAction += GameInput_OnActivateEngineAction;
     }
     
-    private void GameInput_OnActivateEngineAction(object sender, GameInput.EngineActivatedEventArgs e) {
+    private void GameInput_OnActivateEngineAction(object sender, GameInput.EngineActivatedEventArgs e) { 
         engine.enabled = e.activated;
     }
 }
