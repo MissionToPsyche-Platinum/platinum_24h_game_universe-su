@@ -136,6 +136,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftMouseClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""e4b6afa6-0c25-4255-a1da-339b08686df8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -345,6 +354,39 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""KeyTwo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1609eb51-cedf-4379-a97d-fb439a7fd8fe"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftMouseClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""64497d74-e468-4974-a69e-0e21aa348a4c"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""LeftMouseClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2b59f761-90af-4fba-9ded-443ea6c85ec6"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""LeftMouseClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -937,6 +979,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Spacecraft_ActivateEngine = m_Spacecraft.FindAction("ActivateEngine", throwIfNotFound: true);
         m_Spacecraft_KeyOne = m_Spacecraft.FindAction("KeyOne", throwIfNotFound: true);
         m_Spacecraft_KeyTwo = m_Spacecraft.FindAction("KeyTwo", throwIfNotFound: true);
+        m_Spacecraft_LeftMouseClick = m_Spacecraft.FindAction("LeftMouseClick", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1035,6 +1078,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Spacecraft_ActivateEngine;
     private readonly InputAction m_Spacecraft_KeyOne;
     private readonly InputAction m_Spacecraft_KeyTwo;
+    private readonly InputAction m_Spacecraft_LeftMouseClick;
     /// <summary>
     /// Provides access to input actions defined in input action map "Spacecraft".
     /// </summary>
@@ -1066,6 +1110,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Spacecraft/KeyTwo".
         /// </summary>
         public InputAction @KeyTwo => m_Wrapper.m_Spacecraft_KeyTwo;
+        /// <summary>
+        /// Provides access to the underlying input action "Spacecraft/LeftMouseClick".
+        /// </summary>
+        public InputAction @LeftMouseClick => m_Wrapper.m_Spacecraft_LeftMouseClick;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1107,6 +1155,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @KeyTwo.started += instance.OnKeyTwo;
             @KeyTwo.performed += instance.OnKeyTwo;
             @KeyTwo.canceled += instance.OnKeyTwo;
+            @LeftMouseClick.started += instance.OnLeftMouseClick;
+            @LeftMouseClick.performed += instance.OnLeftMouseClick;
+            @LeftMouseClick.canceled += instance.OnLeftMouseClick;
         }
 
         /// <summary>
@@ -1133,6 +1184,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @KeyTwo.started -= instance.OnKeyTwo;
             @KeyTwo.performed -= instance.OnKeyTwo;
             @KeyTwo.canceled -= instance.OnKeyTwo;
+            @LeftMouseClick.started -= instance.OnLeftMouseClick;
+            @LeftMouseClick.performed -= instance.OnLeftMouseClick;
+            @LeftMouseClick.canceled -= instance.OnLeftMouseClick;
         }
 
         /// <summary>
@@ -1468,6 +1522,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnKeyTwo(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "LeftMouseClick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLeftMouseClick(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
