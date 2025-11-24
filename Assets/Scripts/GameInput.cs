@@ -33,6 +33,8 @@ public class GameInput : MonoBehaviour {
         
         inputActions.Spacecraft.KeyOne.performed += KeyOne_performed;
         inputActions.Spacecraft.KeyTwo.performed += KeyTwo_performed;
+
+        inputActions.Spacecraft.LeftMouseClick.performed += LeftMouseClick_performed;
     }
     
     private void ActivateEngine_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
@@ -49,6 +51,10 @@ public class GameInput : MonoBehaviour {
     
     private void KeyTwo_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
         OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(2)); 
+    }
+    
+    private void LeftMouseClick_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+        OnLeftMouseClickPerformedAction?.Invoke(this, EventArgs.Empty); 
     }
     
 }
