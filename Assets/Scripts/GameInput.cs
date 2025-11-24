@@ -7,6 +7,8 @@ public class GameInput : MonoBehaviour {
     public event EventHandler<EngineActivatedEventArgs> OnActivateEngineCanceledAction;
     public event EventHandler<NumKeyEventArgs> OnNumKeyPerformedAction;
 
+    public event EventHandler OnLeftMouseClickPerformedAction;
+
     
     private InputSystem_Actions inputActions;
     
@@ -42,15 +44,11 @@ public class GameInput : MonoBehaviour {
     }
     
     private void KeyOne_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
-        Debug.Log("1");
         OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(1)); 
-        Debug.Log("66");
     }
     
     private void KeyTwo_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
-        Debug.Log("2");
         OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(2)); 
-        Debug.Log("55");
     }
     
 }
