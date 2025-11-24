@@ -118,6 +118,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""KeyOne"",
+                    ""type"": ""Button"",
+                    ""id"": ""66d814ee-610f-4abe-b682-79026e6407ea"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""KeyTwo"",
+                    ""type"": ""Button"",
+                    ""id"": ""77439cba-0bfc-4979-837a-cc5911d90f39"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -294,6 +312,39 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""ActivateEngine"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ff5b74f-31da-4670-8c33-f06016e6f6d4"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""KeyOne"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e4d1a3a0-b304-4952-bc3e-d226d439723f"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""KeyTwo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c0cb5e6-ccfa-462b-9913-f263a9b1186a"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""KeyTwo"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -884,6 +935,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Spacecraft_Move = m_Spacecraft.FindAction("Move", throwIfNotFound: true);
         m_Spacecraft_Look = m_Spacecraft.FindAction("Look", throwIfNotFound: true);
         m_Spacecraft_ActivateEngine = m_Spacecraft.FindAction("ActivateEngine", throwIfNotFound: true);
+        m_Spacecraft_KeyOne = m_Spacecraft.FindAction("KeyOne", throwIfNotFound: true);
+        m_Spacecraft_KeyTwo = m_Spacecraft.FindAction("KeyTwo", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -980,6 +1033,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Spacecraft_Move;
     private readonly InputAction m_Spacecraft_Look;
     private readonly InputAction m_Spacecraft_ActivateEngine;
+    private readonly InputAction m_Spacecraft_KeyOne;
+    private readonly InputAction m_Spacecraft_KeyTwo;
     /// <summary>
     /// Provides access to input actions defined in input action map "Spacecraft".
     /// </summary>
@@ -1003,6 +1058,14 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Spacecraft/ActivateEngine".
         /// </summary>
         public InputAction @ActivateEngine => m_Wrapper.m_Spacecraft_ActivateEngine;
+        /// <summary>
+        /// Provides access to the underlying input action "Spacecraft/KeyOne".
+        /// </summary>
+        public InputAction @KeyOne => m_Wrapper.m_Spacecraft_KeyOne;
+        /// <summary>
+        /// Provides access to the underlying input action "Spacecraft/KeyTwo".
+        /// </summary>
+        public InputAction @KeyTwo => m_Wrapper.m_Spacecraft_KeyTwo;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1038,6 +1101,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @ActivateEngine.started += instance.OnActivateEngine;
             @ActivateEngine.performed += instance.OnActivateEngine;
             @ActivateEngine.canceled += instance.OnActivateEngine;
+            @KeyOne.started += instance.OnKeyOne;
+            @KeyOne.performed += instance.OnKeyOne;
+            @KeyOne.canceled += instance.OnKeyOne;
+            @KeyTwo.started += instance.OnKeyTwo;
+            @KeyTwo.performed += instance.OnKeyTwo;
+            @KeyTwo.canceled += instance.OnKeyTwo;
         }
 
         /// <summary>
@@ -1058,6 +1127,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @ActivateEngine.started -= instance.OnActivateEngine;
             @ActivateEngine.performed -= instance.OnActivateEngine;
             @ActivateEngine.canceled -= instance.OnActivateEngine;
+            @KeyOne.started -= instance.OnKeyOne;
+            @KeyOne.performed -= instance.OnKeyOne;
+            @KeyOne.canceled -= instance.OnKeyOne;
+            @KeyTwo.started -= instance.OnKeyTwo;
+            @KeyTwo.performed -= instance.OnKeyTwo;
+            @KeyTwo.canceled -= instance.OnKeyTwo;
         }
 
         /// <summary>
@@ -1379,6 +1454,20 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnActivateEngine(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "KeyOne" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnKeyOne(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "KeyTwo" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnKeyTwo(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
