@@ -415,13 +415,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameInput: {fileID: 184445953}
   spacecraftParts:
-  - {fileID: 6821444253018246709, guid: a0857356d0f9f40aa870d4f362e33596, type: 3}
-  - {fileID: 1979472439497984940, guid: 9e45d4c05b622479488eb0d91fc85be6, type: 3}
-  gridWidth: 5
-  gridHeight: 7
-  cellSize: 1
-  gridOriginPosition: {x: -2.5, y: -4, z: 0}
-  someTileSelected: 0
+  - {fileID: 6185069549927734299, guid: 619b723e6666b834e91465e459776085, type: 3}
+  - {fileID: 2114473248012822371, guid: e59b64fdb7a65964c9f08e58f055af6d, type: 3}
 --- !u!4 &2104685397
 Transform:
   m_ObjectHideFlags: 0
