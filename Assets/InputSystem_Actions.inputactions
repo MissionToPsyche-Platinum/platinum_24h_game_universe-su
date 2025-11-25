@@ -59,6 +59,60 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "KeyThree",
+                    "type": "Button",
+                    "id": "2588ab66-a7f2-48ec-ba18-5ca7c7436e39",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "KeyFour",
+                    "type": "Button",
+                    "id": "e52457c9-6a07-466c-8d0d-7b4df98b7b29",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "KeyFive",
+                    "type": "Button",
+                    "id": "d80fd506-c2e4-4ec1-9116-98f9b08b2104",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "KeySix",
+                    "type": "Button",
+                    "id": "f1d86373-4891-4d14-99d3-8525b26bddb9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "KeySeven",
+                    "type": "Button",
+                    "id": "cc509798-db0c-4dba-b5f3-086598439c46",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "KeyEight",
+                    "type": "Button",
+                    "id": "e0864260-c041-4c9d-821e-734df33252a9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -251,17 +305,6 @@
                 },
                 {
                     "name": "",
-                    "id": "e4d1a3a0-b304-4952-bc3e-d226d439723f",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "KeyTwo",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9c0cb5e6-ccfa-462b-9913-f263a9b1186a",
                     "path": "<Keyboard>/2",
                     "interactions": "",
@@ -279,6 +322,72 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "LeftMouseClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "39aa0dc2-9175-4344-a218-2c3a996a0a35",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "KeyThree",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "743a0585-34fe-42e5-98ac-d374868593f7",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "KeyFour",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4bba9e69-53e2-4c15-a927-c9648068a69f",
+                    "path": "<Keyboard>/5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "KeyFive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ae34a0e3-bff9-4d62-b187-a72ce1ecf067",
+                    "path": "<Keyboard>/6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "KeySix",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ab6fafd1-cd8a-4b28-8b3d-c99e3af0d64c",
+                    "path": "<Keyboard>/7",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "KeySeven",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "67f01837-453d-4a48-b658-323fbe842c3a",
+                    "path": "<Keyboard>/8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "KeyEight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
