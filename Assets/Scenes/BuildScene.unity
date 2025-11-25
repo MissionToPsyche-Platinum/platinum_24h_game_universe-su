@@ -417,6 +417,7 @@ MonoBehaviour:
   spacecraftParts:
   - {fileID: 6185069549927734299, guid: 619b723e6666b834e91465e459776085, type: 3}
   - {fileID: 2114473248012822371, guid: e59b64fdb7a65964c9f08e58f055af6d, type: 3}
+  - {fileID: 6269006834175180344, guid: 9d31b909ed3c6fa45ae0abc631f32e0e, type: 3}
 --- !u!4 &2104685397
 Transform:
   m_ObjectHideFlags: 0
