@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ShipBuildingGrid : MonoBehaviour {
     
+    public static ShipBuildingGrid instance {get; private set;}
     [SerializeField] private GameInput gameInput;
     [SerializeField] private GameObject[] spacecraftParts;
     
@@ -14,7 +15,11 @@ public class ShipBuildingGrid : MonoBehaviour {
     
     private (int, int) selectedTileCoords;
     private bool someTileSelected = false;
-    private void Awake() => grid = new Grid(gridWidth, gridHeight, cellSize, gridOriginPosition);
+    private void Awake()
+    {
+        instance = this;
+        grid = new Grid(gridWidth, gridHeight, cellSize, gridOriginPosition);
+    } 
     
     private void Start() {
         gameInput.OnNumKeyPerformedAction += GameInput_OnNumKeyAction;
@@ -52,4 +57,15 @@ public class ShipBuildingGrid : MonoBehaviour {
         selectedTileCoords = clickCoords;
     }
     
+    public Vector3? PostionToGridPosition(Vector3 originalPosition)
+    {
+        (int, int) tileCoords;
+        grid.GetXY(originalPosition, out tileCoords.Item1, out tileCoords.Item2);
+
+        if (tileCoords.Item1 < 0 || tileCoords.Item2 < 0 ||
+            tileCoords.Item1 >= gridWidth || tileCoords.Item2 >= gridHeight) {
+            return null;
+        }
+        return GridCoordinatesToUnityPosition(tileCoords);
+    }
 }
