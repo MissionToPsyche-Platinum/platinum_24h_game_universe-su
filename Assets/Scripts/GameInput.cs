@@ -34,6 +34,12 @@ public class GameInput : MonoBehaviour {
         inputActions.Spacecraft.KeyOne.performed += KeyOne_performed;
         inputActions.Spacecraft.KeyTwo.performed += KeyTwo_performed;
         inputActions.Spacecraft.KeyThree.performed += KeyThree_performed;
+        inputActions.Spacecraft.KeyFour.performed += KeyFour_performed;
+        inputActions.Spacecraft.KeyFive.performed += KeyFive_performed;
+        inputActions.Spacecraft.KeySix.performed += KeySix_performed;
+        inputActions.Spacecraft.KeySeven.performed += KeySeven_performed;
+        inputActions.Spacecraft.KeyEight.performed += KeyEight_performed;
+
 
 
         inputActions.Spacecraft.LeftMouseClick.performed += LeftMouseClick_performed;
@@ -60,6 +66,30 @@ public class GameInput : MonoBehaviour {
         OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(3));
     }
 
+    private void KeyFour_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(4));
+    }
+
+    private void KeyFive_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(5));
+    }
+
+    private void KeySix_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(6));
+    }
+
+    private void KeySeven_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(7));
+    }
+
+    private void KeyEight_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(8));
+    }
     private void LeftMouseClick_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
         OnLeftMouseClickPerformedAction?.Invoke(this, EventArgs.Empty); 
     }
