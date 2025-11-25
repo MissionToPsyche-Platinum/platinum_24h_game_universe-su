@@ -94,4 +94,40 @@ public class GameInput : MonoBehaviour {
         OnLeftMouseClickPerformedAction?.Invoke(this, EventArgs.Empty); 
     }
     
+    private void OnDisable() {
+        // Disable input actions when the component is disabled
+        CleanupInputActions();
+    }
+    
+    private void OnDestroy() {
+        // Cleanup input actions when the object is destroyed
+        CleanupInputActions();
+    }
+    
+    private void CleanupInputActions() {
+        // Properly disable and cleanup input actions
+        if (inputActions != null) {
+            // Unsubscribe from all events first
+            inputActions.Spacecraft.ActivateEngine.performed -= ActivateEngine_performed;
+            inputActions.Spacecraft.ActivateEngine.canceled -= ActivateEngine_canceled;
+            
+            inputActions.Spacecraft.KeyOne.performed -= KeyOne_performed;
+            inputActions.Spacecraft.KeyTwo.performed -= KeyTwo_performed;
+            inputActions.Spacecraft.KeyThree.performed -= KeyThree_performed;
+            inputActions.Spacecraft.KeyFour.performed -= KeyFour_performed;
+            inputActions.Spacecraft.KeyFive.performed -= KeyFive_performed;
+            inputActions.Spacecraft.KeySix.performed -= KeySix_performed;
+            inputActions.Spacecraft.KeySeven.performed -= KeySeven_performed;
+            inputActions.Spacecraft.KeyEight.performed -= KeyEight_performed;
+            inputActions.Spacecraft.LeftMouseClick.performed -= LeftMouseClick_performed;
+            
+            // Always disable the action maps (safe to call even if already disabled)
+            inputActions.Spacecraft.Disable();
+            
+            // Disable the entire input system and dispose
+            inputActions.Disable();
+            inputActions.Dispose();
+            inputActions = null;
+        }
+    }
 }
