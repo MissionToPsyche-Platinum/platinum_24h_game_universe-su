@@ -113,7 +113,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -176,6 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1ec24f7c00bc94ba59124907affa89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedObject: {fileID: 4834617215245572854}
 --- !u!114 &9032401727984843951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,3 +189,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4963bb4d80cf0df43a2b933f8f8bbc1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spacecraft: {fileID: 0}
