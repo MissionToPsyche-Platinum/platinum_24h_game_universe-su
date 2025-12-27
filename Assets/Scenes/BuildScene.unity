@@ -163,6 +163,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &211881092
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 211881094}
+  - component: {fileID: 211881093}
+  m_Layer: 0
+  m_Name: GridVisualizer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &211881093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211881092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848b112719c924708b5ea7f44cef145a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridColor: {r: 1, g: 1, b: 1, a: 1}
+  lineWidth: 0.05
+--- !u!4 &211881094
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211881092}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.64743197, y: -1.3107247, z: 0.19803794}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &355378788
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,6 +430,80 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2065645523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2065645525}
+  - component: {fileID: 2065645524}
+  m_Layer: 0
+  m_Name: SpacecraftPartDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2065645524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065645523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 952816c656d894a169300c751c2515d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spacecraftPartPrefabs:
+  - {fileID: 5505991369549460705, guid: a8ded188f06cb4f39b60eb2d5f3a5784, type: 3}
+  - {fileID: 6185069549927734299, guid: 619b723e6666b834e91465e459776085, type: 3}
+  - {fileID: 2114473248012822371, guid: e59b64fdb7a65964c9f08e58f055af6d, type: 3}
+  - {fileID: 6269006834175180344, guid: 9d31b909ed3c6fa45ae0abc631f32e0e, type: 3}
+  - {fileID: 22678911187016829, guid: 9767441d001d9b44984b90ebf2dfafe9, type: 3}
+  - {fileID: 3898192504596313925, guid: b79a2ac292f76884d8e2803926ab2d7b, type: 3}
+  - {fileID: 2624134581080421435, guid: 525d5c850f752b84c98a3d3229271a61, type: 3}
+  - {fileID: 7421062647158426556, guid: a85a9a55d1062c34f93303ab8574a411, type: 3}
+  - {fileID: 4834617215245572854, guid: 2e82c3b80717b854ea0cd30a7d0bdd24, type: 3}
+  snapableDirections:
+  - above below left right
+  - above below left right
+  - above
+  - above below left right
+  - below left
+  - above below left right
+  - above below left right
+  - above below left right
+  - above below left right
+  allParts:
+  - {fileID: 11400000, guid: 344066894e5d14b549b5c2c46ed4d21a, type: 2}
+  - {fileID: 11400000, guid: 9389f319bd62f4933a429d043327b12f, type: 2}
+  - {fileID: 11400000, guid: a10ec9dcc03164dbfbaca7d4608b5aa3, type: 2}
+  - {fileID: 11400000, guid: 8c4d655d0c03646618249376252c33d3, type: 2}
+  - {fileID: 11400000, guid: 7ff37e993e45d41b08c65d6bc9916096, type: 2}
+  - {fileID: 11400000, guid: 4d180649b731c49c984ea9a3b99a92db, type: 2}
+  - {fileID: 11400000, guid: c63005a3c3b694453aa1f6b4bd705350, type: 2}
+  - {fileID: 11400000, guid: 9537f0a38e17942ba82ec48edf64e9db, type: 2}
+  - {fileID: 11400000, guid: 36e1748bf7b7e4da2b517896c9ddd56a, type: 2}
+--- !u!4 &2065645525
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065645523}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2104685395
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,17 +534,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameInput: {fileID: 184445953}
-  spacecraftParts:
-  - {fileID: 6185069549927734299, guid: 619b723e6666b834e91465e459776085, type: 3}
-  - {fileID: 2114473248012822371, guid: e59b64fdb7a65964c9f08e58f055af6d, type: 3}
-  - {fileID: 6269006834175180344, guid: 9d31b909ed3c6fa45ae0abc631f32e0e, type: 3}
-  - {fileID: 22678911187016829, guid: 9767441d001d9b44984b90ebf2dfafe9, type: 3}
-  - {fileID: 4834617215245572854, guid: 2e82c3b80717b854ea0cd30a7d0bdd24, type: 3}
-  - {fileID: 3898192504596313925, guid: b79a2ac292f76884d8e2803926ab2d7b, type: 3}
-  - {fileID: 2624134581080421435, guid: 525d5c850f752b84c98a3d3229271a61, type: 3}
-  - {fileID: 7421062647158426556, guid: a85a9a55d1062c34f93303ab8574a411, type: 3}
-  spaceshipPrefab: {fileID: 0}
-  gridVisualizer: {fileID: 0}
+  partDatabase: {fileID: 2065645524}
+  spacecraftPrefab: {fileID: 5505991369549460705, guid: a8ded188f06cb4f39b60eb2d5f3a5784, type: 3}
+  gridVisualizer: {fileID: 211881093}
 --- !u!4 &2104685397
 Transform:
   m_ObjectHideFlags: 0
@@ -448,3 +560,5 @@ SceneRoots:
   - {fileID: 2104685397}
   - {fileID: 575627214}
   - {fileID: 184445954}
+  - {fileID: 211881094}
+  - {fileID: 2065645525}
