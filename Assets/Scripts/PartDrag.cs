@@ -1,6 +1,7 @@
+using UnityEditor;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(Collider2D))]
 
 public class PartDrag : MonoBehaviour
 {
