@@ -34,56 +34,12 @@ public class ShipBuildingGrid : MonoBehaviour {
     private void Start() {
         gameInput.OnNumKeyPerformedAction += GameInput_OnNumKeyAction;
         gameInput.OnLeftMouseClickPerformedAction += GameInput_OnLeftMouseClickAction;
-        
-        CreateSpaceship();
-        
-        if (gridVisualizer == null) {
-            GameObject gridVizObj = new GameObject("GridVisualizer");
-            gridVizObj.transform.SetParent(transform);
-            gridVisualizer = gridVizObj.AddComponent<GridVisualizer>();
-        }
-        
-        gridVisualizer.VisualizeGrid(grid, gridWidth, gridHeight, cellSize, gridOriginPosition);
     }
-    
-    private void CreateSpaceship() {
-        if (spaceshipPrefab != null) {
-            spaceship = Instantiate(spaceshipPrefab);
-            spaceship.name = "Spacecraft";
-            spaceship.transform.position = Vector3.zero;
-            spaceshipCollider = spaceship.GetComponent<BoxCollider2D>();
-            spaceshipSpriteRenderer = spaceship.GetComponent<SpriteRenderer>();
-            
-            if (spaceshipSpriteRenderer == null) {
-                spaceshipSpriteRenderer = spaceship.GetComponentInChildren<SpriteRenderer>();
-            }
-            
-            if (spaceshipCollider == null) {
-                spaceshipCollider = spaceship.AddComponent<BoxCollider2D>();
-            }
-            
-            if (spaceshipSpriteRenderer != null) {
-                Bounds spriteBounds = spaceshipSpriteRenderer.bounds;
-                spaceshipCollider.size = spriteBounds.size;
-            } else {
-                spaceshipCollider.size = new Vector2(1.5f, 2f);
-            }
-        } else {
-            spaceship = new GameObject("Spacecraft");
-            spaceship.transform.position = Vector3.zero;
-            
-            spaceshipSpriteRenderer = spaceship.AddComponent<SpriteRenderer>();
-            spaceshipSpriteRenderer.sprite = CreateRectangleSprite();
-            spaceshipSpriteRenderer.color = new Color(0.6097187f, 0.6528301f, 0.6513289f, 1f);
-            spaceshipSpriteRenderer.sortingOrder = 1;
-            spaceship.transform.localScale = new Vector3(1f, 1f, 1f);
-            
-            spaceshipCollider = spaceship.AddComponent<BoxCollider2D>();
-            Bounds spriteBounds = spaceshipSpriteRenderer.bounds;
-            spaceshipCollider.size = spriteBounds.size;
-        }
-        
-        CreateShipSnapPoints();
+
+    private void CreateSpacecraft() {
+        Instantiate(spacecraftPrefab);
+        spacecraftPrefab.transform.position = GridCoordinatesToUnityPosition(gridWidth / 2, gridHeight / 2);
+        grid.SetValue(gridWidth / 2, gridHeight / 2, partDatabase.GetPartID(spacecraftPrefab));
     }
     
     private void CreateShipSnapPoints() {
