@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7343320200341856819}
   - component: {fileID: 5302183281615494369}
   - component: {fileID: 1930552552011122689}
-  - component: {fileID: 3040417054239635776}
   - component: {fileID: 8782376569385845512}
   - component: {fileID: 398190188706771762}
+  - component: {fileID: 6952641627509782601}
   m_Layer: 0
   m_Name: MagnetometerPart
   m_TagString: Untagged
@@ -113,13 +113,39 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &3040417054239635776
-BoxCollider2D:
+--- !u!114 &8782376569385845512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22678911187016829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8125a522c85bca94fb2320908a1ce7ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spacecraft: {fileID: 0}
+--- !u!114 &398190188706771762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22678911187016829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1ec24f7c00bc94ba59124907affa89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedObject: {fileID: 22678911187016829}
+--- !u!70 &6952641627509782601
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -153,38 +179,5 @@ BoxCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 2}
-    newSize: {x: 1, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   m_Size: {x: 1, y: 2}
-  m_EdgeRadius: 0
---- !u!114 &8782376569385845512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 22678911187016829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8125a522c85bca94fb2320908a1ce7ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &398190188706771762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 22678911187016829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac1ec24f7c00bc94ba59124907affa89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Direction: 0
