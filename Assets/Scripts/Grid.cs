@@ -18,6 +18,7 @@ public class Grid {
 
         for (int x = 0; x < gridArray.GetLength(0); x++) {
             for (int y = 0; y < gridArray.GetLength(1); y++) {
+                gridArray[x, y] = -1;
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 10000f);
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 10000f);
             }
@@ -48,8 +49,8 @@ public class Grid {
 
     public int GetValue(int x, int y) {
         if(IsInGridRange(x, y)) return gridArray[x, y];
-
-        return 0; //returns 0 if out of bounds
+        
+        return -2; //returns -2 if out of bounds
     }
     
     public int GetValue(Vector3 worldPosition) {
