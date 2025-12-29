@@ -459,26 +459,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 952816c656d894a169300c751c2515d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spacecraftPartPrefabs:
-  - {fileID: 5505991369549460705, guid: a8ded188f06cb4f39b60eb2d5f3a5784, type: 3}
-  - {fileID: 6185069549927734299, guid: 619b723e6666b834e91465e459776085, type: 3}
-  - {fileID: 2114473248012822371, guid: e59b64fdb7a65964c9f08e58f055af6d, type: 3}
-  - {fileID: 6269006834175180344, guid: 9d31b909ed3c6fa45ae0abc631f32e0e, type: 3}
-  - {fileID: 22678911187016829, guid: 9767441d001d9b44984b90ebf2dfafe9, type: 3}
-  - {fileID: 3898192504596313925, guid: b79a2ac292f76884d8e2803926ab2d7b, type: 3}
-  - {fileID: 2624134581080421435, guid: 525d5c850f752b84c98a3d3229271a61, type: 3}
-  - {fileID: 7421062647158426556, guid: a85a9a55d1062c34f93303ab8574a411, type: 3}
-  - {fileID: 4834617215245572854, guid: 2e82c3b80717b854ea0cd30a7d0bdd24, type: 3}
-  snapableDirections:
-  - above below left right
-  - above below left right
-  - above
-  - above below left right
-  - below left
-  - above below left right
-  - above below left right
-  - above below left right
-  - above below left right
   allParts:
   - {fileID: 11400000, guid: 344066894e5d14b549b5c2c46ed4d21a, type: 2}
   - {fileID: 11400000, guid: 9389f319bd62f4933a429d043327b12f, type: 2}
