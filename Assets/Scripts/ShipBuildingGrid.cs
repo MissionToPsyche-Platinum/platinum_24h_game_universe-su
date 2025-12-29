@@ -6,7 +6,6 @@ public class ShipBuildingGrid : MonoBehaviour {
     public static ShipBuildingGrid instance {get; private set;}
     
     [SerializeField] private GameInput gameInput;
-    [SerializeField] private SpacecraftPartDatabase partDatabase;
     [SerializeField] private GameObject spacecraftPrefab;
     [SerializeField] private GridVisualizer gridVisualizer;
     
@@ -35,7 +34,7 @@ public class ShipBuildingGrid : MonoBehaviour {
     private void CreateSpacecraft() {
         Instantiate(spacecraftPrefab);
         spacecraftPrefab.transform.position = GridCoordinatesToUnityPosition(gridWidth / 2, gridHeight / 2);
-        grid.SetValue(gridWidth / 2, gridHeight / 2, partDatabase.GetPartID(spacecraftPrefab));
+        grid.SetValue(gridWidth / 2, gridHeight / 2, SpacecraftPartDatabase.Instance.GetPartID(spacecraftPrefab));
     }
 
     public void SetGridCellValue((int, int) coordinates, int value) {
@@ -73,11 +72,11 @@ public class ShipBuildingGrid : MonoBehaviour {
         
         if (!someTileSelected) return;
         if (grid.GetValue(x, y) != -1) return; 
-        if (!CanPlacePart(partDatabase.GetPartGameObject(e.key), (x, y))) return;
+        if (!CanPlacePart(SpacecraftPartDatabase.Instance.GetPartGameObject(e.key), (x, y))) return;
         
         grid.SetValue(x, y, e.key);
         
-        GameObject spacecraftPart = Instantiate(partDatabase.GetPartGameObject(e.key));
+        GameObject spacecraftPart = Instantiate(SpacecraftPartDatabase.Instance.GetPartGameObject(e.key));
         
         spacecraftPart.SetActive(true);
         spacecraftPart.transform.position = GridCoordinatesToUnityPosition(selectedTileCoords);
@@ -99,7 +98,7 @@ public class ShipBuildingGrid : MonoBehaviour {
     }
 
     public bool CanPlacePart(GameObject partToBePlaced, (int, int) coords) {
-        List<string> possibleConnectionsOfPartToBePlaced = partDatabase.GetSnapableDirections(partToBePlaced);
+        List<string> possibleConnectionsOfPartToBePlaced = SpacecraftPartDatabase.Instance.GetSnapableDirections(partToBePlaced);
         int x = coords.Item1;
         int y = coords.Item2;
 
@@ -128,7 +127,7 @@ public class ShipBuildingGrid : MonoBehaviour {
     private bool PartCanConnect(int partID, string connectingDirection) {
         if (partID < 0) return false;
         
-        List<string> snapableDirections = partDatabase.GetSnapableDirections(partID);
+        List<string> snapableDirections = SpacecraftPartDatabase.Instance.GetSnapableDirections(partID);
 
         return snapableDirections.Contains(connectingDirection);
     }
