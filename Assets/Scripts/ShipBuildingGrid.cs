@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShipBuildingGrid : MonoBehaviour {
-    public static ShipBuildingGrid instance {get; private set;}
+    public static ShipBuildingGrid instance { get; private set; }
     
     [SerializeField] private GameInput gameInput;
     [SerializeField] private GameObject spacecraftPrefab;
@@ -49,7 +49,6 @@ public class ShipBuildingGrid : MonoBehaviour {
     
     private Vector3 GridCoordinatesToUnityPosition(int x, int y) => GridCoordinatesToUnityPosition((x, y));
     
-    
     private Vector3 GridCoordinatesToUnityPosition((int, int) gridCoords) {
         float x = gridOriginPosition.x + cellSize / 2 + (cellSize * gridCoords.Item1);
         float y = gridOriginPosition.y + cellSize / 2 + (cellSize * gridCoords.Item2);
@@ -71,7 +70,6 @@ public class ShipBuildingGrid : MonoBehaviour {
         int y = selectedTileCoords.Item2;
         
         if (!someTileSelected) return;
-        if (grid.GetValue(x, y) != -1) return; 
         if (!CanPlacePart(SpacecraftPartDatabase.Instance.GetPartGameObject(e.key), (x, y))) return;
         
         grid.SetValue(x, y, e.key);
@@ -86,7 +84,7 @@ public class ShipBuildingGrid : MonoBehaviour {
         (int, int) clickCoords;
         grid.GetXY(Mouse.GetMouseWorldPosition(), out clickCoords.Item1, out clickCoords.Item2);
 
-        if (clickCoords.Item1 < 0 || clickCoords.Item2 < 0 ||
+        if (clickCoords.Item1 < 0 || clickCoords.Item2 < 0 || 
             clickCoords.Item1 >= gridWidth || clickCoords.Item2 >= gridHeight) {
                 
             someTileSelected = false;
@@ -101,6 +99,8 @@ public class ShipBuildingGrid : MonoBehaviour {
         List<string> possibleConnectionsOfPartToBePlaced = SpacecraftPartDatabase.Instance.GetSnapableDirections(partToBePlaced);
         int x = coords.Item1;
         int y = coords.Item2;
+        
+        if (grid.GetValue(x, y) != -1) return false; 
 
         foreach (string snapableDirection in possibleConnectionsOfPartToBePlaced) {
             switch (snapableDirection) {
@@ -114,7 +114,7 @@ public class ShipBuildingGrid : MonoBehaviour {
                     if (PartCanConnect(grid.GetValue(x - 1, y), "right")) return true;
                     break;
                 case "right":
-                    if (PartCanConnect(grid.GetValue(x + 1, y), "left")) return true;
+                    if (PartCanConnect(grid.GetValue(x + 1, y), "left"))  return true;
                     break;
                 default:
                     continue;
