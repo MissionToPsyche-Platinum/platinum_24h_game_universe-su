@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5791201175396930333, guid: 619b723e6666b834e91465e459776085, type: 3}
+      propertyPath: m_Name
+      value: TriangleSprite
+      objectReference: {fileID: 0}
     - target: {fileID: 6185069549927734299, guid: 619b723e6666b834e91465e459776085, type: 3}
       propertyPath: m_Name
       value: EnginePart
@@ -195,7 +199,7 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0, y: 0.5773587}
-      - {x: -0.5, y: -0.28866667}
-      - {x: 0.5, y: -0.28866667}
+    - - {x: 0.5008904, y: 0.497778}
+      - {x: -0.5046813, y: 0.5024593}
+      - {x: -0.0008903928, y: -0.3729286}
   m_UseDelaunayMesh: 0
