@@ -43,7 +43,7 @@ public class PartDrag : MonoBehaviour {
         if (nullableGridSnapPosition == null) return;
         Vector3 gridSnapPosition = (Vector3)nullableGridSnapPosition;
 
-        GameObject part = SpacecraftPartDatabase.Instance.GetPartGameObjectByName(selectedObject.name);
+        GameObject part = SpacecraftPartDatabase.Instance.GetPartGameObject(selectedObject.name);
         int partID = SpacecraftPartDatabase.Instance.GetPartID(part);
 
         if (!shipGrid.CanPlacePart(part, shipGrid.UnityPositionToGridCoordinates(gridSnapPosition))) {
