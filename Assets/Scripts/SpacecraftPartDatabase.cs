@@ -28,7 +28,7 @@ public class SpacecraftPartDatabase : MonoBehaviour {
         return null;
     }
 
-    public GameObject GetPartGameObjectByName(string objectOrObjectCloneName) {
+    public GameObject GetPartGameObject(string objectOrObjectCloneName) {
         if (objectOrObjectCloneName.Contains("(Clone)")) {
             string nameWithoutClone = "";
 
