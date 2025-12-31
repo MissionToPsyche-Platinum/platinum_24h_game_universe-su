@@ -6,7 +6,7 @@ public class ShipBuildingGrid : MonoBehaviour {
     public static ShipBuildingGrid instance { get; private set; }
     
     [SerializeField] private GameInput gameInput;
-    [SerializeField] private GameObject spacecraftPrefab;
+    [SerializeField] private GameObject spacecraft;
     [SerializeField] private GridVisualizer gridVisualizer;
     
     private Grid grid;
@@ -32,9 +32,8 @@ public class ShipBuildingGrid : MonoBehaviour {
     }
 
     private void CreateSpacecraft() {
-        Instantiate(spacecraftPrefab);
-        spacecraftPrefab.transform.position = GridCoordinatesToUnityPosition(gridWidth / 2, gridHeight / 2);
-        grid.SetValue(gridWidth / 2, gridHeight / 2, SpacecraftPartDatabase.Instance.GetPartID(spacecraftPrefab));
+        spacecraft.transform.position = GridCoordinatesToUnityPosition(gridWidth / 2, gridHeight / 2);
+        grid.SetValue(gridWidth / 2, gridHeight / 2, SpacecraftPartDatabase.Instance.GetPartID(SpacecraftPartDatabase.Instance.GetPartGameObject(0)));
     }
 
     public void SetGridCellValue((int, int) coordinates, int value) {
@@ -68,16 +67,10 @@ public class ShipBuildingGrid : MonoBehaviour {
     private void GameInput_OnNumKeyAction(object sender, GameInput.NumKeyEventArgs e) {
         int x = selectedTileCoords.Item1;
         int y = selectedTileCoords.Item2;
+        GameObject part = SpacecraftPartDatabase.Instance.GetPartGameObject(e.key);
         
         if (!someTileSelected) return;
-        if (!CanPlacePart(SpacecraftPartDatabase.Instance.GetPartGameObject(e.key), (x, y))) return;
-        
-        grid.SetValue(x, y, e.key);
-        
-        GameObject spacecraftPart = Instantiate(SpacecraftPartDatabase.Instance.GetPartGameObject(e.key));
-        
-        spacecraftPart.SetActive(true);
-        spacecraftPart.transform.position = GridCoordinatesToUnityPosition(selectedTileCoords);
+        if (CanPlacePart(part, (x, y))) PlacePart(part, (x, y));
     }
     
     private void GameInput_OnLeftMouseClickAction(object sender, System.EventArgs e) {
@@ -122,6 +115,15 @@ public class ShipBuildingGrid : MonoBehaviour {
         }
         
         return false;
+    }
+    
+    private void PlacePart(GameObject part, (int, int) coordinates) {
+        grid.SetValue(coordinates.Item1, coordinates.Item2, SpacecraftPartDatabase.Instance.GetPartID(part));
+        
+        GameObject spacecraftPart = Instantiate(part, spacecraft.transform);
+        
+        spacecraftPart.SetActive(true);
+        spacecraftPart.transform.position = GridCoordinatesToUnityPosition(selectedTileCoords);
     }
 
     private bool PartCanConnect(int partID, string connectingDirection) {
