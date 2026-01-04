@@ -12,11 +12,13 @@ public class PartDrag : MonoBehaviour {
     private Collider2D partCollider;
     private Quaternion lockedRotation;
     private ShipBuildingGrid shipGrid;
+    private SpacecraftPartDatabase partDB;
 
     private void Awake() {
         partCollider = GetComponent<Collider2D>();
-        shipGrid = ShipBuildingGrid.instance;
         lockedRotation = transform.rotation;
+        shipGrid = ShipBuildingGrid.instance;
+        partDB = SpacecraftPartDatabase.Instance;
     }
 
     void OnMouseDown() {
@@ -39,12 +41,12 @@ public class PartDrag : MonoBehaviour {
         
         if (shipGrid == null || partCollider == null) return;
         
-        Vector3? nullableGridSnapPosition = ShipBuildingGrid.instance.PostionToGridPosition(transform.position);
+        Vector3? nullableGridSnapPosition = shipGrid.PostionToGridPosition(transform.position);
         if (nullableGridSnapPosition == null) return;
         Vector3 gridSnapPosition = (Vector3)nullableGridSnapPosition;
 
-        GameObject part = SpacecraftPartDatabase.Instance.GetPartGameObject(selectedObject.name);
-        int partID = SpacecraftPartDatabase.Instance.GetPartID(part);
+        GameObject part = partDB.GetPartGameObject(selectedObject.name);
+        int partID = partDB.GetPartID(part);
 
         if (!shipGrid.CanPlacePart(part, shipGrid.UnityPositionToGridCoordinates(gridSnapPosition))) {
             transform.position = originalPosition;
