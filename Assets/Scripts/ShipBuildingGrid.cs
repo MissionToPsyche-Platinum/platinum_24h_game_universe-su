@@ -18,9 +18,13 @@ public class ShipBuildingGrid : MonoBehaviour {
     private (int, int) selectedTileCoords;
     private bool someTileSelected = false;
     
+    private SpacecraftPartDatabase partDB;
+    
     private void Awake() {
         instance = this;
+        
         grid = new Grid(gridWidth, gridHeight, cellSize, gridOriginPosition);
+        partDB = SpacecraftPartDatabase.Instance;
 
         CreateSpacecraft();
         gridVisualizer.VisualizeGrid(grid, gridWidth, gridHeight, cellSize, gridOriginPosition);
@@ -33,7 +37,7 @@ public class ShipBuildingGrid : MonoBehaviour {
 
     private void CreateSpacecraft() {
         spacecraft.transform.position = GridCoordinatesToUnityPosition(gridWidth / 2, gridHeight / 2);
-        grid.SetValue(gridWidth / 2, gridHeight / 2, SpacecraftPartDatabase.Instance.GetPartID(SpacecraftPartDatabase.Instance.GetPartGameObject(0)));
+        grid.SetValue(gridWidth / 2, gridHeight / 2, partDB.GetPartID(partDB.GetPartGameObject(0)));
     }
 
     public void SetGridCellValue((int, int) coordinates, int value) {
@@ -67,7 +71,7 @@ public class ShipBuildingGrid : MonoBehaviour {
     private void GameInput_OnNumKeyAction(object sender, GameInput.NumKeyEventArgs e) {
         int x = selectedTileCoords.Item1;
         int y = selectedTileCoords.Item2;
-        GameObject part = SpacecraftPartDatabase.Instance.GetPartGameObject(e.key);
+        GameObject part = partDB.GetPartGameObject(e.key);
         
         if (!someTileSelected) return;
         if (CanPlacePart(part, (x, y))) PlacePart(part, (x, y));
@@ -89,7 +93,7 @@ public class ShipBuildingGrid : MonoBehaviour {
     }
 
     public bool CanPlacePart(GameObject partToBePlaced, (int, int) coords) {
-        List<string> possibleConnectionsOfPartToBePlaced = SpacecraftPartDatabase.Instance.GetSnapableDirections(partToBePlaced);
+        List<string> possibleConnectionsOfPartToBePlaced = partDB.GetSnapableDirections(partToBePlaced);
         int x = coords.Item1;
         int y = coords.Item2;
         
@@ -118,7 +122,7 @@ public class ShipBuildingGrid : MonoBehaviour {
     }
     
     private void PlacePart(GameObject part, (int, int) coordinates) {
-        grid.SetValue(coordinates.Item1, coordinates.Item2, SpacecraftPartDatabase.Instance.GetPartID(part));
+        grid.SetValue(coordinates.Item1, coordinates.Item2, partDB.GetPartID(part));
         
         GameObject spacecraftPart = Instantiate(part, spacecraft.transform);
         
@@ -129,7 +133,7 @@ public class ShipBuildingGrid : MonoBehaviour {
     private bool PartCanConnect(int partID, string connectingDirection) {
         if (partID < 0) return false;
         
-        List<string> snapableDirections = SpacecraftPartDatabase.Instance.GetSnapableDirections(partID);
+        List<string> snapableDirections = partDB.GetSnapableDirections(partID);
 
         return snapableDirections.Contains(connectingDirection);
     }
