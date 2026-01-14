@@ -128,6 +128,14 @@ public class ShipBuildingGrid : MonoBehaviour {
         
         spacecraftPart.SetActive(true);
         spacecraftPart.transform.position = GridCoordinatesToUnityPosition(selectedTileCoords);
+        
+        // Add FixedJoint2D to connect the part to the parent spacecraft's Rigidbody2D
+        FixedJoint2D joint = spacecraftPart.AddComponent<FixedJoint2D>();
+        Rigidbody2D parentRigidbody = spacecraft.GetComponent<Rigidbody2D>();
+        if (parentRigidbody != null) {
+            joint.connectedBody = parentRigidbody;
+            joint.enableCollision = false; // Prevent parts from colliding with each other
+        }
     }
 
     private bool PartCanConnect(int partID, string connectingDirection) {
