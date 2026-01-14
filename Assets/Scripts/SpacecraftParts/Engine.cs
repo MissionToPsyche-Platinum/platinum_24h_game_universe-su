@@ -6,9 +6,6 @@ public class Engine : MonoBehaviour {
     [SerializeField] private int speed;
 
     public void Awake() => enabled = false;
-    private void Update() => spacecraft.GetComponent<Rigidbody2D>().linearVelocity = Vector2.up * speed;
-
-
-
     
+    private void Update() => spacecraft.GetComponent<Rigidbody2D>().linearVelocity = Vector2.up * speed;
 }
