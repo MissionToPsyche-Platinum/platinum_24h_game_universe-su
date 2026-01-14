@@ -8,6 +8,7 @@ public class Spacecraft : MonoBehaviour {
     private void Awake() {
         DontDestroyOnLoad(this);
     }
+    
     private void Start() {
         gameInput.OnActivateEnginePerformedAction += GameInput_OnActivateEngineAction; //Adds GameInput_OnActivateEngineAction() as a listener to the OnActivateEngineAction event. 
         gameInput.OnActivateEngineCanceledAction += GameInput_OnActivateEngineAction;
