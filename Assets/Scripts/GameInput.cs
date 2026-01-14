@@ -10,6 +10,8 @@ public class GameInput : MonoBehaviour {
 
     public event EventHandler OnLeftMouseClickPerformedAction;
 
+    public event EventHandler OnSetFlightScenePerformedAction;
+
     
     private InputSystem_Actions inputActions;
     
@@ -99,10 +101,19 @@ public class GameInput : MonoBehaviour {
     }
     
     private void SceneSwitch_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
-        if (SceneManager.GetActiveScene().name == "FlightScene") SceneManager.LoadScene("BuildScene");
-        else SceneManager.LoadScene("FlightScene");
+        if (SceneManager.GetActiveScene().name == "FlightScene") SetBuildScene();
+        else SetFlightScene();
     }
-    
+
+    private void SetBuildScene() {
+        SceneManager.LoadScene("BuildScene");
+    }
+
+    private void SetFlightScene() {
+        SceneManager.LoadScene("FlightScene");
+        OnSetFlightScenePerformedAction?.Invoke(this, EventArgs.Empty);
+    }
+
     private void OnDisable() {
         // Disable input actions when the component is disabled
         CleanupInputActions();
