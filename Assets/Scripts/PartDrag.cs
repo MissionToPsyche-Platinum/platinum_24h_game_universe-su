@@ -27,6 +27,19 @@ public class PartDrag : MonoBehaviour {
         offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
         
         shipGrid.SetGridCellValueByUnityPosition(originalPosition, -1);
+
+        // Temporarily disconnect from joints while dragging
+        FixedJoint2D joint = GetComponent<FixedJoint2D>();
+        if (joint != null) {
+            joint.enabled = false;
+        }
+        
+        // Enable physics temporarily for dragging
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null) {
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.simulated = true;
+        }
     }
 
     void OnMouseDrag() {
@@ -51,11 +64,30 @@ public class PartDrag : MonoBehaviour {
         if (!shipGrid.CanPlacePart(part, shipGrid.UnityPositionToGridCoordinates(gridSnapPosition))) {
             transform.position = originalPosition;
             shipGrid.SetGridCellValueByUnityPosition(originalPosition, partID);
+            
+            // Reconnect joint and disable physics before returning
+            ReconnectPart();
             return;
         }
         
         transform.position = gridSnapPosition;
         shipGrid.SetGridCellValueByUnityPosition(transform.position, partID);
+        
+        // Reconnect joint and disable physics
+        ReconnectPart();
+    }
+
+    private void ReconnectPart() {
+        FixedJoint2D joint = GetComponent<FixedJoint2D>();
+        if (joint != null) {
+            joint.enabled = true;
+        }
+        
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null) {
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.simulated = false;
+        }
     }
     
     private void Update() {
