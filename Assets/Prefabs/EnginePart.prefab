@@ -106,6 +106,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6185069549927734299, guid: 619b723e6666b834e91465e459776085, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2560377808416238246}
+    - targetCorrespondingSourceObject: {fileID: 6185069549927734299, guid: 619b723e6666b834e91465e459776085, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -8739441973212505047}
   m_SourcePrefab: {fileID: 100100000, guid: 619b723e6666b834e91465e459776085, type: 3}
 --- !u!1 &2114473248012822371 stripped
 GameObject:
@@ -203,3 +206,22 @@ PolygonCollider2D:
       - {x: -0.5046813, y: 0.5024593}
       - {x: -0.0008903928, y: -0.3729286}
   m_UseDelaunayMesh: 0
+--- !u!255 &-8739441973212505047
+FixedJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114473248012822371}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_BreakAction: 3
+  m_AutoConfigureConnectedAnchor: 1
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_DampingRatio: 0
+  m_Frequency: 0
