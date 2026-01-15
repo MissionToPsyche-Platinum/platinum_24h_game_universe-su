@@ -128,6 +128,25 @@ public class ShipBuildingGrid : MonoBehaviour {
         
         spacecraftPart.SetActive(true);
         spacecraftPart.transform.position = GridCoordinatesToUnityPosition(selectedTileCoords);
+        
+        // Connect the part to the main spacecraft rigidbody
+        ConnectPartToSpacecraft(spacecraftPart);
+    }
+
+    private void ConnectPartToSpacecraft(GameObject part) {
+        FixedJoint2D joint = part.GetComponent<FixedJoint2D>();
+        if (joint != null) {
+            Rigidbody2D spacecraftRb = spacecraft.GetComponent<Rigidbody2D>();
+            joint.connectedBody = spacecraftRb;
+            joint.enableCollision = false;
+        }
+        
+        // Make part kinematic during building phase
+        Rigidbody2D partRb = part.GetComponent<Rigidbody2D>();
+        if (partRb != null) {
+            partRb.bodyType = RigidbodyType2D.Kinematic;
+            partRb.simulated = false;
+        }
     }
 
     private bool PartCanConnect(int partID, string connectingDirection) {
