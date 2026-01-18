@@ -3,6 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 
+//Script that allows ship parts to be dragged around the grid. Also connects parts together with joints.
 public class PartDrag : MonoBehaviour {
     [SerializeField] private GameObject selectedObject;
     
@@ -22,6 +23,8 @@ public class PartDrag : MonoBehaviour {
     }
 
     void OnMouseDown() {
+        if (!Spacecraft.IsBuildMode) return;
+        
         originalPosition = transform.position;
         screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
         offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
@@ -43,6 +46,8 @@ public class PartDrag : MonoBehaviour {
     }
 
     void OnMouseDrag() {
+        if (!Spacecraft.IsBuildMode) return;
+        
         Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
         Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
         transform.position = curPosition;
@@ -50,6 +55,8 @@ public class PartDrag : MonoBehaviour {
     }
 
     void OnMouseUp() {
+        if (!Spacecraft.IsBuildMode) return;
+
         transform.rotation = lockedRotation;
         
         if (shipGrid == null || partCollider == null) return;
@@ -78,11 +85,11 @@ public class PartDrag : MonoBehaviour {
     }
 
     private void ReconnectPart() {
+        if (!Spacecraft.IsBuildMode) return;
+
         FixedJoint2D joint = GetComponent<FixedJoint2D>();
-        if (joint != null) {
-            joint.enabled = true;
-        }
-        
+        if (joint != null) joint.enabled = true;
+
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null) {
             rb.bodyType = RigidbodyType2D.Kinematic;
