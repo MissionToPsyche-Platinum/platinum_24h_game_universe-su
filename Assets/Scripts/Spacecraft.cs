@@ -8,7 +8,6 @@ public class Spacecraft : MonoBehaviour {
     private Rigidbody2D[] partRigidbodies;
 
     [SerializeField] private GameInput gameInput;
-    [SerializeField] private Engine engine;
 
     private void Awake() {
         DontDestroyOnLoad(this);
@@ -16,9 +15,6 @@ public class Spacecraft : MonoBehaviour {
     }
     
     private void Start() {
-        gameInput.OnActivateEnginePerformedAction += GameInput_OnActivateEngineAction; //Adds GameInput_OnActivateEngineAction() as a listener to the OnActivateEngineAction event. 
-        gameInput.OnActivateEngineCanceledAction += GameInput_OnActivateEngineAction;
-
         // Listen for scene changes to update physics mode
         SceneManager.sceneLoaded += OnSceneLoaded;
 
@@ -42,9 +38,10 @@ public class Spacecraft : MonoBehaviour {
     }
     
     private void SetBuildingMode() {
-        // Find all part rigidbodies and joints
+        // Find all part rigidbodies, joints, and engine scripts
         partRigidbodies = GetComponentsInChildren<Rigidbody2D>();
         partJoints = GetComponentsInChildren<FixedJoint2D>();
+        Engine[] engineScripts = GetComponentsInChildren<Engine>();
         
         // Make all parts kinematic and disable joints for building
         foreach (Rigidbody2D partRb in partRigidbodies) {
@@ -63,9 +60,10 @@ public class Spacecraft : MonoBehaviour {
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.simulated = false;
         
+        
         // Disable engine
-        if (engine != null) {
-            engine.enabled = false;
+        foreach (Engine e in engineScripts) {
+            e.enabled = false;
         }
     }
     
@@ -73,6 +71,7 @@ public class Spacecraft : MonoBehaviour {
         // Find all part rigidbodies and joints
         partRigidbodies = GetComponentsInChildren<Rigidbody2D>();
         partJoints = GetComponentsInChildren<FixedJoint2D>();
+        Engine[] engineScripts = GetComponentsInChildren<Engine>();
         
         // Enable physics for all parts
         foreach (Rigidbody2D partRb in partRigidbodies) {
@@ -90,10 +89,12 @@ public class Spacecraft : MonoBehaviour {
         // Enable main spacecraft physics
         rb.bodyType = RigidbodyType2D.Dynamic;
         rb.simulated = true;
-    }
-    
-    private void GameInput_OnActivateEngineAction(object sender, GameInput.EngineActivatedEventArgs e) { 
-        engine.enabled = e.activated;
+        
+        
+        // Enable engines
+        foreach (Engine e in engineScripts) {
+            e.enabled = true;
+        }
     }
 
     private void OnDestroy() {
