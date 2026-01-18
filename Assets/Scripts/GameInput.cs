@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine.SceneManagement;
 
 public class GameInput : MonoBehaviour {
+    public static GameInput instance { get; private set; }
     public event EventHandler<EngineActivatedEventArgs> OnActivateEnginePerformedAction;
     public event EventHandler<EngineActivatedEventArgs> OnActivateEngineCanceledAction;
     public event EventHandler<NumKeyEventArgs> OnNumKeyPerformedAction;
@@ -28,6 +29,8 @@ public class GameInput : MonoBehaviour {
     }
     
     public void Awake() {
+        instance = this;
+        
         inputActions = new InputSystem_Actions();
     
         inputActions.Spacecraft.Enable();
