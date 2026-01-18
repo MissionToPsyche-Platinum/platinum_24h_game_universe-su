@@ -127,8 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 850c3c51dbcba4bec9934c8a05b0f594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spacecraft: {fileID: 0}
-  speed: 0
+  speed: 100
 --- !u!50 &-2325348509328309816
 Rigidbody2D:
   serializedVersion: 5
