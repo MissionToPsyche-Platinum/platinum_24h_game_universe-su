@@ -84,7 +84,6 @@ public class Spacecraft : MonoBehaviour {
     
     private void SetBuildingMode() {
         IsBuildMode = true;
-        // Ensure rb is not null - try to find it if missing
         if (rb == null) {
             rb = GetComponentInChildren<Rigidbody2D>();
             if (rb == null) {
@@ -142,7 +141,7 @@ public class Spacecraft : MonoBehaviour {
         // Get all colliders
         Collider2D[] partColliders = GetComponentsInChildren<Collider2D>();
         
-        // DISABLE PartDrag components in flight mode (so parts can't be dragged)
+        // DISABLE PartDrag components in flight mode so parts can't be dragged
         PartDrag[] partDrags = GetComponentsInChildren<PartDrag>();
         foreach (PartDrag partDrag in partDrags) {
             partDrag.enabled = false;
@@ -162,7 +161,7 @@ public class Spacecraft : MonoBehaviour {
             collider.isTrigger = false;
         }
         
-        // Step 3: Restore joint connections from cache (preserves part-to-part links)
+        // Step 3: Restore joint connections from cache preserves part-to-part links
         foreach (FixedJoint2D joint in partJoints) {
             Rigidbody2D jointRb = joint.GetComponent<Rigidbody2D>();
             if (jointRb == rb) {
@@ -220,7 +219,7 @@ public class Spacecraft : MonoBehaviour {
         }
         rb.WakeUp();
 
-        // Enable engine component for flight mode (so FixedUpdate can run)
+        // Enable engine component for flight mode so FixedUpdate can run
         if (engine != null) {
             engine.enabled = true;
         }
