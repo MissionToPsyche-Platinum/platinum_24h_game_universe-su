@@ -92,10 +92,11 @@ public class Spacecraft : MonoBehaviour {
             }
         }
         
-        // Find all part rigidbodies and joints
+        // Find all part rigidbodies, joints and engines
         partRigidbodies = GetComponentsInChildren<Rigidbody2D>();
         partJoints = GetComponentsInChildren<FixedJoint2D>();
-        
+        Engine[] engineScripts = GetComponentsInChildren<Engine>();
+
         // Disable all joints first
         foreach (FixedJoint2D joint in partJoints) {
             joint.enabled = false;
@@ -113,9 +114,9 @@ public class Spacecraft : MonoBehaviour {
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.simulated = false;
         
-        // Disable engine
-        if (engine != null) {
-            engine.enabled = false;
+        // Disable engines
+        foreach (Engine e in engineScripts) {
+            e.enabled = false;
         }
     }
     
@@ -134,9 +135,10 @@ public class Spacecraft : MonoBehaviour {
         // Update cached joints if needed
         CacheOriginalJointConnections();
         
-        // Find all part rigidbodies and joints
+        // Find all part rigidbodies, joints and engines
         partRigidbodies = GetComponentsInChildren<Rigidbody2D>();
         partJoints = GetComponentsInChildren<FixedJoint2D>();
+        Engine[] engineScripts = GetComponentsInChildren<Engine>();
         
         // Get all colliders
         Collider2D[] partColliders = GetComponentsInChildren<Collider2D>();
@@ -219,9 +221,9 @@ public class Spacecraft : MonoBehaviour {
         }
         rb.WakeUp();
 
-        // Enable engine component for flight mode so FixedUpdate can run
-        if (engine != null) {
-            engine.enabled = true;
+        // Enable engines
+        foreach (Engine e in engineScripts) {
+            e.enabled = true;
         }
     }
     
