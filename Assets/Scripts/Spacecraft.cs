@@ -2,8 +2,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Spacecraft : MonoBehaviour {
-    
-    private Rigidbody2D rb;
     private FixedJoint2D[] partJoints;
     private Rigidbody2D[] partRigidbodies;
 
@@ -11,7 +9,6 @@ public class Spacecraft : MonoBehaviour {
 
     private void Awake() {
         DontDestroyOnLoad(this);
-        rb = GetComponent<Rigidbody2D>();
     }
     
     private void Start() {
@@ -45,20 +42,14 @@ public class Spacecraft : MonoBehaviour {
         
         // Make all parts kinematic and disable joints for building
         foreach (Rigidbody2D partRb in partRigidbodies) {
-            if (partRb != rb) { // Don't affect main spacecraft rigidbody
-                partRb.bodyType = RigidbodyType2D.Kinematic;
-                partRb.simulated = false;
-            }
+            partRb.bodyType = RigidbodyType2D.Kinematic;
+            partRb.simulated = false;
         }
         
         // Disable joints during building
         foreach (FixedJoint2D joint in partJoints) {
             joint.enabled = false;
         }
-        
-        // Disable main spacecraft physics
-        rb.bodyType = RigidbodyType2D.Kinematic;
-        rb.simulated = false;
         
         
         // Disable engine
@@ -75,20 +66,14 @@ public class Spacecraft : MonoBehaviour {
         
         // Enable physics for all parts
         foreach (Rigidbody2D partRb in partRigidbodies) {
-            if (partRb != rb) { // Don't affect main spacecraft rigidbody
-                partRb.bodyType = RigidbodyType2D.Dynamic;
-                partRb.simulated = true;
-            }
+            partRb.bodyType = RigidbodyType2D.Dynamic;
+            partRb.simulated = true;
         }
         
         // Enable joints for flight
         foreach (FixedJoint2D joint in partJoints) {
             joint.enabled = true;
         }
-        
-        // Enable main spacecraft physics
-        rb.bodyType = RigidbodyType2D.Dynamic;
-        rb.simulated = true;
         
         
         // Enable engines
