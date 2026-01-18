@@ -1,4 +1,5 @@
 using UnityEngine;
+//Class defines the behavior of the gamma ray part. 
 
 public class GammaRay : MonoBehaviour
 {

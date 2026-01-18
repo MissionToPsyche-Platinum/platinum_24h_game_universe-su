@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//Class defines the behavior of the engine part. 
 public class Engine : MonoBehaviour {
 
     [SerializeField] private Spacecraft spacecraft;

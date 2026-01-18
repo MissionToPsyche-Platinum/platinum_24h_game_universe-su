@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Class that controls the ship building grid. allows the user to place objects and connect them to the base part.
+/// </summary>
 public class ShipBuildingGrid : MonoBehaviour {
     public static ShipBuildingGrid instance { get; private set; }
     

@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Helper class that retrieves the mouse position.
+/// </summary>
 public class Mouse {
     
     public static Vector3 GetMouseWorldPosition() {

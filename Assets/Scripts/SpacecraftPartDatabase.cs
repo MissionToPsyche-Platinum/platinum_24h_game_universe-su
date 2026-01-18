@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+/// <summary>
+/// Class that allows for retrieving ship parts for cloning and getting data about existing parts.
+/// </summary>
 public class SpacecraftPartDatabase : MonoBehaviour {
     [SerializeField] private PartScriptableObject[] allParts;
 

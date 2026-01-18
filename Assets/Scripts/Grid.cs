@@ -1,5 +1,7 @@
 using UnityEngine;
 
+//Class defines the properties of the building grid. also allows for queries of whether a location is within the grid.
+
 public class Grid {
 
     private int width;

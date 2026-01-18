@@ -3,6 +3,8 @@ using System;
 using UnityEditor;
 using UnityEngine.SceneManagement;
 
+//Class that handles input and triggers events based on it.
+
 public class GameInput : MonoBehaviour {
     public event EventHandler<EngineActivatedEventArgs> OnActivateEnginePerformedAction;
     public event EventHandler<EngineActivatedEventArgs> OnActivateEngineCanceledAction;

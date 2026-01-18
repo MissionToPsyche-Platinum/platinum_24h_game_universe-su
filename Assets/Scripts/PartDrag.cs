@@ -3,6 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 
+//Script that allows ship parts to be dragged around the grid. Also connects parts together with joints.
 public class PartDrag : MonoBehaviour {
     [SerializeField] private GameObject selectedObject;
     

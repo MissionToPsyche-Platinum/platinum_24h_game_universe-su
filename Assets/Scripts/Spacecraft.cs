@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+/// <summary>
+/// The manager of the spacecraft as a whole. responsible for managing what mode each piece is in as well as activating engines
+/// </summary>
 public class Spacecraft : MonoBehaviour {
     
     private Rigidbody2D rb;
