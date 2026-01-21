@@ -47,10 +47,8 @@ public class FuelBarUI : MonoBehaviour
         StartCoroutine(FindEngineCoroutine());
     }
 
-    /// <summary>
-    /// Continuously attempts to find the Engine object until it exists,
-    /// then subscribes to its fuel change event.
-    /// </summary>
+    // Continuously attempts to find the Engine object until it exists,
+    // then subscribes to its fuel change event.
     private IEnumerator FindEngineCoroutine()
     {
         // Keep trying to find the engine until found
@@ -78,17 +76,15 @@ public class FuelBarUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Called whenever the engine reports that fuel has changed.
-    /// </summary>
+
+    // Called whenever the engine reports that fuel has changed.
     private void Engine_OnFuelChanged(object sender, float fuelPercentage)
     {
         UpdateFuelBar(fuelPercentage);
     }
 
-    /// <summary>
-    /// Updates the visual fill amount of the fuel bar.
-    /// </summary>
+
+    // Updates the visual fill amount of the fuel bar.
     private void UpdateFuelBar(float fuelPercentage)
     {
         if (fuelBarImage != null)

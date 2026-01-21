@@ -85,13 +85,7 @@ public class Engine : MonoBehaviour
         {
             fuelAmount = 0f;
         }
-
         OnFuelChanged?.Invoke(this, FuelPercentage);
-    }
-
-    public float GetFuelAmount()
-    {
-        return fuelAmount;
     }
 }
 
