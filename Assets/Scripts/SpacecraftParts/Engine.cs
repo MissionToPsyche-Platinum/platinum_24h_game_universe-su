@@ -12,12 +12,10 @@ public class Engine : MonoBehaviour
     private GameInput gameInput;
     private Rigidbody2D engineRigidbody2D;
 
-    // NOTE: Consider removing 'static' later if you ever have multiple Engine objects.
     private static bool active;
 
     private float fuelAmount;
 
-    // Event + percentage for UI (HealthBar-style)
     public event System.EventHandler<float> OnFuelChanged;
 
     public float FuelPercentage
