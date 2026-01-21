@@ -1,11 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
+
 /// <summary>
 /// The manager of the spacecraft as a whole. responsible for managing what mode each piece is in as well as activating engines
 /// </summary>
 public class Spacecraft : MonoBehaviour {
     
     private static Spacecraft Instance;
+
+    public static Spacecraft GetInstance() => Instance;
 
     public static bool IsBuildMode { get; private set; }
     
@@ -18,6 +22,20 @@ public class Spacecraft : MonoBehaviour {
 
     [SerializeField] private GameInput gameInput;
     [SerializeField] private Engine engine;
+
+    // Health system
+    [Header("Health Settings")]
+    [SerializeField] private float maxHealth = 100f;
+    [SerializeField] private float currentHealth;
+    
+    // Events for health changes
+    public event EventHandler<float> OnHealthChanged; // Passes current health percentage (0-1)
+    public event EventHandler OnHealthDepleted;
+
+    // Public properties to access health values
+    public float MaxHealth => maxHealth;
+    public float CurrentHealth => currentHealth;
+    public float HealthPercentage => maxHealth > 0 ? currentHealth / maxHealth : 0f;
 
 
 
@@ -32,6 +50,9 @@ public class Spacecraft : MonoBehaviour {
         
         // Get Rigidbody2D from self or children (SpacecraftStart)
         rb = GetComponentInChildren<Rigidbody2D>();
+        
+        // Initialize health
+        currentHealth = maxHealth;
         
         // Cache original joint connections
         CacheOriginalJointConnections();
@@ -225,10 +246,46 @@ public class Spacecraft : MonoBehaviour {
         foreach (Engine e in engineScripts) {
             e.enabled = true;
         }
+        
+        // Reset health when entering flight mode
+        ResetHealth();
     }
     
     private void GameInput_OnActivateEngineAction(object sender, GameInput.EngineActivatedEventArgs e) { 
         engine.enabled = e.activated;
+    }
+
+    public void TakeDamage(float damage) {
+        if (damage <= 0) return;
+        
+        currentHealth = Mathf.Max(0, currentHealth - damage);
+        
+        // Notify listeners of health change
+        OnHealthChanged?.Invoke(this, HealthPercentage);
+        
+        // Check if health is depleted
+        if (currentHealth <= 0) {
+            OnHealthDepleted?.Invoke(this, EventArgs.Empty);
+            HandleDeath();
+        }
+    }
+    
+    public void Heal(float healAmount) {
+        if (healAmount <= 0) return;
+        
+        currentHealth = Mathf.Min(maxHealth, currentHealth + healAmount);
+        OnHealthChanged?.Invoke(this, HealthPercentage);
+    }
+    
+    public void ResetHealth() {
+        currentHealth = maxHealth;
+        OnHealthChanged?.Invoke(this, HealthPercentage);
+    }
+    
+    private void HandleDeath() {
+        Debug.Log("Spacecraft destroyed!");
+        // we can add death handling here later
+
     }
 
     private void OnDestroy() {
