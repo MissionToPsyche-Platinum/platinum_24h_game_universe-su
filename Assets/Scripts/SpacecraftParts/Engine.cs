@@ -1,29 +1,89 @@
+// Engine.cs
 using UnityEngine;
 
 //Class defines the behavior of the engine part. 
-public class Engine : MonoBehaviour {
+public class Engine : MonoBehaviour
+{
     [SerializeField] private int speed;
+
+    [Header("Fuel Settings")]
+    [SerializeField] private float maxFuel = 10f;
+
     private GameInput gameInput;
     private Rigidbody2D engineRigidbody2D;
+
     private static bool active;
+
+    private float fuelAmount;
+
+    public event System.EventHandler<float> OnFuelChanged;
+
+    public float FuelPercentage
+    {
+        get
+        {
+            if (maxFuel <= 0f)
+            {
+                return 0f;
+            }
+            return fuelAmount / maxFuel;
+        }
+    }
 
     public void Awake()
     {
         enabled = false;
-        engineRigidbody2D =  GetComponentInParent<Rigidbody2D>();
+
+        fuelAmount = maxFuel;
+        OnFuelChanged?.Invoke(this, FuelPercentage);
+
+        engineRigidbody2D = GetComponentInParent<Rigidbody2D>();
+
         gameInput = GameInput.instance;
-        gameInput.OnActivateEnginePerformedAction += GameInput_OnActivateEngineAction; //Adds GameInput_OnActivateEngineAction() as a listener to the OnActivateEngineAction event. 
+        gameInput.OnActivateEnginePerformedAction += GameInput_OnActivateEngineAction;
         gameInput.OnActivateEngineCanceledAction += GameInput_OnActivateEngineAction;
     }
+
     private void FixedUpdate()
     {
-        if (active)
+        if (!active)
         {
-            engineRigidbody2D.AddForce(speed * transform.up * Time.deltaTime);
+            return;
         }
+
+        Debug.Log(fuelAmount); // Log current fuel amount for testing
+
+        // Check and see if we have fuel
+        if (fuelAmount <= 0f)
+        {
+            fuelAmount = 0f;
+            OnFuelChanged?.Invoke(this, FuelPercentage);
+            return; // no fuel so no thrust
+        }
+
+        // Apply thrust
+        engineRigidbody2D.AddForce(speed * transform.up * Time.fixedDeltaTime);
+
+        // Consume fuel AFTER thrust
+        ConsumeFuel();
     }
 
-    private void GameInput_OnActivateEngineAction(object sender, GameInput.EngineActivatedEventArgs e) { 
+    private void GameInput_OnActivateEngineAction(object sender, GameInput.EngineActivatedEventArgs e)
+    {
         active = e.activated;
     }
+
+    private void ConsumeFuel()
+    {
+        float fuelConsumptionRate = 1f; // consumption rate
+        fuelAmount -= fuelConsumptionRate * Time.fixedDeltaTime;
+
+        // Clamp and notify
+        if (fuelAmount < 0f)
+        {
+            fuelAmount = 0f;
+        }
+        OnFuelChanged?.Invoke(this, FuelPercentage);
+    }
 }
+
