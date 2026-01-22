@@ -123,17 +123,29 @@ public class Spacecraft : MonoBehaviour {
             joint.enabled = false;
         }
         
-        // Make all parts kinematic and disable simulation
+        // Enable PartDrag components in build mode so parts can be dragged
+        PartDrag[] partDrags = GetComponentsInChildren<PartDrag>();
+        foreach (PartDrag partDrag in partDrags) {
+            partDrag.enabled = true;
+        }
+        
+        // Get all colliders and ensure they're enabled for mouse events
+        Collider2D[] partColliders = GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D collider in partColliders) {
+            collider.enabled = true;
+        }
+        
+        // Make all parts kinematic but keep simulation enabled for mouse events
         foreach (Rigidbody2D partRb in partRigidbodies) {
             if (partRb != rb) {
                 partRb.bodyType = RigidbodyType2D.Kinematic;
-                partRb.simulated = false;
+                partRb.simulated = true;  // Keep simulated = true so mouse events work
             }
         }
         
-        // Disable main spacecraft physics
+        // Set main spacecraft to kinematic but keep simulation enabled
         rb.bodyType = RigidbodyType2D.Kinematic;
-        rb.simulated = false;
+        rb.simulated = true;  // Keep simulated = true so mouse events work
         
         // Disable engines
         foreach (Engine e in engineScripts) {

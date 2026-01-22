@@ -93,7 +93,7 @@ public class PartDrag : MonoBehaviour {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null) {
             rb.bodyType = RigidbodyType2D.Kinematic;
-            rb.simulated = false;
+            rb.simulated = true; 
         }
     }
     
