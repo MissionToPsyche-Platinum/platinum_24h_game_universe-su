@@ -143,11 +143,11 @@ public class ShipBuildingGrid : MonoBehaviour {
             joint.enableCollision = false;
         }
         
-        // Make part kinematic during building phase
+        // Make part kinematic during building phase but keep simulation enabled for mouse events
         Rigidbody2D partRb = part.GetComponent<Rigidbody2D>();
         if (partRb != null) {
             partRb.bodyType = RigidbodyType2D.Kinematic;
-            partRb.simulated = false;
+            partRb.simulated = true; 
         }
     }
 
