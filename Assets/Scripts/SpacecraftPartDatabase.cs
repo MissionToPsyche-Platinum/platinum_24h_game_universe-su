@@ -13,6 +13,7 @@ public class SpacecraftPartDatabase : MonoBehaviour {
 
     public void Awake() {
         Instance = this;
+        DontDestroyOnLoad(Instance);
     }
     
     public int GetPartID(GameObject part) {
