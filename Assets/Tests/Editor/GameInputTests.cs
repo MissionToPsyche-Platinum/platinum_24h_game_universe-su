@@ -6,8 +6,8 @@ public class GameInputTests {
     [Test]
     public void EngineActivatedEventArgs_Constructor_SetsActivated() {
         // Create event arguments with true and false
-        var argsTrue = new GameInput.EngineActivatedEventArgs(true);
-        var argsFalse = new GameInput.EngineActivatedEventArgs(false);
+        var argsTrue = new GameInput.EngineEventArgs(true, 1);
+        var argsFalse = new GameInput.EngineEventArgs(false, 1);
         
         // Check that the values were set correctly
         Assert.IsTrue(argsTrue.activated, "Args should set activated to true");
@@ -23,7 +23,7 @@ public class GameInputTests {
         bool eventValue = false;
         
         // Listen for the event - when it fires, set our flags
-        gameInput.OnActivateEnginePerformedAction += (sender, args) => {
+        gameInput.OnEnginePerformedAction += (sender, args) => {
             eventFired = true;
             eventValue = args.activated;
         };
@@ -51,7 +51,7 @@ public class GameInputTests {
         bool eventValue = true;
         
         // Listen for the canceled event - when it fires, set our flags
-        gameInput.OnActivateEngineCanceledAction += (sender, args) => {
+        gameInput.OnEngineCanceledAction += (sender, args) => {
             eventFired = true;
             eventValue = args.activated;
         };
