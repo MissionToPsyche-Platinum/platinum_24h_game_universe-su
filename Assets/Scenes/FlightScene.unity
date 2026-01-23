@@ -146,7 +146,7 @@ Transform:
   m_GameObject: {fileID: 115347372}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.1, y: 8.3, z: 0}
+  m_LocalPosition: {x: 7.28, y: 4.58, z: 0}
   m_LocalScale: {x: 4.352213, y: 4.352213, z: 1.0079}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -624,11 +624,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7792084172871663603, guid: 10eda568a7de7e04693212985f98844e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.1725373
+      value: -4.67
       objectReference: {fileID: 0}
     - target: {fileID: 7792084172871663603, guid: 10eda568a7de7e04693212985f98844e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.5804405
+      value: 15.77
       objectReference: {fileID: 0}
     - target: {fileID: 7792084172871663603, guid: 10eda568a7de7e04693212985f98844e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1363,8 +1363,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53446b58f14d4205b98c8d41369f19d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameInput: {fileID: 1687022013}
-  engine: {fileID: 2108131182}
   maxHealth: 100
   currentHealth: 0
 --- !u!50 &781035727
@@ -1404,11 +1402,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1947891166154513261, guid: a605a9cb8e6a23444baef3434392fdb5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.05
+      value: -3.64
       objectReference: {fileID: 0}
     - target: {fileID: 1947891166154513261, guid: a605a9cb8e6a23444baef3434392fdb5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.84
+      value: 0.46
       objectReference: {fileID: 0}
     - target: {fileID: 1947891166154513261, guid: a605a9cb8e6a23444baef3434392fdb5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1581,6 +1579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  engineID: -1
 --- !u!1 &1231567561
 GameObject:
   m_ObjectHideFlags: 0
@@ -2060,8 +2059,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53446b58f14d4205b98c8d41369f19d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameInput: {fileID: 1687022013}
-  engine: {fileID: 1204785238}
   maxHealth: 100
   currentHealth: 0
 --- !u!114 &1915428436
@@ -2151,17 +2148,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9117703848265668867, guid: e59b64fdb7a65964c9f08e58f055af6d, type: 3}
   m_PrefabInstance: {fileID: 1853528171}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2108131182 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7247162863546709924, guid: e59b64fdb7a65964c9f08e58f055af6d, type: 3}
-  m_PrefabInstance: {fileID: 1853528171}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 850c3c51dbcba4bec9934c8a05b0f594, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
