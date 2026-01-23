@@ -113,6 +113,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "EngineOne",
+                    "type": "Button",
+                    "id": "38062801-e530-4fed-bb4c-919d5a755918",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EngineTwo",
+                    "type": "Button",
+                    "id": "bdeae971-52d0-4ed1-bf9d-3fbb8e74830d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EngineThree",
+                    "type": "Button",
+                    "id": "792af1f4-5900-4c36-b1f1-329756024a63",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EngineFour",
+                    "type": "Button",
+                    "id": "bc27fcf2-2f5a-4fa8-8d66-dc03a0b019c7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -388,6 +424,50 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "KeyEight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "929eb155-13ba-415c-916c-739094bad64e",
+                    "path": "<Keyboard>/u",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "EngineOne",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8bdcf924-0fd8-43e3-ac1c-a5cc318804ee",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "EngineTwo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "317a30f3-56f6-457d-9026-15ed0954b46c",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "EngineThree",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f6bbfc33-8ab5-4a90-86e2-785cd6417dc2",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "EngineFour",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
