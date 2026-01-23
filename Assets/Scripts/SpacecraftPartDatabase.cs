@@ -9,6 +9,7 @@ public class SpacecraftPartDatabase : MonoBehaviour {
     [SerializeField] private PartScriptableObject[] allParts;
 
     public static SpacecraftPartDatabase Instance;
+    private int engineCount = 0;
 
     public void Awake() {
         Instance = this;
@@ -60,5 +61,10 @@ public class SpacecraftPartDatabase : MonoBehaviour {
         }
 
         return null;
+    }
+
+    public int CreateEngineID() {
+        engineCount++;
+        return engineCount;
     }
 }
