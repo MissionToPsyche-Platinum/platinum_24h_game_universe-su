@@ -34,7 +34,7 @@ public class SpacecraftTests {
         // Simulate pressing the engine button by calling the event handler
         var handlerMethod = typeof(Spacecraft).GetMethod("GameInput_OnActivateEngineAction", 
             System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-        handlerMethod?.Invoke(spacecraft, new object[] { gameInput, new GameInput.EngineActivatedEventArgs(true) });
+        handlerMethod?.Invoke(spacecraft, new object[] { gameInput, new GameInput.EngineEventArgs(true, 1) });
         
         // Check that the engine turned on
         Assert.IsTrue(engine.enabled, "Engine should be enabled when input event fires");
@@ -76,7 +76,7 @@ public class SpacecraftTests {
         // Simulate releasing the engine button by calling the event handler
         var handlerMethod = typeof(Spacecraft).GetMethod("GameInput_OnActivateEngineAction", 
             System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-        handlerMethod?.Invoke(spacecraft, new object[] { gameInput, new GameInput.EngineActivatedEventArgs(false) });
+        handlerMethod?.Invoke(spacecraft, new object[] { gameInput, new GameInput.EngineEventArgs(false, 1) });
         
         // Check that the engine turned off
         Assert.IsFalse(engine.enabled, "Engine should be disabled when input is canceled");
