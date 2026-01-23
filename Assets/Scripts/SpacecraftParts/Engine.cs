@@ -1,29 +1,37 @@
+using System;
 using UnityEngine;
 
 //Class defines the behavior of the engine part. 
 public class Engine : MonoBehaviour {
     [SerializeField] private int speed;
+    [SerializeField] private SpriteRenderer engineVisual;
+    
+    public int engineID = -1;
     private GameInput gameInput;
     private Rigidbody2D engineRigidbody2D;
     private static bool active;
 
-    public void Awake()
-    {
-        enabled = false;
-        engineRigidbody2D =  GetComponentInParent<Rigidbody2D>();
-        gameInput = GameInput.instance;
-        gameInput.OnActivateEnginePerformedAction += GameInput_OnActivateEngineAction; //Adds GameInput_OnActivateEngineAction() as a listener to the OnActivateEngineAction event. 
-        gameInput.OnActivateEngineCanceledAction += GameInput_OnActivateEngineAction;
-    }
-    private void FixedUpdate()
-    {
-        if (active)
-        {
-            engineRigidbody2D.AddForce(speed * transform.up * Time.deltaTime);
-        }
+    public void Awake() {
+        active = false;
+        engineRigidbody2D = GetComponentInParent<Rigidbody2D>();
+        gameInput = GameInput.Instance;
+        engineID = SpacecraftPartDatabase.Instance.CreateEngineID();
     }
 
-    private void GameInput_OnActivateEngineAction(object sender, GameInput.EngineActivatedEventArgs e) { 
-        active = e.activated;
+    public void Start() {
+        gameInput.OnEnginePerformedAction += GameInput_OnEngineAction; //Adds GameInput_OnEngineAction() as a listener to the OnEngineAction event. 
+        gameInput.OnEngineCanceledAction += GameInput_OnEngineAction;
+    }
+    
+    private void FixedUpdate() {
+        if (active) engineRigidbody2D.AddForce(speed * transform.up * Time.deltaTime);
+    }
+
+    private void GameInput_OnEngineAction(object sender, GameInput.EngineEventArgs e) { 
+        if(engineID == e.engineNum) {
+            active = e.activated;
+            if (active) engineVisual.color = Color.red;
+            else engineVisual.color = Color.yellow;
+        }
     }
 }
