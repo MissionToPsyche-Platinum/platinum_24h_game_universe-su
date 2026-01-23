@@ -1,10 +1,12 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 //Class defines the behavior of the engine part. 
 public class Engine : MonoBehaviour {
     [SerializeField] private int speed;
     [SerializeField] private SpriteRenderer engineVisual;
+    [SerializeField] private TextMeshProUGUI idUI;
     
     public int engineID = -1;
     private GameInput gameInput;
@@ -15,7 +17,7 @@ public class Engine : MonoBehaviour {
         active = false;
         engineRigidbody2D = GetComponentInParent<Rigidbody2D>();
         gameInput = GameInput.Instance;
-        engineID = SpacecraftPartDatabase.Instance.CreateEngineID();
+        SetEngineID();
     }
 
     public void Start() {
@@ -25,6 +27,11 @@ public class Engine : MonoBehaviour {
     
     private void FixedUpdate() {
         if (active) engineRigidbody2D.AddForce(speed * transform.up * Time.deltaTime);
+    }
+
+    private void SetEngineID() {
+        engineID = SpacecraftPartDatabase.Instance.CreateEngineID();
+        idUI.text = engineID.ToString();
     }
 
     private void GameInput_OnEngineAction(object sender, GameInput.EngineEventArgs e) { 
