@@ -6,22 +6,25 @@ using UnityEngine.SceneManagement;
 //Class that handles input and triggers events based on it.
 
 public class GameInput : MonoBehaviour {
-    public static GameInput instance { get; private set; }
-    public event EventHandler<EngineActivatedEventArgs> OnActivateEnginePerformedAction;
-    public event EventHandler<EngineActivatedEventArgs> OnActivateEngineCanceledAction;
+    public static GameInput Instance { get; private set; }
+    public event EventHandler<EngineEventArgs> OnEnginePerformedAction;
+    public event EventHandler<EngineEventArgs> OnEngineCanceledAction;
     public event EventHandler<NumKeyEventArgs> OnNumKeyPerformedAction;
 
     public event EventHandler OnLeftMouseClickPerformedAction;
 
     public event EventHandler OnSetFlightScenePerformedAction;
-
     
     private InputSystem_Actions inputActions;
     
-     public class EngineActivatedEventArgs : EventArgs {
+    public class EngineEventArgs : EventArgs {
         public bool activated;
-    
-        public EngineActivatedEventArgs(bool activated) => this.activated = activated;
+        public int engineNum;
+        
+        public EngineEventArgs(bool activated, int engineNum) {
+            this.activated = activated;
+            this.engineNum = engineNum;
+        }
     }
     
     public class NumKeyEventArgs : EventArgs {
@@ -31,15 +34,24 @@ public class GameInput : MonoBehaviour {
     }
     
     public void Awake() {
-        instance = this;
+        Instance = this;
+        DontDestroyOnLoad(this);
         
         inputActions = new InputSystem_Actions();
     
         inputActions.Spacecraft.Enable();
         inputActions.General.Enable();
-        
-        inputActions.Spacecraft.ActivateEngine.performed += ActivateEngine_performed;
-        inputActions.Spacecraft.ActivateEngine.canceled += ActivateEngine_canceled;
+    }
+
+    public void Start() {
+        inputActions.Spacecraft.EngineOne.performed += EngineOne_performed;
+        inputActions.Spacecraft.EngineOne.canceled += EngineOne_canceled;
+        inputActions.Spacecraft.EngineTwo.performed += EngineTwo_performed;
+        inputActions.Spacecraft.EngineTwo.canceled += EngineTwo_canceled;
+        inputActions.Spacecraft.EngineThree.performed += EngineThree_performed;
+        inputActions.Spacecraft.EngineThree.canceled += EngineThree_canceled;
+        inputActions.Spacecraft.EngineFour.performed += EngineFour_performed;
+        inputActions.Spacecraft.EngineFour.canceled += EngineFour_canceled;
         
         inputActions.Spacecraft.KeyOne.performed += KeyOne_performed;
         inputActions.Spacecraft.KeyTwo.performed += KeyTwo_performed;
@@ -55,13 +67,39 @@ public class GameInput : MonoBehaviour {
         inputActions.General.SceneSwitch.performed += SceneSwitch_performed;
     }
     
-    private void ActivateEngine_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
-        OnActivateEnginePerformedAction?.Invoke(this, new EngineActivatedEventArgs(true)); //"?.Invoke" basically checks if theres any listeners (methods). If there are listeners, calls all of 'em.
+    private void EngineOne_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+        OnEnginePerformedAction?.Invoke(this, new EngineEventArgs(true, 1)); //"?.Invoke" basically checks if theres any listeners (methods). If there are listeners, calls all of 'em.
     }
     
-    private void ActivateEngine_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
-        OnActivateEngineCanceledAction?.Invoke(this, new EngineActivatedEventArgs(false)); 
+    private void EngineOne_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj) { 
+       OnEngineCanceledAction?.Invoke(this, new EngineEventArgs(false, 1)); 
     }
+
+    private void EngineTwo_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) { 
+        OnEnginePerformedAction?.Invoke(this, new EngineEventArgs(true, 2));
+    }
+     
+    private void EngineTwo_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj) { 
+        OnEngineCanceledAction?.Invoke(this, new EngineEventArgs(false, 2)); 
+    }
+     
+    private void EngineThree_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) { 
+        OnEnginePerformedAction?.Invoke(this, new EngineEventArgs(true, 3));
+    }
+
+    private void EngineThree_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj) { 
+        OnEngineCanceledAction?.Invoke(this, new EngineEventArgs(false, 3));
+    }
+
+    private void EngineFour_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) { 
+        OnEnginePerformedAction?.Invoke(this, new EngineEventArgs(true, 4)); 
+    }
+     
+    private void EngineFour_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj) { 
+        OnEngineCanceledAction?.Invoke(this, new EngineEventArgs(false, 4)); 
+    }
+    
+    
     
     private void KeyOne_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) { 
         OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(1)); 
@@ -133,8 +171,14 @@ public class GameInput : MonoBehaviour {
         //Properly disable and cleanup input actions
         if (inputActions != null) {
             // Unsubscribe from all events first
-            inputActions.Spacecraft.ActivateEngine.performed -= ActivateEngine_performed;
-            inputActions.Spacecraft.ActivateEngine.canceled -= ActivateEngine_canceled;
+            inputActions.Spacecraft.EngineOne.performed -= EngineOne_performed;
+            inputActions.Spacecraft.EngineOne.canceled -= EngineOne_canceled;
+            inputActions.Spacecraft.EngineTwo.performed -= EngineTwo_performed;
+            inputActions.Spacecraft.EngineTwo.canceled -= EngineTwo_canceled;
+            inputActions.Spacecraft.EngineThree.performed -= EngineThree_performed;
+            inputActions.Spacecraft.EngineThree.canceled -= EngineThree_canceled;
+            inputActions.Spacecraft.EngineFour.performed -= EngineFour_performed;
+            inputActions.Spacecraft.EngineFour.canceled -= EngineFour_canceled;
             
             inputActions.Spacecraft.KeyOne.performed -= KeyOne_performed;
             inputActions.Spacecraft.KeyTwo.performed -= KeyTwo_performed;

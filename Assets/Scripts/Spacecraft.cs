@@ -20,9 +20,6 @@ public class Spacecraft : MonoBehaviour {
     // Cache original joint connections to preserve part-to-part links
     private System.Collections.Generic.Dictionary<FixedJoint2D, Rigidbody2D> originalJointConnections;
 
-    [SerializeField] private GameInput gameInput;
-    [SerializeField] private Engine engine;
-
     // Health system
     [Header("Health Settings")]
     [SerializeField] private float maxHealth = 100f;
@@ -72,8 +69,6 @@ public class Spacecraft : MonoBehaviour {
     }
     
     private void Start() {
-        gameInput.OnActivateEnginePerformedAction += GameInput_OnActivateEngineAction;
-        gameInput.OnActivateEngineCanceledAction += GameInput_OnActivateEngineAction;
 
         // Listen for scene changes to update physics mode
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -262,10 +257,6 @@ public class Spacecraft : MonoBehaviour {
         // Reset health when entering flight mode
         ResetHealth();
     }
-    
-    private void GameInput_OnActivateEngineAction(object sender, GameInput.EngineActivatedEventArgs e) { 
-        engine.enabled = e.activated;
-    }
 
     public void TakeDamage(float damage) {
         if (damage <= 0) return;
@@ -302,8 +293,6 @@ public class Spacecraft : MonoBehaviour {
 
     private void OnDestroy() {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        if (Instance == this) {
-            Instance = null;
-        }
+        if (Instance == this) Instance = null;
     }
 }

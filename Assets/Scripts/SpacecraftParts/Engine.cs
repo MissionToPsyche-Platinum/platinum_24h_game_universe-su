@@ -1,22 +1,44 @@
-// Engine.cs
+using System;
+using TMPro;
 using UnityEngine;
 
 //Class defines the behavior of the engine part. 
-public class Engine : MonoBehaviour
-{
+public class Engine : MonoBehaviour {
     [SerializeField] private int speed;
-
+    [SerializeField] private SpriteRenderer engineVisual;
+    [SerializeField] private TextMeshProUGUI idUI;
+    
     [Header("Fuel Settings")]
     [SerializeField] private float maxFuel = 10f;
-
+    
+    public int engineID = -1;
     private GameInput gameInput;
     private Rigidbody2D engineRigidbody2D;
 
     private static bool active;
-
+    
     private float fuelAmount;
 
     public event System.EventHandler<float> OnFuelChanged;
+
+
+    public void Awake() {
+        active = false;
+        
+        fuelAmount = maxFuel;
+        OnFuelChanged?.Invoke(this, FuelPercentage);
+        
+        engineRigidbody2D = GetComponentInParent<Rigidbody2D>();
+        
+        gameInput = GameInput.Instance;
+        
+        SetEngineID();
+    }
+
+    public void Start() {
+        gameInput.OnEnginePerformedAction += GameInput_OnEngineAction; //Adds GameInput_OnEngineAction() as a listener to the OnEngineAction event. 
+        gameInput.OnEngineCanceledAction += GameInput_OnEngineAction;
+    }
 
     public float FuelPercentage
     {
@@ -29,21 +51,7 @@ public class Engine : MonoBehaviour
             return fuelAmount / maxFuel;
         }
     }
-
-    public void Awake()
-    {
-        enabled = false;
-
-        fuelAmount = maxFuel;
-        OnFuelChanged?.Invoke(this, FuelPercentage);
-
-        engineRigidbody2D = GetComponentInParent<Rigidbody2D>();
-
-        gameInput = GameInput.instance;
-        gameInput.OnActivateEnginePerformedAction += GameInput_OnActivateEngineAction;
-        gameInput.OnActivateEngineCanceledAction += GameInput_OnActivateEngineAction;
-    }
-
+    
     private void FixedUpdate()
     {
         if (!active)
@@ -67,12 +75,20 @@ public class Engine : MonoBehaviour
         // Consume fuel AFTER thrust
         ConsumeFuel();
     }
-
-    private void GameInput_OnActivateEngineAction(object sender, GameInput.EngineActivatedEventArgs e)
-    {
-        active = e.activated;
+    
+    private void SetEngineID() {
+        engineID = SpacecraftPartDatabase.Instance.CreateEngineID();
+        idUI.text = engineID.ToString();
     }
 
+    private void GameInput_OnEngineAction(object sender, GameInput.EngineEventArgs e) { 
+        if(engineID == e.engineNum) {
+            active = e.activated;
+            if (active) engineVisual.color = Color.red;
+            else engineVisual.color = Color.yellow;
+        }
+    }
+    
     private void ConsumeFuel()
     {
         float fuelConsumptionRate = 1f; // consumption rate
@@ -86,4 +102,3 @@ public class Engine : MonoBehaviour
         OnFuelChanged?.Invoke(this, FuelPercentage);
     }
 }
-
