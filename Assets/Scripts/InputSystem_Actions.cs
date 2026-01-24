@@ -120,81 +120,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""KeyOne"",
-                    ""type"": ""Button"",
-                    ""id"": ""66d814ee-610f-4abe-b682-79026e6407ea"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""KeyTwo"",
-                    ""type"": ""Button"",
-                    ""id"": ""77439cba-0bfc-4979-837a-cc5911d90f39"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""LeftMouseClick"",
                     ""type"": ""Button"",
                     ""id"": ""e4b6afa6-0c25-4255-a1da-339b08686df8"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""KeyThree"",
-                    ""type"": ""Button"",
-                    ""id"": ""2588ab66-a7f2-48ec-ba18-5ca7c7436e39"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""KeyFour"",
-                    ""type"": ""Button"",
-                    ""id"": ""e52457c9-6a07-466c-8d0d-7b4df98b7b29"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""KeyFive"",
-                    ""type"": ""Button"",
-                    ""id"": ""d80fd506-c2e4-4ec1-9116-98f9b08b2104"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""KeySix"",
-                    ""type"": ""Button"",
-                    ""id"": ""f1d86373-4891-4d14-99d3-8525b26bddb9"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""KeySeven"",
-                    ""type"": ""Button"",
-                    ""id"": ""cc509798-db0c-4dba-b5f3-086598439c46"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""KeyEight"",
-                    ""type"": ""Button"",
-                    ""id"": ""e0864260-c041-4c9d-821e-734df33252a9"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -416,28 +344,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7ff5b74f-31da-4670-8c33-f06016e6f6d4"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""KeyOne"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9c0cb5e6-ccfa-462b-9913-f263a9b1186a"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""KeyTwo"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""64497d74-e468-4974-a69e-0e21aa348a4c"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
@@ -449,74 +355,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""39aa0dc2-9175-4344-a218-2c3a996a0a35"",
-                    ""path"": ""<Keyboard>/3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""KeyThree"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""743a0585-34fe-42e5-98ac-d374868593f7"",
-                    ""path"": ""<Keyboard>/4"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""KeyFour"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4bba9e69-53e2-4c15-a927-c9648068a69f"",
-                    ""path"": ""<Keyboard>/5"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""KeyFive"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ae34a0e3-bff9-4d62-b187-a72ce1ecf067"",
-                    ""path"": ""<Keyboard>/6"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""KeySix"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ab6fafd1-cd8a-4b28-8b3d-c99e3af0d64c"",
-                    ""path"": ""<Keyboard>/7"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""KeySeven"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""67f01837-453d-4a48-b658-323fbe842c3a"",
-                    ""path"": ""<Keyboard>/8"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""KeyEight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""929eb155-13ba-415c-916c-739094bad64e"",
-                    ""path"": ""<Keyboard>/u"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
@@ -527,7 +367,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""8bdcf924-0fd8-43e3-ac1c-a5cc318804ee"",
-                    ""path"": ""<Keyboard>/i"",
+                    ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
@@ -538,7 +378,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""317a30f3-56f6-457d-9026-15ed0954b46c"",
-                    ""path"": ""<Keyboard>/o"",
+                    ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
@@ -549,7 +389,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f6bbfc33-8ab5-4a90-86e2-785cd6417dc2"",
-                    ""path"": ""<Keyboard>/p"",
+                    ""path"": ""<Keyboard>/4"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
@@ -1102,6 +942,205 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""SpacecraftBuilding"",
+            ""id"": ""0e491337-ce90-4125-8df8-9cb4698d7245"",
+            ""actions"": [
+                {
+                    ""name"": ""KeyOne"",
+                    ""type"": ""Button"",
+                    ""id"": ""a0afa82c-901b-4b59-be40-a523921c6448"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""KeyTwo"",
+                    ""type"": ""Button"",
+                    ""id"": ""b05c7c73-8718-466c-8744-42eef616ef3e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""KeyThree"",
+                    ""type"": ""Button"",
+                    ""id"": ""3ba435bd-d4ce-4871-b0d9-0f7c00076617"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""KeyFour"",
+                    ""type"": ""Button"",
+                    ""id"": ""d473f6d9-5ce3-4a5c-b4c9-f48acb3b3582"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""KeyFive"",
+                    ""type"": ""Button"",
+                    ""id"": ""64c73b9a-2d4c-46dd-b35f-b78a3479aa59"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""KeySix"",
+                    ""type"": ""Button"",
+                    ""id"": ""f6b5eed1-0925-4d3e-bc74-da2742762e0c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""KeySeven"",
+                    ""type"": ""Button"",
+                    ""id"": ""2c4648b2-e78d-46d1-ba7c-423385ae229e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""KeyEight"",
+                    ""type"": ""Button"",
+                    ""id"": ""4538f5a0-b0f1-4e91-8401-bf91e0d7f597"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftMouseClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""edf0722d-8f19-452a-8d08-e99ce1cd8e54"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4dfa397d-d00e-461b-98d8-b44b75402661"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""KeyOne"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""384db22d-9dfd-4360-93f5-a4bd26a3d389"",
+                    ""path"": ""<Keyboard>/8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""KeyEight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ae22cec-ffdc-4c52-b6de-474718af25b5"",
+                    ""path"": ""<Keyboard>/7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""KeySeven"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a05faca-4d2f-479d-93ca-6d86d03a7bb2"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""KeySix"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee80ff69-ad58-4136-9bd6-ac34d990e885"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""KeyFive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d95d93be-3bec-42ac-8f93-1cdf01a5500e"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""KeyFour"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9ff0267a-e33f-45b2-85d1-b4ff630341f1"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""KeyThree"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d1831ea1-7854-4f50-9871-7f8307c9cfcb"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""KeyTwo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc7e1855-face-4e08-a8bc-de14f90f2738"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftMouseClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""13a92b44-11d6-4f9a-862e-b31c36d5e2b0"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""LeftMouseClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1172,15 +1211,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Spacecraft_Move = m_Spacecraft.FindAction("Move", throwIfNotFound: true);
         m_Spacecraft_Look = m_Spacecraft.FindAction("Look", throwIfNotFound: true);
         m_Spacecraft_ActivateEngine = m_Spacecraft.FindAction("ActivateEngine", throwIfNotFound: true);
-        m_Spacecraft_KeyOne = m_Spacecraft.FindAction("KeyOne", throwIfNotFound: true);
-        m_Spacecraft_KeyTwo = m_Spacecraft.FindAction("KeyTwo", throwIfNotFound: true);
         m_Spacecraft_LeftMouseClick = m_Spacecraft.FindAction("LeftMouseClick", throwIfNotFound: true);
-        m_Spacecraft_KeyThree = m_Spacecraft.FindAction("KeyThree", throwIfNotFound: true);
-        m_Spacecraft_KeyFour = m_Spacecraft.FindAction("KeyFour", throwIfNotFound: true);
-        m_Spacecraft_KeyFive = m_Spacecraft.FindAction("KeyFive", throwIfNotFound: true);
-        m_Spacecraft_KeySix = m_Spacecraft.FindAction("KeySix", throwIfNotFound: true);
-        m_Spacecraft_KeySeven = m_Spacecraft.FindAction("KeySeven", throwIfNotFound: true);
-        m_Spacecraft_KeyEight = m_Spacecraft.FindAction("KeyEight", throwIfNotFound: true);
         m_Spacecraft_EngineOne = m_Spacecraft.FindAction("EngineOne", throwIfNotFound: true);
         m_Spacecraft_EngineTwo = m_Spacecraft.FindAction("EngineTwo", throwIfNotFound: true);
         m_Spacecraft_EngineThree = m_Spacecraft.FindAction("EngineThree", throwIfNotFound: true);
@@ -1200,6 +1231,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         // General
         m_General = asset.FindActionMap("General", throwIfNotFound: true);
         m_General_SceneSwitch = m_General.FindAction("SceneSwitch", throwIfNotFound: true);
+        // SpacecraftBuilding
+        m_SpacecraftBuilding = asset.FindActionMap("SpacecraftBuilding", throwIfNotFound: true);
+        m_SpacecraftBuilding_KeyOne = m_SpacecraftBuilding.FindAction("KeyOne", throwIfNotFound: true);
+        m_SpacecraftBuilding_KeyTwo = m_SpacecraftBuilding.FindAction("KeyTwo", throwIfNotFound: true);
+        m_SpacecraftBuilding_KeyThree = m_SpacecraftBuilding.FindAction("KeyThree", throwIfNotFound: true);
+        m_SpacecraftBuilding_KeyFour = m_SpacecraftBuilding.FindAction("KeyFour", throwIfNotFound: true);
+        m_SpacecraftBuilding_KeyFive = m_SpacecraftBuilding.FindAction("KeyFive", throwIfNotFound: true);
+        m_SpacecraftBuilding_KeySix = m_SpacecraftBuilding.FindAction("KeySix", throwIfNotFound: true);
+        m_SpacecraftBuilding_KeySeven = m_SpacecraftBuilding.FindAction("KeySeven", throwIfNotFound: true);
+        m_SpacecraftBuilding_KeyEight = m_SpacecraftBuilding.FindAction("KeyEight", throwIfNotFound: true);
+        m_SpacecraftBuilding_LeftMouseClick = m_SpacecraftBuilding.FindAction("LeftMouseClick", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -1207,6 +1249,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_Spacecraft.enabled, "This will cause a leak and performance issues, InputSystem_Actions.Spacecraft.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, InputSystem_Actions.UI.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_General.enabled, "This will cause a leak and performance issues, InputSystem_Actions.General.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_SpacecraftBuilding.enabled, "This will cause a leak and performance issues, InputSystem_Actions.SpacecraftBuilding.Disable() has not been called.");
     }
 
     /// <summary>
@@ -1285,15 +1328,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Spacecraft_Move;
     private readonly InputAction m_Spacecraft_Look;
     private readonly InputAction m_Spacecraft_ActivateEngine;
-    private readonly InputAction m_Spacecraft_KeyOne;
-    private readonly InputAction m_Spacecraft_KeyTwo;
     private readonly InputAction m_Spacecraft_LeftMouseClick;
-    private readonly InputAction m_Spacecraft_KeyThree;
-    private readonly InputAction m_Spacecraft_KeyFour;
-    private readonly InputAction m_Spacecraft_KeyFive;
-    private readonly InputAction m_Spacecraft_KeySix;
-    private readonly InputAction m_Spacecraft_KeySeven;
-    private readonly InputAction m_Spacecraft_KeyEight;
     private readonly InputAction m_Spacecraft_EngineOne;
     private readonly InputAction m_Spacecraft_EngineTwo;
     private readonly InputAction m_Spacecraft_EngineThree;
@@ -1322,41 +1357,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @ActivateEngine => m_Wrapper.m_Spacecraft_ActivateEngine;
         /// <summary>
-        /// Provides access to the underlying input action "Spacecraft/KeyOne".
-        /// </summary>
-        public InputAction @KeyOne => m_Wrapper.m_Spacecraft_KeyOne;
-        /// <summary>
-        /// Provides access to the underlying input action "Spacecraft/KeyTwo".
-        /// </summary>
-        public InputAction @KeyTwo => m_Wrapper.m_Spacecraft_KeyTwo;
-        /// <summary>
         /// Provides access to the underlying input action "Spacecraft/LeftMouseClick".
         /// </summary>
         public InputAction @LeftMouseClick => m_Wrapper.m_Spacecraft_LeftMouseClick;
-        /// <summary>
-        /// Provides access to the underlying input action "Spacecraft/KeyThree".
-        /// </summary>
-        public InputAction @KeyThree => m_Wrapper.m_Spacecraft_KeyThree;
-        /// <summary>
-        /// Provides access to the underlying input action "Spacecraft/KeyFour".
-        /// </summary>
-        public InputAction @KeyFour => m_Wrapper.m_Spacecraft_KeyFour;
-        /// <summary>
-        /// Provides access to the underlying input action "Spacecraft/KeyFive".
-        /// </summary>
-        public InputAction @KeyFive => m_Wrapper.m_Spacecraft_KeyFive;
-        /// <summary>
-        /// Provides access to the underlying input action "Spacecraft/KeySix".
-        /// </summary>
-        public InputAction @KeySix => m_Wrapper.m_Spacecraft_KeySix;
-        /// <summary>
-        /// Provides access to the underlying input action "Spacecraft/KeySeven".
-        /// </summary>
-        public InputAction @KeySeven => m_Wrapper.m_Spacecraft_KeySeven;
-        /// <summary>
-        /// Provides access to the underlying input action "Spacecraft/KeyEight".
-        /// </summary>
-        public InputAction @KeyEight => m_Wrapper.m_Spacecraft_KeyEight;
         /// <summary>
         /// Provides access to the underlying input action "Spacecraft/EngineOne".
         /// </summary>
@@ -1408,33 +1411,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @ActivateEngine.started += instance.OnActivateEngine;
             @ActivateEngine.performed += instance.OnActivateEngine;
             @ActivateEngine.canceled += instance.OnActivateEngine;
-            @KeyOne.started += instance.OnKeyOne;
-            @KeyOne.performed += instance.OnKeyOne;
-            @KeyOne.canceled += instance.OnKeyOne;
-            @KeyTwo.started += instance.OnKeyTwo;
-            @KeyTwo.performed += instance.OnKeyTwo;
-            @KeyTwo.canceled += instance.OnKeyTwo;
             @LeftMouseClick.started += instance.OnLeftMouseClick;
             @LeftMouseClick.performed += instance.OnLeftMouseClick;
             @LeftMouseClick.canceled += instance.OnLeftMouseClick;
-            @KeyThree.started += instance.OnKeyThree;
-            @KeyThree.performed += instance.OnKeyThree;
-            @KeyThree.canceled += instance.OnKeyThree;
-            @KeyFour.started += instance.OnKeyFour;
-            @KeyFour.performed += instance.OnKeyFour;
-            @KeyFour.canceled += instance.OnKeyFour;
-            @KeyFive.started += instance.OnKeyFive;
-            @KeyFive.performed += instance.OnKeyFive;
-            @KeyFive.canceled += instance.OnKeyFive;
-            @KeySix.started += instance.OnKeySix;
-            @KeySix.performed += instance.OnKeySix;
-            @KeySix.canceled += instance.OnKeySix;
-            @KeySeven.started += instance.OnKeySeven;
-            @KeySeven.performed += instance.OnKeySeven;
-            @KeySeven.canceled += instance.OnKeySeven;
-            @KeyEight.started += instance.OnKeyEight;
-            @KeyEight.performed += instance.OnKeyEight;
-            @KeyEight.canceled += instance.OnKeyEight;
             @EngineOne.started += instance.OnEngineOne;
             @EngineOne.performed += instance.OnEngineOne;
             @EngineOne.canceled += instance.OnEngineOne;
@@ -1467,33 +1446,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @ActivateEngine.started -= instance.OnActivateEngine;
             @ActivateEngine.performed -= instance.OnActivateEngine;
             @ActivateEngine.canceled -= instance.OnActivateEngine;
-            @KeyOne.started -= instance.OnKeyOne;
-            @KeyOne.performed -= instance.OnKeyOne;
-            @KeyOne.canceled -= instance.OnKeyOne;
-            @KeyTwo.started -= instance.OnKeyTwo;
-            @KeyTwo.performed -= instance.OnKeyTwo;
-            @KeyTwo.canceled -= instance.OnKeyTwo;
             @LeftMouseClick.started -= instance.OnLeftMouseClick;
             @LeftMouseClick.performed -= instance.OnLeftMouseClick;
             @LeftMouseClick.canceled -= instance.OnLeftMouseClick;
-            @KeyThree.started -= instance.OnKeyThree;
-            @KeyThree.performed -= instance.OnKeyThree;
-            @KeyThree.canceled -= instance.OnKeyThree;
-            @KeyFour.started -= instance.OnKeyFour;
-            @KeyFour.performed -= instance.OnKeyFour;
-            @KeyFour.canceled -= instance.OnKeyFour;
-            @KeyFive.started -= instance.OnKeyFive;
-            @KeyFive.performed -= instance.OnKeyFive;
-            @KeyFive.canceled -= instance.OnKeyFive;
-            @KeySix.started -= instance.OnKeySix;
-            @KeySix.performed -= instance.OnKeySix;
-            @KeySix.canceled -= instance.OnKeySix;
-            @KeySeven.started -= instance.OnKeySeven;
-            @KeySeven.performed -= instance.OnKeySeven;
-            @KeySeven.canceled -= instance.OnKeySeven;
-            @KeyEight.started -= instance.OnKeyEight;
-            @KeyEight.performed -= instance.OnKeyEight;
-            @KeyEight.canceled -= instance.OnKeyEight;
             @EngineOne.started -= instance.OnEngineOne;
             @EngineOne.performed -= instance.OnEngineOne;
             @EngineOne.canceled -= instance.OnEngineOne;
@@ -1830,6 +1785,190 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="GeneralActions" /> instance referencing this action map.
     /// </summary>
     public GeneralActions @General => new GeneralActions(this);
+
+    // SpacecraftBuilding
+    private readonly InputActionMap m_SpacecraftBuilding;
+    private List<ISpacecraftBuildingActions> m_SpacecraftBuildingActionsCallbackInterfaces = new List<ISpacecraftBuildingActions>();
+    private readonly InputAction m_SpacecraftBuilding_KeyOne;
+    private readonly InputAction m_SpacecraftBuilding_KeyTwo;
+    private readonly InputAction m_SpacecraftBuilding_KeyThree;
+    private readonly InputAction m_SpacecraftBuilding_KeyFour;
+    private readonly InputAction m_SpacecraftBuilding_KeyFive;
+    private readonly InputAction m_SpacecraftBuilding_KeySix;
+    private readonly InputAction m_SpacecraftBuilding_KeySeven;
+    private readonly InputAction m_SpacecraftBuilding_KeyEight;
+    private readonly InputAction m_SpacecraftBuilding_LeftMouseClick;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "SpacecraftBuilding".
+    /// </summary>
+    public struct SpacecraftBuildingActions
+    {
+        private @InputSystem_Actions m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public SpacecraftBuildingActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "SpacecraftBuilding/KeyOne".
+        /// </summary>
+        public InputAction @KeyOne => m_Wrapper.m_SpacecraftBuilding_KeyOne;
+        /// <summary>
+        /// Provides access to the underlying input action "SpacecraftBuilding/KeyTwo".
+        /// </summary>
+        public InputAction @KeyTwo => m_Wrapper.m_SpacecraftBuilding_KeyTwo;
+        /// <summary>
+        /// Provides access to the underlying input action "SpacecraftBuilding/KeyThree".
+        /// </summary>
+        public InputAction @KeyThree => m_Wrapper.m_SpacecraftBuilding_KeyThree;
+        /// <summary>
+        /// Provides access to the underlying input action "SpacecraftBuilding/KeyFour".
+        /// </summary>
+        public InputAction @KeyFour => m_Wrapper.m_SpacecraftBuilding_KeyFour;
+        /// <summary>
+        /// Provides access to the underlying input action "SpacecraftBuilding/KeyFive".
+        /// </summary>
+        public InputAction @KeyFive => m_Wrapper.m_SpacecraftBuilding_KeyFive;
+        /// <summary>
+        /// Provides access to the underlying input action "SpacecraftBuilding/KeySix".
+        /// </summary>
+        public InputAction @KeySix => m_Wrapper.m_SpacecraftBuilding_KeySix;
+        /// <summary>
+        /// Provides access to the underlying input action "SpacecraftBuilding/KeySeven".
+        /// </summary>
+        public InputAction @KeySeven => m_Wrapper.m_SpacecraftBuilding_KeySeven;
+        /// <summary>
+        /// Provides access to the underlying input action "SpacecraftBuilding/KeyEight".
+        /// </summary>
+        public InputAction @KeyEight => m_Wrapper.m_SpacecraftBuilding_KeyEight;
+        /// <summary>
+        /// Provides access to the underlying input action "SpacecraftBuilding/LeftMouseClick".
+        /// </summary>
+        public InputAction @LeftMouseClick => m_Wrapper.m_SpacecraftBuilding_LeftMouseClick;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_SpacecraftBuilding; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="SpacecraftBuildingActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(SpacecraftBuildingActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="SpacecraftBuildingActions" />
+        public void AddCallbacks(ISpacecraftBuildingActions instance)
+        {
+            if (instance == null || m_Wrapper.m_SpacecraftBuildingActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SpacecraftBuildingActionsCallbackInterfaces.Add(instance);
+            @KeyOne.started += instance.OnKeyOne;
+            @KeyOne.performed += instance.OnKeyOne;
+            @KeyOne.canceled += instance.OnKeyOne;
+            @KeyTwo.started += instance.OnKeyTwo;
+            @KeyTwo.performed += instance.OnKeyTwo;
+            @KeyTwo.canceled += instance.OnKeyTwo;
+            @KeyThree.started += instance.OnKeyThree;
+            @KeyThree.performed += instance.OnKeyThree;
+            @KeyThree.canceled += instance.OnKeyThree;
+            @KeyFour.started += instance.OnKeyFour;
+            @KeyFour.performed += instance.OnKeyFour;
+            @KeyFour.canceled += instance.OnKeyFour;
+            @KeyFive.started += instance.OnKeyFive;
+            @KeyFive.performed += instance.OnKeyFive;
+            @KeyFive.canceled += instance.OnKeyFive;
+            @KeySix.started += instance.OnKeySix;
+            @KeySix.performed += instance.OnKeySix;
+            @KeySix.canceled += instance.OnKeySix;
+            @KeySeven.started += instance.OnKeySeven;
+            @KeySeven.performed += instance.OnKeySeven;
+            @KeySeven.canceled += instance.OnKeySeven;
+            @KeyEight.started += instance.OnKeyEight;
+            @KeyEight.performed += instance.OnKeyEight;
+            @KeyEight.canceled += instance.OnKeyEight;
+            @LeftMouseClick.started += instance.OnLeftMouseClick;
+            @LeftMouseClick.performed += instance.OnLeftMouseClick;
+            @LeftMouseClick.canceled += instance.OnLeftMouseClick;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="SpacecraftBuildingActions" />
+        private void UnregisterCallbacks(ISpacecraftBuildingActions instance)
+        {
+            @KeyOne.started -= instance.OnKeyOne;
+            @KeyOne.performed -= instance.OnKeyOne;
+            @KeyOne.canceled -= instance.OnKeyOne;
+            @KeyTwo.started -= instance.OnKeyTwo;
+            @KeyTwo.performed -= instance.OnKeyTwo;
+            @KeyTwo.canceled -= instance.OnKeyTwo;
+            @KeyThree.started -= instance.OnKeyThree;
+            @KeyThree.performed -= instance.OnKeyThree;
+            @KeyThree.canceled -= instance.OnKeyThree;
+            @KeyFour.started -= instance.OnKeyFour;
+            @KeyFour.performed -= instance.OnKeyFour;
+            @KeyFour.canceled -= instance.OnKeyFour;
+            @KeyFive.started -= instance.OnKeyFive;
+            @KeyFive.performed -= instance.OnKeyFive;
+            @KeyFive.canceled -= instance.OnKeyFive;
+            @KeySix.started -= instance.OnKeySix;
+            @KeySix.performed -= instance.OnKeySix;
+            @KeySix.canceled -= instance.OnKeySix;
+            @KeySeven.started -= instance.OnKeySeven;
+            @KeySeven.performed -= instance.OnKeySeven;
+            @KeySeven.canceled -= instance.OnKeySeven;
+            @KeyEight.started -= instance.OnKeyEight;
+            @KeyEight.performed -= instance.OnKeyEight;
+            @KeyEight.canceled -= instance.OnKeyEight;
+            @LeftMouseClick.started -= instance.OnLeftMouseClick;
+            @LeftMouseClick.performed -= instance.OnLeftMouseClick;
+            @LeftMouseClick.canceled -= instance.OnLeftMouseClick;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="SpacecraftBuildingActions.UnregisterCallbacks(ISpacecraftBuildingActions)" />.
+        /// </summary>
+        /// <seealso cref="SpacecraftBuildingActions.UnregisterCallbacks(ISpacecraftBuildingActions)" />
+        public void RemoveCallbacks(ISpacecraftBuildingActions instance)
+        {
+            if (m_Wrapper.m_SpacecraftBuildingActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="SpacecraftBuildingActions.AddCallbacks(ISpacecraftBuildingActions)" />
+        /// <seealso cref="SpacecraftBuildingActions.RemoveCallbacks(ISpacecraftBuildingActions)" />
+        /// <seealso cref="SpacecraftBuildingActions.UnregisterCallbacks(ISpacecraftBuildingActions)" />
+        public void SetCallbacks(ISpacecraftBuildingActions instance)
+        {
+            foreach (var item in m_Wrapper.m_SpacecraftBuildingActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_SpacecraftBuildingActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="SpacecraftBuildingActions" /> instance referencing this action map.
+    /// </summary>
+    public SpacecraftBuildingActions @SpacecraftBuilding => new SpacecraftBuildingActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -1924,68 +2063,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnActivateEngine(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "KeyOne" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnKeyOne(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "KeyTwo" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnKeyTwo(InputAction.CallbackContext context);
-        /// <summary>
         /// Method invoked when associated input action "LeftMouseClick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLeftMouseClick(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "KeyThree" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnKeyThree(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "KeyFour" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnKeyFour(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "KeyFive" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnKeyFive(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "KeySix" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnKeySix(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "KeySeven" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnKeySeven(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "KeyEight" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnKeyEight(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "EngineOne" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -2107,5 +2190,76 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSceneSwitch(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "SpacecraftBuilding" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="SpacecraftBuildingActions.AddCallbacks(ISpacecraftBuildingActions)" />
+    /// <seealso cref="SpacecraftBuildingActions.RemoveCallbacks(ISpacecraftBuildingActions)" />
+    public interface ISpacecraftBuildingActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "KeyOne" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnKeyOne(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "KeyTwo" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnKeyTwo(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "KeyThree" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnKeyThree(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "KeyFour" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnKeyFour(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "KeyFive" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnKeyFive(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "KeySix" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnKeySix(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "KeySeven" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnKeySeven(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "KeyEight" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnKeyEight(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "LeftMouseClick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLeftMouseClick(InputAction.CallbackContext context);
     }
 }
