@@ -1466,20 +1466,6 @@ MonoBehaviour:
   damageCooldown: 1
   destroyOnCollision: 0
   disableAfterCollision: 0
---- !u!114 &1204785238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1204785236}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 850c3c51dbcba4bec9934c8a05b0f594, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 3
-  maxFuel: 10
 --- !u!1 &1485757942
 GameObject:
   m_ObjectHideFlags: 0
