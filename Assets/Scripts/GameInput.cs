@@ -38,8 +38,10 @@ public class GameInput : MonoBehaviour {
         DontDestroyOnLoad(this);
         
         inputActions = new InputSystem_Actions();
-    
-        inputActions.Spacecraft.Enable();
+        
+        if (SceneManager.GetActiveScene().name == "FlightScene") inputActions.Spacecraft.Enable();
+        else inputActions.SpacecraftBuilding.Enable();
+        
         inputActions.General.Enable();
     }
 
@@ -53,16 +55,16 @@ public class GameInput : MonoBehaviour {
         inputActions.Spacecraft.EngineFour.performed += EngineFour_performed;
         inputActions.Spacecraft.EngineFour.canceled += EngineFour_canceled;
         
-        inputActions.Spacecraft.KeyOne.performed += KeyOne_performed;
-        inputActions.Spacecraft.KeyTwo.performed += KeyTwo_performed;
-        inputActions.Spacecraft.KeyThree.performed += KeyThree_performed;
-        inputActions.Spacecraft.KeyFour.performed += KeyFour_performed;
-        inputActions.Spacecraft.KeyFive.performed += KeyFive_performed;
-        inputActions.Spacecraft.KeySix.performed += KeySix_performed;
-        inputActions.Spacecraft.KeySeven.performed += KeySeven_performed;
-        inputActions.Spacecraft.KeyEight.performed += KeyEight_performed;
+        inputActions.SpacecraftBuilding.KeyOne.performed += KeyOne_performed;
+        inputActions.SpacecraftBuilding.KeyTwo.performed += KeyTwo_performed;
+        inputActions.SpacecraftBuilding.KeyThree.performed += KeyThree_performed;
+        inputActions.SpacecraftBuilding.KeyFour.performed += KeyFour_performed;
+        inputActions.SpacecraftBuilding.KeyFive.performed += KeyFive_performed;
+        inputActions.SpacecraftBuilding.KeySix.performed += KeySix_performed;
+        inputActions.SpacecraftBuilding.KeySeven.performed += KeySeven_performed;
+        inputActions.SpacecraftBuilding.KeyEight.performed += KeyEight_performed;
         
-        inputActions.Spacecraft.LeftMouseClick.performed += LeftMouseClick_performed;
+        inputActions.SpacecraftBuilding.LeftMouseClick.performed += LeftMouseClick_performed;
     
         inputActions.General.SceneSwitch.performed += SceneSwitch_performed;
     }
@@ -150,10 +152,17 @@ public class GameInput : MonoBehaviour {
 
     private void SetBuildScene() {
         SceneManager.LoadScene("BuildScene");
+        
+        inputActions.Spacecraft.Disable();
+        inputActions.SpacecraftBuilding.Enable();
     }
 
     private void SetFlightScene() {
         SceneManager.LoadScene("FlightScene");
+        
+        inputActions.SpacecraftBuilding.Disable();
+        inputActions.Spacecraft.Enable();
+        
         OnSetFlightScenePerformedAction?.Invoke(this, EventArgs.Empty);
     }
 
@@ -180,15 +189,15 @@ public class GameInput : MonoBehaviour {
             inputActions.Spacecraft.EngineFour.performed -= EngineFour_performed;
             inputActions.Spacecraft.EngineFour.canceled -= EngineFour_canceled;
             
-            inputActions.Spacecraft.KeyOne.performed -= KeyOne_performed;
-            inputActions.Spacecraft.KeyTwo.performed -= KeyTwo_performed;
-            inputActions.Spacecraft.KeyThree.performed -= KeyThree_performed;
-            inputActions.Spacecraft.KeyFour.performed -= KeyFour_performed;
-            inputActions.Spacecraft.KeyFive.performed -= KeyFive_performed;
-            inputActions.Spacecraft.KeySix.performed -= KeySix_performed;
-            inputActions.Spacecraft.KeySeven.performed -= KeySeven_performed;
-            inputActions.Spacecraft.KeyEight.performed -= KeyEight_performed;
-            inputActions.Spacecraft.LeftMouseClick.performed -= LeftMouseClick_performed;
+            inputActions.SpacecraftBuilding.KeyOne.performed -= KeyOne_performed;
+            inputActions.SpacecraftBuilding.KeyTwo.performed -= KeyTwo_performed;
+            inputActions.SpacecraftBuilding.KeyThree.performed -= KeyThree_performed;
+            inputActions.SpacecraftBuilding.KeyFour.performed -= KeyFour_performed;
+            inputActions.SpacecraftBuilding.KeyFive.performed -= KeyFive_performed;
+            inputActions.SpacecraftBuilding.KeySix.performed -= KeySix_performed;
+            inputActions.SpacecraftBuilding.KeySeven.performed -= KeySeven_performed;
+            inputActions.SpacecraftBuilding.KeyEight.performed -= KeyEight_performed;
+            inputActions.SpacecraftBuilding.LeftMouseClick.performed -= LeftMouseClick_performed;
             
             // Always disable the action maps (safe to call even if already disabled)
             inputActions.Spacecraft.Disable();
