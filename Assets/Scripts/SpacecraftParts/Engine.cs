@@ -5,6 +5,7 @@ using UnityEngine;
 //Class defines the behavior of the engine part. 
 public class Engine : MonoBehaviour {
     [SerializeField] private int speed;
+    [SerializeField] private Rigidbody2D engineRigidbody2D;
     [SerializeField] private SpriteRenderer engineVisual;
     [SerializeField] private TextMeshProUGUI idUI;
     
@@ -13,10 +14,9 @@ public class Engine : MonoBehaviour {
     
     public int engineID = -1;
     private GameInput gameInput;
-    private Rigidbody2D engineRigidbody2D;
 
-    private static bool active;
-    
+
+    private bool active;
     private float fuelAmount;
 
     public event System.EventHandler<float> OnFuelChanged;
@@ -26,11 +26,9 @@ public class Engine : MonoBehaviour {
         active = false;
         
         fuelAmount = maxFuel;
-        OnFuelChanged?.Invoke(this, FuelPercentage);
-        
-        engineRigidbody2D = GetComponentInParent<Rigidbody2D>();
-        
         gameInput = GameInput.Instance;
+        
+        OnFuelChanged?.Invoke(this, FuelPercentage);
         
         SetEngineID();
     }
