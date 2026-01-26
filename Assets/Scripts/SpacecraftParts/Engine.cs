@@ -23,8 +23,6 @@ public class Engine : MonoBehaviour {
 
 
     public void Awake() {
-        active = false;
-        
         fuelAmount = maxFuel;
         gameInput = GameInput.Instance;
         
@@ -38,40 +36,21 @@ public class Engine : MonoBehaviour {
         gameInput.OnEngineCanceledAction += GameInput_OnEngineAction;
     }
 
-    public float FuelPercentage
-    {
-        get
-        {
-            if (maxFuel <= 0f)
-            {
-                return 0f;
-            }
+    public float FuelPercentage {
+        get {
+            if (maxFuel <= 0f) return 0f;
+            
             return fuelAmount / maxFuel;
         }
     }
     
-    private void FixedUpdate()
-    {
-        if (!active)
-        {
-            return;
-        }
+    private void FixedUpdate() {
+        if(TryConsumeFuel() && active) ActivateEngine(); //Only activates if engine is active and there is fuel.
+    }
 
-        Debug.Log(fuelAmount); // Log current fuel amount for testing
-
-        // Check and see if we have fuel
-        if (fuelAmount <= 0f)
-        {
-            fuelAmount = 0f;
-            OnFuelChanged?.Invoke(this, FuelPercentage);
-            return; // no fuel so no thrust
-        }
-
+    private void ActivateEngine() {
         // Apply thrust
         engineRigidbody2D.AddForce(speed * transform.up * Time.fixedDeltaTime);
-
-        // Consume fuel AFTER thrust
-        ConsumeFuel();
     }
     
     private void SetEngineID() {
@@ -80,23 +59,24 @@ public class Engine : MonoBehaviour {
     }
 
     private void GameInput_OnEngineAction(object sender, GameInput.EngineEventArgs e) { 
-        if(engineID == e.engineNum) {
-            active = e.activated;
-            if (active) engineVisual.color = Color.red;
-            else engineVisual.color = Color.yellow;
-        }
+        if(engineID == e.engineNum) active = e.activated;
+            
+        if (active) engineVisual.color = Color.red;
+        else engineVisual.color = Color.yellow;
     }
     
-    private void ConsumeFuel()
-    {
+    private bool TryConsumeFuel() {
         float fuelConsumptionRate = 1f; // consumption rate
         fuelAmount -= fuelConsumptionRate * Time.fixedDeltaTime;
 
         // Clamp and notify
-        if (fuelAmount < 0f)
-        {
+        if (fuelAmount < 0f) {
             fuelAmount = 0f;
+            return false;
         }
+        
         OnFuelChanged?.Invoke(this, FuelPercentage);
+
+        return true;
     }
 }
