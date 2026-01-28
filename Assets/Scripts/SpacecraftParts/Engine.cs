@@ -45,7 +45,7 @@ public class Engine : MonoBehaviour {
     }
     
     private void FixedUpdate() {
-        if(TryConsumeFuel() && active) ActivateEngine(); //Only activates if engine is active and there is fuel.
+        if(active && TryConsumeFuel()) ActivateEngine(); //Only activates if engine is active and there is fuel.
     }
 
     private void ActivateEngine() {
