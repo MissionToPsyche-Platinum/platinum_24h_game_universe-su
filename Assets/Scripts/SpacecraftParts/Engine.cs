@@ -11,11 +11,10 @@ public class Engine : MonoBehaviour {
     
     [Header("Fuel Settings")]
     [SerializeField] private float maxFuel = 10f;
-    
-    public int engineID = -1;
+
+    private static int totalEngineCount;
+    private int engineID;
     private GameInput gameInput;
-
-
     private bool active;
     private float fuelAmount;
 
@@ -23,12 +22,13 @@ public class Engine : MonoBehaviour {
 
 
     public void Awake() {
+        totalEngineCount++;
+        SetEngineID();
+        
         fuelAmount = maxFuel;
         gameInput = GameInput.Instance;
         
         OnFuelChanged?.Invoke(this, FuelPercentage);
-        
-        SetEngineID();
     }
 
     public void Start() {
@@ -48,13 +48,10 @@ public class Engine : MonoBehaviour {
         if(active && TryConsumeFuel()) ActivateEngine(); //Only activates if engine is active and there is fuel.
     }
 
-    private void ActivateEngine() {
-        // Apply thrust
-        engineRigidbody2D.AddForce(speed * transform.up * Time.fixedDeltaTime);
-    }
+    private void ActivateEngine() => engineRigidbody2D.AddForce(speed * transform.up * Time.fixedDeltaTime);
     
     private void SetEngineID() {
-        engineID = SpacecraftPartDatabase.Instance.CreateEngineID();
+        engineID = totalEngineCount;
         idUI.text = engineID.ToString();
     }
 
@@ -69,7 +66,7 @@ public class Engine : MonoBehaviour {
         float fuelConsumptionRate = 1f; // consumption rate
         fuelAmount -= fuelConsumptionRate * Time.fixedDeltaTime;
 
-        // Clamp and notify
+        // Clamp
         if (fuelAmount < 0f) {
             fuelAmount = 0f;
             return false;
