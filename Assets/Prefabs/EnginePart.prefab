@@ -378,6 +378,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2000
+  engineRigidbody2D: {fileID: -2325348509328309816}
   engineVisual: {fileID: 1376506664758379619}
   idUI: {fileID: 2720730538049329284}
   maxFuel: 10
