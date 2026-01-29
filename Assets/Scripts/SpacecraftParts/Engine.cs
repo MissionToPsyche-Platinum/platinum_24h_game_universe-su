@@ -5,34 +5,30 @@ using UnityEngine;
 //Class defines the behavior of the engine part. 
 public class Engine : MonoBehaviour {
     [SerializeField] private int speed;
+    [SerializeField] private Rigidbody2D engineRigidbody2D;
     [SerializeField] private SpriteRenderer engineVisual;
     [SerializeField] private TextMeshProUGUI idUI;
     
     [Header("Fuel Settings")]
     [SerializeField] private float maxFuel = 10f;
-    
-    public int engineID = -1;
-    private GameInput gameInput;
-    private Rigidbody2D engineRigidbody2D;
 
-    private static bool active;
-    
+    private static int totalEngineCount;
+    private int engineID;
+    private GameInput gameInput;
+    private bool active;
     private float fuelAmount;
 
     public event System.EventHandler<float> OnFuelChanged;
 
 
     public void Awake() {
-        active = false;
+        totalEngineCount++;
+        SetEngineID();
         
         fuelAmount = maxFuel;
-        OnFuelChanged?.Invoke(this, FuelPercentage);
-        
-        engineRigidbody2D = GetComponentInParent<Rigidbody2D>();
-        
         gameInput = GameInput.Instance;
         
-        SetEngineID();
+        OnFuelChanged?.Invoke(this, FuelPercentage);
     }
 
     public void Start() {
@@ -40,65 +36,44 @@ public class Engine : MonoBehaviour {
         gameInput.OnEngineCanceledAction += GameInput_OnEngineAction;
     }
 
-    public float FuelPercentage
-    {
-        get
-        {
-            if (maxFuel <= 0f)
-            {
-                return 0f;
-            }
+    public float FuelPercentage {
+        get {
+            if (maxFuel <= 0f) return 0f;
+            
             return fuelAmount / maxFuel;
         }
     }
     
-    private void FixedUpdate()
-    {
-        if (!active)
-        {
-            return;
-        }
-
-        Debug.Log(fuelAmount); // Log current fuel amount for testing
-
-        // Check and see if we have fuel
-        if (fuelAmount <= 0f)
-        {
-            fuelAmount = 0f;
-            OnFuelChanged?.Invoke(this, FuelPercentage);
-            return; // no fuel so no thrust
-        }
-
-        // Apply thrust
-        engineRigidbody2D.AddForce(speed * transform.up * Time.fixedDeltaTime);
-
-        // Consume fuel AFTER thrust
-        ConsumeFuel();
+    private void FixedUpdate() {
+        if(active && TryConsumeFuel()) ActivateEngine(); //Only activates if engine is active and there is fuel.
     }
+
+    private void ActivateEngine() => engineRigidbody2D.AddForce(speed * transform.up * Time.fixedDeltaTime);
     
     private void SetEngineID() {
-        engineID = SpacecraftPartDatabase.Instance.CreateEngineID();
+        engineID = totalEngineCount;
         idUI.text = engineID.ToString();
     }
 
     private void GameInput_OnEngineAction(object sender, GameInput.EngineEventArgs e) { 
-        if(engineID == e.engineNum) {
-            active = e.activated;
-            if (active) engineVisual.color = Color.red;
-            else engineVisual.color = Color.yellow;
-        }
+        if(engineID == e.engineNum) active = e.activated;
+            
+        if (active) engineVisual.color = Color.red;
+        else engineVisual.color = Color.yellow;
     }
     
-    private void ConsumeFuel()
-    {
+    private bool TryConsumeFuel() {
         float fuelConsumptionRate = 1f; // consumption rate
         fuelAmount -= fuelConsumptionRate * Time.fixedDeltaTime;
 
-        // Clamp and notify
-        if (fuelAmount < 0f)
-        {
+        // Clamp
+        if (fuelAmount < 0f) {
             fuelAmount = 0f;
+            return false;
         }
+        
         OnFuelChanged?.Invoke(this, FuelPercentage);
+
+        return true;
     }
 }
