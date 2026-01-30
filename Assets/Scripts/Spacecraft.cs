@@ -232,7 +232,7 @@ public class Spacecraft : MonoBehaviour {
             if (partRb != rb) {
                 partRb.simulated = true;
                 partRb.bodyType = RigidbodyType2D.Dynamic;
-                partRb.gravityScale = 1f;
+                partRb.gravityScale = 0f;
                 partRb.excludeLayers = 0;
             }
         }
@@ -240,7 +240,7 @@ public class Spacecraft : MonoBehaviour {
         // Enable main spacecraft physics
         rb.simulated = true;
         rb.bodyType = RigidbodyType2D.Dynamic;
-        rb.gravityScale = 1f;
+        rb.gravityScale = 0f;
         rb.excludeLayers = 0;
         
         // Step 7: Wake up all Rigidbody2D components
