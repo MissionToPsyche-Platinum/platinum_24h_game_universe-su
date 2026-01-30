@@ -9,8 +9,6 @@ using System.Collections;
 [RequireComponent(typeof(Image))]
 public class FuelBarUI : MonoBehaviour
 {
-    [Header("Fuel Bar Settings")]
-    [SerializeField] private Color fuelColor = Color.yellow;
 
     [Tooltip("Optional: background image for the fuel bar container")]
     [SerializeField] private Image backgroundImage;
@@ -28,14 +26,7 @@ public class FuelBarUI : MonoBehaviour
     {
         // Cache the Image component on this GameObject
         fuelBarImage = GetComponent<Image>();
-
-        // Set the bar color (yellow by default)
-        fuelBarImage.color = fuelColor;
-
-        // Configure this image to behave like a horizontal fill bar
-        fuelBarImage.type = Image.Type.Filled;
-        fuelBarImage.fillMethod = Image.FillMethod.Horizontal;
-        fuelBarImage.fillOrigin = (int)Image.OriginHorizontal.Left;
+        
 
         // Initialize to full so the bar is visible immediately
         fuelBarImage.fillAmount = 1f;
