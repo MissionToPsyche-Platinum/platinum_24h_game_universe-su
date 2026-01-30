@@ -8,8 +8,6 @@ using System.Collections;
 [RequireComponent(typeof(Image))]
 public class HealthBarUI : MonoBehaviour {
     
-    [Header("Health Bar Settings")]
-    [SerializeField] private Color healthColor = Color.red;
     [Tooltip("Optional: background image for the health bar container")]
     [SerializeField] private Image backgroundImage;
     
@@ -18,53 +16,18 @@ public class HealthBarUI : MonoBehaviour {
     private bool isSubscribed = false;
     
     private void Awake() {
+        spacecraft = Spacecraft.GetInstance();
+        
         healthBarImage = GetComponent<Image>();
-        
-        // Set the color to red
-        healthBarImage.color = healthColor;
-        
-        // Set image type to Filled for smooth health bar animation
-        healthBarImage.type = Image.Type.Filled;
-        healthBarImage.fillMethod = Image.FillMethod.Horizontal;
         
         // Initialize to full health so it's visible
         healthBarImage.fillAmount = 1f;
+        UpdateHealthBar(spacecraft.HealthPercentage);
     }
     
     private void Start() {
-        // Start coroutine to find spacecraft
-        StartCoroutine(FindSpacecraftCoroutine());
+        spacecraft.OnHealthChanged += Spacecraft_OnHealthChanged;
     }
-    
-    private IEnumerator FindSpacecraftCoroutine() {
-        // Keep trying to find the spacecraft until found
-        while (spacecraft == null) {
-            // Try using the static instance method first
-            spacecraft = Spacecraft.GetInstance();
-            
-            // If still null, try FindFirstObjectByType as fallback
-            if (spacecraft == null) {
-                spacecraft = FindFirstObjectByType<Spacecraft>();
-            }
-            
-            if (spacecraft == null) {
-                // Wait a bit before trying again
-                yield return new WaitForSeconds(0.1f);
-            }
-        }
-        
-        // Once found, subscribe to events
-        if (spacecraft != null && !isSubscribed) {
-            spacecraft.OnHealthChanged += Spacecraft_OnHealthChanged;
-            isSubscribed = true;
-            
-            // Initialize health bar with current health
-            UpdateHealthBar(spacecraft.HealthPercentage);
-            
-            Debug.Log("HealthBarUI: Successfully connected to Spacecraft!");
-        }
-    }
-
     
     private void Spacecraft_OnHealthChanged(object sender, float healthPercentage) {
         UpdateHealthBar(healthPercentage);
@@ -77,16 +40,6 @@ public class HealthBarUI : MonoBehaviour {
             
             // Update the fill amount (0 = empty, 1 = full)
             healthBarImage.fillAmount = healthPercentage;
-        }
-    }
-    
-    private void OnEnable() {
-        // when scene loads, try to reconnect
-        if (spacecraft == null || !isSubscribed) {
-            StartCoroutine(FindSpacecraftCoroutine());
-        } else if (spacecraft != null && isSubscribed) {
-            // Update health bar immediately if already connected
-            UpdateHealthBar(spacecraft.HealthPercentage);
         }
     }
     
