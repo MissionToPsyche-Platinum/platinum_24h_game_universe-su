@@ -150,7 +150,7 @@ public class GameInput : MonoBehaviour {
         else SetFlightScene();
     }
 
-    private void SetBuildScene() {
+    public void SetBuildScene() {
         SceneManager.LoadScene("BuildScene");
         
         inputActions.Spacecraft.Disable();
