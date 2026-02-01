@@ -82,10 +82,29 @@ public class ShipBuildingGrid : MonoBehaviour {
     }
 
     private void GameInput_OnDeletePartPerformedAction(object sender, System.EventArgs e) {
+        if (partDB.GetPartID(selectedPart) == 2) AdjustEngineIDsForDeletion(selectedPart);
+        
         Destroy(selectedPart);
         selectedPart = null;
         
         grid.SetValue(selectedTileCoords.Item1, selectedTileCoords.Item2, -1);
+    }
+
+    private void AdjustEngineIDsForDeletion(GameObject engineToBeDeleted) {
+        int engineID = engineToBeDeleted.GetComponent<Engine>().engineID;
+        Engine.totalEngineCount--;
+        
+        if (engineID == Engine.totalEngineCount) return;
+        //If the above is not true, that means we are not deleting the most recently placed engine. This means that the
+        //engine ID's will not be perfectly sequential (ex: we will have engines 1 and 3 but not 2). So we need to fix
+        //that with everything below.
+        
+        foreach (Transform child in spacecraft.transform) {
+            Engine otherEngine;
+            if (!child.TryGetComponent(out otherEngine)) continue;
+
+            if (otherEngine.engineID > engineID) otherEngine.engineID--;
+        }
     }
     
     private void GameInput_OnLeftMouseClickAction(object sender, System.EventArgs e) {
