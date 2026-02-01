@@ -92,9 +92,11 @@ public class ShipBuildingGrid : MonoBehaviour {
 
     private void AdjustEngineIDsForDeletion(GameObject engineToBeDeleted) {
         int engineID = engineToBeDeleted.GetComponent<Engine>().engineID;
+        int totalEngines = Engine.totalEngineCount;
+        
         Engine.totalEngineCount--;
         
-        if (engineID == Engine.totalEngineCount) return;
+        if (engineID == totalEngines) return;
         //If the above is not true, that means we are not deleting the most recently placed engine. This means that the
         //engine ID's will not be perfectly sequential (ex: we will have engines 1 and 3 but not 2). So we need to fix
         //that with everything below.
