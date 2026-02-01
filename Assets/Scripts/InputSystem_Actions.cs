@@ -1027,6 +1027,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DeletePart"",
+                    ""type"": ""Button"",
+                    ""id"": ""43abbfef-9076-4c85-b967-e9ec84172a49"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1139,6 +1148,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""LeftMouseClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ef2c34fa-81a2-45aa-aaa0-d0028f7f2845"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DeletePart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2141de3-bf50-48b1-a39e-3a8017d72cdc"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""DeletePart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1242,6 +1273,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_SpacecraftBuilding_KeySeven = m_SpacecraftBuilding.FindAction("KeySeven", throwIfNotFound: true);
         m_SpacecraftBuilding_KeyEight = m_SpacecraftBuilding.FindAction("KeyEight", throwIfNotFound: true);
         m_SpacecraftBuilding_LeftMouseClick = m_SpacecraftBuilding.FindAction("LeftMouseClick", throwIfNotFound: true);
+        m_SpacecraftBuilding_DeletePart = m_SpacecraftBuilding.FindAction("DeletePart", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -1798,6 +1830,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_SpacecraftBuilding_KeySeven;
     private readonly InputAction m_SpacecraftBuilding_KeyEight;
     private readonly InputAction m_SpacecraftBuilding_LeftMouseClick;
+    private readonly InputAction m_SpacecraftBuilding_DeletePart;
     /// <summary>
     /// Provides access to input actions defined in input action map "SpacecraftBuilding".
     /// </summary>
@@ -1845,6 +1878,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "SpacecraftBuilding/LeftMouseClick".
         /// </summary>
         public InputAction @LeftMouseClick => m_Wrapper.m_SpacecraftBuilding_LeftMouseClick;
+        /// <summary>
+        /// Provides access to the underlying input action "SpacecraftBuilding/DeletePart".
+        /// </summary>
+        public InputAction @DeletePart => m_Wrapper.m_SpacecraftBuilding_DeletePart;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1898,6 +1935,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @LeftMouseClick.started += instance.OnLeftMouseClick;
             @LeftMouseClick.performed += instance.OnLeftMouseClick;
             @LeftMouseClick.canceled += instance.OnLeftMouseClick;
+            @DeletePart.started += instance.OnDeletePart;
+            @DeletePart.performed += instance.OnDeletePart;
+            @DeletePart.canceled += instance.OnDeletePart;
         }
 
         /// <summary>
@@ -1936,6 +1976,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @LeftMouseClick.started -= instance.OnLeftMouseClick;
             @LeftMouseClick.performed -= instance.OnLeftMouseClick;
             @LeftMouseClick.canceled -= instance.OnLeftMouseClick;
+            @DeletePart.started -= instance.OnDeletePart;
+            @DeletePart.performed -= instance.OnDeletePart;
+            @DeletePart.canceled -= instance.OnDeletePart;
         }
 
         /// <summary>
@@ -2261,5 +2304,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLeftMouseClick(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DeletePart" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDeletePart(InputAction.CallbackContext context);
     }
 }
