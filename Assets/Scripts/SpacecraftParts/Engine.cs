@@ -80,4 +80,9 @@ public class Engine : MonoBehaviour {
 
         return true;
     }
+
+    private void OnDestroy() {
+        gameInput.OnEnginePerformedAction -= GameInput_OnEngineAction;
+        gameInput.OnEngineCanceledAction -= GameInput_OnEngineAction;
+    }
 }
