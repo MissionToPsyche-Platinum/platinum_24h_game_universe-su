@@ -12,8 +12,17 @@ public class Engine : MonoBehaviour {
     [Header("Fuel Settings")]
     [SerializeField] private float maxFuel = 10f;
 
-    private static int totalEngineCount;
-    private int engineID;
+    [SerializeField] private int _engineID;
+
+    public int engineID {
+        get => _engineID;
+        set {
+            _engineID = value;
+            idUI.text = value.ToString();
+        }
+    }
+    
+    public static int totalEngineCount;
     private GameInput gameInput;
     private bool active;
     private float fuelAmount;
@@ -23,7 +32,7 @@ public class Engine : MonoBehaviour {
 
     public void Awake() {
         totalEngineCount++;
-        SetEngineID();
+        engineID = totalEngineCount;
         
         fuelAmount = maxFuel;
         gameInput = GameInput.Instance;
@@ -50,11 +59,6 @@ public class Engine : MonoBehaviour {
 
     private void ActivateEngine() => engineRigidbody2D.AddForce(speed * transform.up * Time.fixedDeltaTime);
     
-    private void SetEngineID() {
-        engineID = totalEngineCount;
-        idUI.text = engineID.ToString();
-    }
-
     private void GameInput_OnEngineAction(object sender, GameInput.EngineEventArgs e) { 
         if(engineID == e.engineNum) active = e.activated;
             
