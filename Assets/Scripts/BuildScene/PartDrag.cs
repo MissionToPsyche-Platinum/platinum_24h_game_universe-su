@@ -18,7 +18,7 @@ public class PartDrag : MonoBehaviour {
     private void Awake() {
         partCollider = GetComponent<Collider2D>();
         lockedRotation = transform.rotation;
-        shipGrid = ShipBuildingGrid.instance;
+        shipGrid = ShipBuildingGrid.Instance;
         partDB = SpacecraftPartDatabase.Instance;
     }
 
@@ -30,6 +30,7 @@ public class PartDrag : MonoBehaviour {
         offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
         
         shipGrid.SetGridCellValueByUnityPosition(originalPosition, -1);
+        shipGrid.SetSelectedPart(gameObject);
 
         // Temporarily disconnect from joints while dragging
         FixedJoint2D joint = GetComponent<FixedJoint2D>();
