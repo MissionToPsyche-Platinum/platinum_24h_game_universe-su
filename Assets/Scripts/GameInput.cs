@@ -13,6 +13,8 @@ public class GameInput : MonoBehaviour {
 
     public event EventHandler OnLeftMouseClickPerformedAction;
 
+    public event EventHandler OnDeletePartPerformedAction;
+
     public event EventHandler OnSetFlightScenePerformedAction;
     
     private InputSystem_Actions inputActions;
@@ -63,7 +65,8 @@ public class GameInput : MonoBehaviour {
         inputActions.SpacecraftBuilding.KeySix.performed += KeySix_performed;
         inputActions.SpacecraftBuilding.KeySeven.performed += KeySeven_performed;
         inputActions.SpacecraftBuilding.KeyEight.performed += KeyEight_performed;
-        
+
+        inputActions.SpacecraftBuilding.DeletePart.performed += DeletePart_performed;
         inputActions.SpacecraftBuilding.LeftMouseClick.performed += LeftMouseClick_performed;
     
         inputActions.General.SceneSwitch.performed += SceneSwitch_performed;
@@ -139,6 +142,10 @@ public class GameInput : MonoBehaviour {
     private void KeyEight_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(8));
+    }
+
+    private void DeletePart_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+        OnDeletePartPerformedAction?.Invoke(this, EventArgs.Empty);
     }
     
     private void LeftMouseClick_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
