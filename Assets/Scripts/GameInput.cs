@@ -173,6 +173,14 @@ public class GameInput : MonoBehaviour {
         OnSetFlightScenePerformedAction?.Invoke(this, EventArgs.Empty);
     }
 
+    public void SetCreditsScene() {
+        SceneManager.LoadScene("CreditsScene");
+
+        inputActions.Spacecraft.Disable();
+        inputActions.SpacecraftBuilding.Disable();
+    }
+
+
     private void OnDisable() {
         // Disable input actions when the component is disabled
         CleanupInputActions();
