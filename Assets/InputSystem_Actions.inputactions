@@ -941,6 +941,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DeletePart",
+                    "type": "Button",
+                    "id": "43abbfef-9076-4c85-b967-e9ec84172a49",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1051,6 +1060,28 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "LeftMouseClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ef2c34fa-81a2-45aa-aaa0-d0028f7f2845",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DeletePart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f2141de3-bf50-48b1-a39e-3a8017d72cdc",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "DeletePart",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

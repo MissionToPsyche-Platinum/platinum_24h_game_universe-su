@@ -5,7 +5,7 @@ using UnityEngine;
 /// Class that controls the ship building grid. allows the user to place objects and connect them to the base part.
 /// </summary>
 public class ShipBuildingGrid : MonoBehaviour {
-    public static ShipBuildingGrid instance { get; private set; }
+    public static ShipBuildingGrid Instance { get; private set; }
     
     [SerializeField] private GameInput gameInput;
     [SerializeField] private GameObject spacecraft;
@@ -16,14 +16,15 @@ public class ShipBuildingGrid : MonoBehaviour {
     private int gridHeight = 7;
     private float cellSize = 1f;
     private Vector3 gridOriginPosition = new(-2.5f, -4f);
-    
+
+    private GameObject selectedPart;
     private (int, int) selectedTileCoords;
     private bool someTileSelected = false;
     
     private SpacecraftPartDatabase partDB;
     
     private void Awake() {
-        instance = this;
+        Instance = this;
         
         grid = new Grid(gridWidth, gridHeight, cellSize, gridOriginPosition);
         partDB = SpacecraftPartDatabase.Instance;
@@ -34,6 +35,7 @@ public class ShipBuildingGrid : MonoBehaviour {
     
     private void Start() {
         gameInput.OnNumKeyPerformedAction += GameInput_OnNumKeyAction;
+        gameInput.OnDeletePartPerformedAction += GameInput_OnDeletePartPerformedAction;
         gameInput.OnLeftMouseClickPerformedAction += GameInput_OnLeftMouseClickAction;
     }
 
@@ -78,6 +80,34 @@ public class ShipBuildingGrid : MonoBehaviour {
         if (!someTileSelected) return;
         if (CanPlacePart(part, (x, y))) PlacePart(part, (x, y));
     }
+
+    private void GameInput_OnDeletePartPerformedAction(object sender, System.EventArgs e) {
+        if (partDB.GetPartID(selectedPart) == 2) AdjustEngineIDsForDeletion(selectedPart);
+        
+        Destroy(selectedPart);
+        selectedPart = null;
+        
+        grid.SetValue(selectedTileCoords.Item1, selectedTileCoords.Item2, -1);
+    }
+
+    private void AdjustEngineIDsForDeletion(GameObject engineToBeDeleted) {
+        int engineID = engineToBeDeleted.GetComponent<Engine>().engineID;
+        int totalEngines = Engine.totalEngineCount;
+        
+        Engine.totalEngineCount--;
+        
+        if (engineID == totalEngines) return;
+        //If the above is not true, that means we are not deleting the most recently placed engine. This means that the
+        //engine ID's will not be perfectly sequential (ex: we will have engines 1 and 3 but not 2). So we need to fix
+        //that with everything below.
+        
+        foreach (Transform child in spacecraft.transform) {
+            Engine otherEngine;
+            if (!child.TryGetComponent(out otherEngine)) continue;
+
+            if (otherEngine.engineID > engineID) otherEngine.engineID--;
+        }
+    }
     
     private void GameInput_OnLeftMouseClickAction(object sender, System.EventArgs e) {
         (int, int) clickCoords;
@@ -89,6 +119,8 @@ public class ShipBuildingGrid : MonoBehaviour {
             someTileSelected = false;
             return;
         }
+
+        if (grid.GetValue(clickCoords.Item1, clickCoords.Item2) == -1) selectedPart = null;
         
         someTileSelected = true;
         selectedTileCoords = clickCoords;
@@ -171,4 +203,6 @@ public class ShipBuildingGrid : MonoBehaviour {
         
         return GridCoordinatesToUnityPosition(tileCoords);
     }
+
+    public void SetSelectedPart(GameObject part) => selectedPart = part;
 }
