@@ -61,29 +61,34 @@ public class PartDrag : MonoBehaviour {
         transform.rotation = lockedRotation;
         
         if (shipGrid == null || partCollider == null) return;
-        
-        Vector3? nullableGridSnapPosition = shipGrid.PostionToGridPosition(transform.position);
-        if (nullableGridSnapPosition == null) return;
-        Vector3 gridSnapPosition = (Vector3)nullableGridSnapPosition;
 
         GameObject part = partDB.GetPartGameObject(selectedObject.name);
-        int partID = partDB.GetPartID(part);
-
-        if (!shipGrid.CanPlacePart(part, shipGrid.UnityPositionToGridCoordinates(gridSnapPosition))) {
+        
+        if (!TryPlacePart(part)) {
             transform.position = originalPosition;
-            shipGrid.SetGridCellValueByUnityPosition(originalPosition, partID);
-            
+            shipGrid.SetGridCellValueByUnityPosition(originalPosition, partDB.GetPartID(part));
+
             // Reconnect joint and disable physics before returning
             ReconnectPart();
-            return;
         }
+    }
+
+    private bool TryPlacePart(GameObject part) {
+        Vector3? nullableGridSnapPosition = shipGrid.PostionToGridPosition(transform.position);
+        if (nullableGridSnapPosition == null) return false;
+        Vector3 gridSnapPosition = (Vector3)nullableGridSnapPosition;
+        
+        if (!shipGrid.CanPlacePart(part, shipGrid.UnityPositionToGridCoordinates(gridSnapPosition))) return false;
         
         transform.position = gridSnapPosition;
-        shipGrid.SetGridCellValueByUnityPosition(transform.position, partID);
+        shipGrid.SetGridCellValueByUnityPosition(transform.position, partDB.GetPartID(part));
         
         // Reconnect joint and disable physics
         ReconnectPart();
+        return true;
     }
+    
+    
 
     private void ReconnectPart() {
         if (!Spacecraft.IsBuildMode) return;
