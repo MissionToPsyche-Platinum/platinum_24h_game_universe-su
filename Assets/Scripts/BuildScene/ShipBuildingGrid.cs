@@ -47,6 +47,10 @@ public class ShipBuildingGrid : MonoBehaviour {
     public void SetGridCellValue((int, int) coordinates, int value) {
         grid.SetValue(coordinates.Item1, coordinates.Item2, value);
     }
+    
+    public int GetGridCellValue((int, int) coordinates) {
+        return grid.GetValue(coordinates.Item1, coordinates.Item2);
+    }
 
     public void SetGridCellValueByUnityPosition(Vector3 position, int value) {
         (int, int) coordinates = UnityPositionToGridCoordinates(position);
