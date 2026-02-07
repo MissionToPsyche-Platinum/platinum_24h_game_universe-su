@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7421062647158426556
+--- !u!1 &4620690964985610815
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,42 +8,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4559654471308273252}
-  - component: {fileID: 7344797589354959060}
-  - component: {fileID: 2007849977143627829}
-  - component: {fileID: 6556024218918548376}
-  - component: {fileID: 3033503194899937510}
-  - component: {fileID: 4862306525171706928}
-  - component: {fileID: 1397320101164581373}
+  - component: {fileID: 832169376155678115}
+  - component: {fileID: 573275149681660245}
   m_Layer: 0
-  m_Name: SolarPanelPart
+  m_Name: SolarPanelPartVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4559654471308273252
+--- !u!4 &832169376155678115
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7421062647158426556}
+  m_GameObject: {fileID: 4620690964985610815}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1881146, y: 0.92709, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 4559654471308273252}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &7344797589354959060
+--- !u!212 &573275149681660245
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7421062647158426556}
+  m_GameObject: {fileID: 4620690964985610815}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -92,6 +87,43 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &7421062647158426556
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4559654471308273252}
+  - component: {fileID: 2007849977143627829}
+  - component: {fileID: 6556024218918548376}
+  - component: {fileID: 3033503194899937510}
+  - component: {fileID: 4862306525171706928}
+  - component: {fileID: 1397320101164581373}
+  m_Layer: 0
+  m_Name: SolarPanelPart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4559654471308273252
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7421062647158426556}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.1881146, y: 0.92709, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 832169376155678115}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2007849977143627829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,6 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedObject: {fileID: 7421062647158426556}
+  objectVisual: {fileID: 4620690964985610815}
 --- !u!114 &6556024218918548376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,6 +230,6 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: -1.1881146, y: 0.92709}
   m_DampingRatio: 0
   m_Frequency: 0
