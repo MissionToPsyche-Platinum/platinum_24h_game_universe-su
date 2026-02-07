@@ -246,6 +246,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6725471293297042678, guid: 619b723e6666b834e91465e459776085, type: 3}
+      propertyPath: objectVisual
+      value: 
+      objectReference: {fileID: 1788952706954700901}
     - target: {fileID: -528824160874054211, guid: 619b723e6666b834e91465e459776085, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.y
       value: 0.28866667
@@ -308,7 +312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5791201175396930333, guid: 619b723e6666b834e91465e459776085, type: 3}
       propertyPath: m_Name
-      value: TriangleSprite
+      value: EnginePartVisual
       objectReference: {fileID: 0}
     - target: {fileID: 6185069549927734299, guid: 619b723e6666b834e91465e459776085, type: 3}
       propertyPath: m_Name
@@ -360,6 +364,11 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 6599898052947377947, guid: 619b723e6666b834e91465e459776085, type: 3}
   m_PrefabInstance: {fileID: 5228074208488717176}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1788952706954700901 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5791201175396930333, guid: 619b723e6666b834e91465e459776085, type: 3}
+  m_PrefabInstance: {fileID: 5228074208488717176}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2114473248012822371 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6185069549927734299, guid: 619b723e6666b834e91465e459776085, type: 3}
@@ -382,8 +391,7 @@ MonoBehaviour:
   engineVisual: {fileID: 1376506664758379619}
   idUI: {fileID: 2720730538049329284}
   maxFuel: 10
-  engineID: -1
-  engineRigidbody2D: {fileID: -2325348509328309816}
+  _engineID: 0
 --- !u!50 &-2325348509328309816
 Rigidbody2D:
   serializedVersion: 5
