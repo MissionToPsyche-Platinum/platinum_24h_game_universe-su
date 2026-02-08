@@ -194,6 +194,14 @@ public class GameInput : MonoBehaviour {
         inputActions.SpacecraftBuilding.Disable();
     }
 
+    public void SetGameOverScene(bool victory) {
+        GameOverUI.isVictory = victory;
+        SceneManager.LoadScene("GameOverScene");
+
+        inputActions.Spacecraft.Disable();
+        inputActions.SpacecraftBuilding.Disable();
+    }
+
 
 
 
