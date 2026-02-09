@@ -11,6 +11,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FlightScene.unity
     guid: 27b4c72ae210d46cbbcd3d3af699f1bc
+  - enabled: 1
+    path: Assets/Scenes/MainMenuScene.unity
+    guid: 2b1368b0f2e0745059f9d599405b4bc0
+  - enabled: 1
+    path: Assets/Scenes/CreditsScene.unity
+    guid: 2f78253449aa6164c9920186138ce2a5
+  - enabled: 1
+    path: Assets/Scenes/MissionDetailsScene.unity
+    guid: 551c0e217986b124498aeca876c48e26
+  - enabled: 1
+    path: Assets/Scenes/GameOverScene.unity
+    guid: d4474762b2a412149a7d6a647ef72673
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
