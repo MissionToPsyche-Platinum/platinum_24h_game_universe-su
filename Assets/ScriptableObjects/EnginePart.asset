@@ -16,3 +16,5 @@ MonoBehaviour:
   partID: 2
   connectingDirections:
   - above
+  - left
+  - right

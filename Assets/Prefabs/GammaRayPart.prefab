@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5627879826785048528}
   - component: {fileID: 1247759047237356991}
   m_Layer: 0
-  m_Name: GammaRayPart
+  m_Name: GammaRayPartVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedObject: {fileID: 6269006834175180344}
+  objectVisual: {fileID: 769044047499275008}
 --- !u!50 &-3808239222376169871
 Rigidbody2D:
   serializedVersion: 5
@@ -229,6 +230,6 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: -2.4, y: 3.1}
   m_DampingRatio: 0
   m_Frequency: 0
