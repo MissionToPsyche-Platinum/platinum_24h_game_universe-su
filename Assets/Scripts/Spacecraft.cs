@@ -287,8 +287,7 @@ public class Spacecraft : MonoBehaviour {
     
     private void HandleDeath() {
         Debug.Log("Spacecraft destroyed!");
-        // we can add death handling here later
-
+        GameInput.Instance.SetGameOverScene(false);
     }
 
     private void OnDestroy() {
