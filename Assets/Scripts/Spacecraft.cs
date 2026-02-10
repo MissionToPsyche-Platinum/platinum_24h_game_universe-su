@@ -227,21 +227,23 @@ public class Spacecraft : MonoBehaviour {
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
         
-        // Step 6: NOW enable physics for all parts
+        // Step 6: NOW enable physics for all parts (with interpolation for smooth rendering)
         foreach (Rigidbody2D partRb in partRigidbodies) {
             if (partRb != rb) {
                 partRb.simulated = true;
                 partRb.bodyType = RigidbodyType2D.Dynamic;
                 partRb.gravityScale = 0f;
                 partRb.excludeLayers = 0;
+                partRb.interpolation = RigidbodyInterpolation2D.Interpolate;
             }
         }
-        
+
         // Enable main spacecraft physics
         rb.simulated = true;
         rb.bodyType = RigidbodyType2D.Dynamic;
         rb.gravityScale = 0f;
         rb.excludeLayers = 0;
+        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
         
         // Step 7: Wake up all Rigidbody2D components
         foreach (Rigidbody2D partRb in partRigidbodies) {

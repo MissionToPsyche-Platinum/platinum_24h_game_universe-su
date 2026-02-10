@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 /// <summary>
 /// Class that controls the ship building grid. allows the user to place objects and connect them to the base part.
 /// </summary>
@@ -37,6 +38,10 @@ public class ShipBuildingGrid : MonoBehaviour {
         gameInput.OnNumKeyPerformedAction += GameInput_OnNumKeyAction;
         gameInput.OnDeletePartPerformedAction += GameInput_OnDeletePartPerformedAction;
         gameInput.OnLeftMouseClickPerformedAction += GameInput_OnLeftMouseClickAction;
+
+        // Auto-create the build panel UI
+        GameObject panelObj = new GameObject("BuildPanelUI");
+        panelObj.AddComponent<BuildPanelUI>();
     }
 
     private void CreateSpacecraft() {
@@ -58,9 +63,9 @@ public class ShipBuildingGrid : MonoBehaviour {
         SetGridCellValue(coordinates, value);
     }
     
-    private Vector3 GridCoordinatesToUnityPosition(int x, int y) => GridCoordinatesToUnityPosition((x, y));
-    
-    private Vector3 GridCoordinatesToUnityPosition((int, int) gridCoords) {
+    public Vector3 GridCoordinatesToUnityPosition(int x, int y) => GridCoordinatesToUnityPosition((x, y));
+
+    public Vector3 GridCoordinatesToUnityPosition((int, int) gridCoords) {
         float x = gridOriginPosition.x + cellSize / 2 + (cellSize * gridCoords.Item1);
         float y = gridOriginPosition.y + cellSize / 2 + (cellSize * gridCoords.Item2);
 
@@ -114,6 +119,8 @@ public class ShipBuildingGrid : MonoBehaviour {
     }
     
     private void GameInput_OnLeftMouseClickAction(object sender, System.EventArgs e) {
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+
         (int, int) clickCoords;
         grid.GetXY(Mouse.GetMouseWorldPosition(), out clickCoords.Item1, out clickCoords.Item2);
 
@@ -209,4 +216,17 @@ public class ShipBuildingGrid : MonoBehaviour {
     }
 
     public void SetSelectedPart(GameObject part) => selectedPart = part;
+
+    public int GridWidth => gridWidth;
+    public int GridHeight => gridHeight;
+
+    public void PlacePartAtCoordinates(GameObject part, (int, int) coordinates) {
+        grid.SetValue(coordinates.Item1, coordinates.Item2, partDB.GetPartID(part));
+
+        GameObject spacecraftPart = Instantiate(part, spacecraft.transform);
+        spacecraftPart.SetActive(true);
+        spacecraftPart.transform.position = GridCoordinatesToUnityPosition(coordinates);
+
+        ConnectPartToSpacecraft(spacecraftPart);
+    }
 }
