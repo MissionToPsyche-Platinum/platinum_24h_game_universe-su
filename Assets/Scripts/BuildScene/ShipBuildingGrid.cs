@@ -119,16 +119,21 @@ public class ShipBuildingGrid : MonoBehaviour {
     }
     
     private void GameInput_OnLeftMouseClickAction(object sender, System.EventArgs e) {
-        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+        StartCoroutine(HandleLeftClickNextFrame());
+    }
+
+    private System.Collections.IEnumerator HandleLeftClickNextFrame() {
+        yield return null;
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) yield break;
 
         (int, int) clickCoords;
         grid.GetXY(Mouse.GetMouseWorldPosition(), out clickCoords.Item1, out clickCoords.Item2);
 
-        if (clickCoords.Item1 < 0 || clickCoords.Item2 < 0 || 
+        if (clickCoords.Item1 < 0 || clickCoords.Item2 < 0 ||
             clickCoords.Item1 >= gridWidth || clickCoords.Item2 >= gridHeight) {
-                
+
             someTileSelected = false;
-            return;
+            yield break;
         }
 
         if (grid.GetValue(clickCoords.Item1, clickCoords.Item2) == -1) selectedPart = null;
