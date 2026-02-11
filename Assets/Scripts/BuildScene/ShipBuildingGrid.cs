@@ -10,6 +10,8 @@ public class ShipBuildingGrid : MonoBehaviour {
     [SerializeField] private GameInput gameInput;
     [SerializeField] private GameObject spacecraft;
     [SerializeField] private GridVisualizer gridVisualizer;
+    [SerializeField] private GameObject highlightTransform;
+    [SerializeField] private SpriteRenderer highlightSprite;
     
     private Grid grid;
     private int gridWidth = 5;
@@ -120,12 +122,14 @@ public class ShipBuildingGrid : MonoBehaviour {
         if (clickCoords.Item1 < 0 || clickCoords.Item2 < 0 || 
             clickCoords.Item1 >= gridWidth || clickCoords.Item2 >= gridHeight) {
                 
+            highlightSprite.color = new Color(1,1,0,0);
             someTileSelected = false;
             return;
         }
 
         if (grid.GetValue(clickCoords.Item1, clickCoords.Item2) == -1) selectedPart = null;
-        
+        highlightTransform.transform.position = new Vector3(clickCoords.Item1-2, clickCoords.Item2-3.5f);
+        highlightSprite.color = new Color(1,1,0,0.2f);
         someTileSelected = true;
         selectedTileCoords = clickCoords;
     }
