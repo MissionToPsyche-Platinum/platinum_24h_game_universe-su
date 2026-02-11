@@ -195,6 +195,12 @@ public class GameInput : MonoBehaviour {
     }
 
     public void SetGameOverScene(bool victory) {
+        // Destroy the old spacecraft so any path out of game over starts fresh
+        Spacecraft spacecraft = Spacecraft.GetInstance();
+        if (spacecraft != null) {
+            Destroy(spacecraft.gameObject);
+        }
+
         GameOverUI.isVictory = victory;
         SceneManager.LoadScene("GameOverScene");
 
