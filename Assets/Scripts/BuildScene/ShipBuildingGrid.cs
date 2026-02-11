@@ -12,17 +12,20 @@ public class ShipBuildingGrid : MonoBehaviour {
     [SerializeField] private GameObject spacecraft;
     [SerializeField] private GridVisualizer gridVisualizer;
     [SerializeField] private GameObject highlightTransform;
-    [SerializeField] private SpriteRenderer highlightSprite;
-    
+
     private Grid grid;
     private int gridWidth = 5;
     private int gridHeight = 7;
     private float cellSize = 1f;
     private Vector3 gridOriginPosition = new(-2.5f, -4f);
+    private static readonly Color colorHighlight   = new Color(1f, 1f, 0.3f, 0.4f);
+    private static readonly Color colorHighlightInvisible   = new Color(1f, 1f, 0.3f, 0.4f);
+    
 
     private GameObject selectedPart;
     private (int, int) selectedTileCoords;
     private bool someTileSelected = false;
+    private SpriteRenderer highlightSprite;
     
     private SpacecraftPartDatabase partDB;
     
@@ -31,6 +34,7 @@ public class ShipBuildingGrid : MonoBehaviour {
         
         grid = new Grid(gridWidth, gridHeight, cellSize, gridOriginPosition);
         partDB = SpacecraftPartDatabase.Instance;
+        highlightSprite = highlightTransform.GetComponent<SpriteRenderer>();
 
         CreateSpacecraft();
         gridVisualizer.VisualizeGrid(grid, gridWidth, gridHeight, cellSize, gridOriginPosition);
@@ -128,20 +132,22 @@ public class ShipBuildingGrid : MonoBehaviour {
         yield return null;
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) yield break;
 
+        Vector3 mousePosition = Mouse.GetMouseWorldPosition();
+
         (int, int) clickCoords;
-        grid.GetXY(Mouse.GetMouseWorldPosition(), out clickCoords.Item1, out clickCoords.Item2);
+        grid.GetXY(mousePosition, out clickCoords.Item1, out clickCoords.Item2);
 
         if (clickCoords.Item1 < 0 || clickCoords.Item2 < 0 ||
             clickCoords.Item1 >= gridWidth || clickCoords.Item2 >= gridHeight) {
                 
-            highlightSprite.color = new Color(1,1,0,0);
+            highlightSprite.color = colorHighlightInvisible;
             someTileSelected = false;
             yield break;
         }
 
         if (grid.GetValue(clickCoords.Item1, clickCoords.Item2) == -1) selectedPart = null;
-        highlightTransform.transform.position = new Vector3(clickCoords.Item1-2, clickCoords.Item2-3.5f);
-        highlightSprite.color = new Color(1,1,0,0.2f);
+        highlightTransform.transform.position = (Vector3) PostionToGridPosition(mousePosition);
+        highlightSprite.color = colorHighlight;
         someTileSelected = true;
         selectedTileCoords = clickCoords;
     }
