@@ -11,9 +11,6 @@ public class CameraFollow : MonoBehaviour {
     [Tooltip("The target to follow (will auto-find Spacecraft if not assigned)")]
     [SerializeField] private Transform target;
     
-    [Tooltip("Smoothing speed for camera movement")]
-    [SerializeField] private float smoothSpeed = 5f;
-    
     [Tooltip("Offset from the target position")]
     [SerializeField] private Vector3 offset = new Vector3(0, 0, -10);
     
@@ -23,6 +20,7 @@ public class CameraFollow : MonoBehaviour {
     private Spacecraft spacecraft;
     private bool isFollowing = false;
     private Camera cam;
+    private Rigidbody2D targetRb;
     
     private void Awake() {
         cam = GetComponent<Camera>();
@@ -60,6 +58,7 @@ public class CameraFollow : MonoBehaviour {
                 Rigidbody2D rb = spacecraft.GetComponentInChildren<Rigidbody2D>();
                 if (rb != null) {
                     target = rb.transform;
+                    targetRb = rb;
                     isFollowing = true;
                     Debug.Log("CameraFollow: Successfully locked onto Spacecraft!");
                     break;
@@ -77,24 +76,11 @@ public class CameraFollow : MonoBehaviour {
     }
     
     private void LateUpdate() {
-        // Only follow if we have a target and are in FlightScene
-        if (!isFollowing || target == null) {
-            return;
-        }
-        
-        string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        if (currentScene != "FlightScene") {
-            // Stop following if not in FlightScene
-            isFollowing = false;
-            return;
-        }
-        
-        // Calculate desired position
-        Vector3 desiredPosition = target.position + offset;
-        
-        // Smoothly move towards the target position
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
-        transform.position = smoothedPosition;
+        if (!isFollowing || target == null) return;
+
+        // Rigidbody2D interpolation handles smooth rendering between physics steps,
+        // so we can follow the target position directly with no lag
+        transform.position = target.position + offset;
     }
     
     public void SetTarget(Transform newTarget) {
