@@ -201,6 +201,9 @@ public class GameInput : MonoBehaviour {
             Destroy(spacecraft.gameObject);
         }
 
+        // Reset static engine count so new engines get IDs 1-4 again
+        Engine.totalEngineCount = 0;
+
         GameOverUI.isVictory = victory;
         SceneManager.LoadScene("GameOverScene");
 
