@@ -11,9 +11,6 @@ public class CameraFollow : MonoBehaviour {
     [Tooltip("The target to follow (will auto-find Spacecraft if not assigned)")]
     [SerializeField] private Transform target;
     
-    [Tooltip("Time in seconds for the camera to reach the target (lower = snappier)")]
-    [SerializeField] private float smoothTime = 0.1f;
-    
     [Tooltip("Offset from the target position")]
     [SerializeField] private Vector3 offset = new Vector3(0, 0, -10);
     
@@ -23,7 +20,6 @@ public class CameraFollow : MonoBehaviour {
     private Spacecraft spacecraft;
     private bool isFollowing = false;
     private Camera cam;
-    private Vector3 velocity = Vector3.zero;
     private Rigidbody2D targetRb;
     
     private void Awake() {
