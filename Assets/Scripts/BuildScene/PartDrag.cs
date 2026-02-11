@@ -8,6 +8,9 @@ public class PartDrag : MonoBehaviour {
     [SerializeField] private GameObject selectedObject;
     [SerializeField] private GameObject objectVisual;
     
+    private static readonly Color colorValid   = new Color(0.3f, 1f, 0.3f, 0.6f);
+    private static readonly Color colorInvalid = new Color(1f, 0.3f, 0.3f, 0.6f);
+
     private Vector3 screenPoint;
     private Vector3 offset;
     private Vector3 originalPosition;
@@ -16,6 +19,7 @@ public class PartDrag : MonoBehaviour {
     private ShipBuildingGrid shipGrid;
     private SpacecraftPartDatabase partDB;
     private SpriteRenderer objectSprite;
+    private Color baseColor;
 
     private void Awake() {
         partCollider = GetComponent<Collider2D>();
@@ -31,6 +35,7 @@ public class PartDrag : MonoBehaviour {
         if (!Spacecraft.IsBuildMode) return;
         
         originalPosition = transform.position;
+        baseColor = objectSprite.color;
         screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
         offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
         
@@ -55,17 +60,34 @@ public class PartDrag : MonoBehaviour {
 
     void OnMouseDrag() {
         if (!Spacecraft.IsBuildMode) return;
-        
+
         Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
         Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
-        transform.position = curPosition;
         transform.rotation = lockedRotation;
+
+        // Snap to grid and show valid/invalid placement color feedback
+        if (shipGrid != null) {
+            Vector3? snapPos = shipGrid.PostionToGridPosition(curPosition);
+            if (snapPos != null) {
+                transform.position = (Vector3)snapPos;
+                (int, int) coords = shipGrid.UnityPositionToGridCoordinates((Vector3)snapPos);
+                GameObject part = partDB.GetPartGameObject(selectedObject.name);
+                bool valid = shipGrid.CanPlacePart(part, coords);
+                objectSprite.color = valid ? colorValid : colorInvalid;
+            } else {
+                transform.position = curPosition;
+                objectSprite.color = new Color(baseColor.r, baseColor.g, baseColor.b, 0.5f);
+            }
+        } else {
+            transform.position = curPosition;
+        }
     }
 
     void OnMouseUp() {
         if (!Spacecraft.IsBuildMode) return;
         if (shipGrid == null || partCollider == null) return;
-        
+
+        objectSprite.color = baseColor;
         SetSortingLayer("Default");
 
         transform.rotation = lockedRotation;
