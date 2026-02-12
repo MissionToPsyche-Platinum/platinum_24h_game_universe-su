@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -14,9 +15,6 @@ public class AsteroidDamage : MonoBehaviour {
     [Tooltip("Whether this is a trigger collider (no physical collision)")]
     [SerializeField] private bool isTrigger = true;
     
-    [Tooltip("Cooldown time in seconds before this asteroid can damage again (0 = can damage every frame)")]
-    [SerializeField] private float damageCooldown = 0f;
-    
     [Header("Behavior Settings")]
     [Tooltip("Destroy this asteroid on collision with spacecraft")]
     [SerializeField] private bool destroyOnCollision = false;
@@ -26,6 +24,7 @@ public class AsteroidDamage : MonoBehaviour {
     
     private float lastDamageTime = -1f;
     private Collider2D asteroidCollider;
+    private float damageCooldown;
     
     private void Awake() {
         asteroidCollider = GetComponent<Collider2D>();
@@ -35,7 +34,10 @@ public class AsteroidDamage : MonoBehaviour {
             asteroidCollider.isTrigger = true;
         }
     }
-    
+
+    //Start func is used for this bc AsteroidController Instance is defined after this Awake() method is called. 
+    private void Start() => damageCooldown = AsteroidController.Instance.GetDamageCoolDown();
+
     private void OnTriggerEnter2D(Collider2D other) {
         if (!isTrigger) return;
         

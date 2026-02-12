@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 
 /// <summary>
@@ -6,6 +7,18 @@ using System.Collections;
 /// This is attached to the camera in the flight scene.
 /// </summary>
 public class CameraFollow : MonoBehaviour {
+
+    public static event EventHandler<AsteroidPassingEventArgs> OnAsteroidPassing;
+    
+    public class AsteroidPassingEventArgs : EventArgs {
+        public GameObject asteroid;
+        public bool isEntering;
+    
+        public AsteroidPassingEventArgs(GameObject asteroid, bool isEntering) {
+            this.asteroid = asteroid;
+            this.isEntering = isEntering;
+        }
+    }
     
     [Header("Follow Settings")]
     [Tooltip("The target to follow (will auto-find Spacecraft if not assigned)")]
@@ -82,7 +95,25 @@ public class CameraFollow : MonoBehaviour {
         // so we can follow the target position directly with no lag
         transform.position = target.position + offset;
     }
+
+    private void OnTriggerEnter2D(Collider2D objectCollider) {
+        GameObject otherObject = objectCollider.gameObject;
+        
+        //Only runs if otherObject is an asteroid
+        if (otherObject.GetComponent<AsteroidFlight>() == null) return; 
+        
+        OnAsteroidPassing?.Invoke(this, new AsteroidPassingEventArgs(otherObject, true));
+    }
     
+    private void OnTriggerExit2D(Collider2D objectCollider) {
+        GameObject otherObject = objectCollider.gameObject;
+        
+        //Only runs if otherObject is an asteroid
+        if (otherObject.GetComponent<AsteroidFlight>() == null) return; 
+        
+        OnAsteroidPassing?.Invoke(this, new AsteroidPassingEventArgs(otherObject, false));
+    }
+
     public void SetTarget(Transform newTarget) {
         target = newTarget;
         isFollowing = newTarget != null;
