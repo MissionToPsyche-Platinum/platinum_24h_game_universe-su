@@ -45,13 +45,10 @@ public class AsteroidController : MonoBehaviour {
 
         int spawnSide;
         Vector3 spawnPosition = GetSpawnPosition(out spawnSide);
-        if (!Physics.CheckSphere(spawnPosition, 2f, LayerMask.GetMask("Default"))) {
-            GameObject asteroid = Instantiate(nextAsteroid, spawnPosition, Quaternion.identity);
-            asteroid.GetComponent<AsteroidFlight>().spawnSide = spawnSide;
-            outOfCameraTimes.Add(asteroid, 0f);
-        } else {
-            Debug.Log("Dont Spawn");
-        }
+
+        GameObject asteroid = Instantiate(nextAsteroid, spawnPosition, Quaternion.identity);
+        asteroid.GetComponent<AsteroidFlight>().spawnSide = spawnSide;
+        outOfCameraTimes.Add(asteroid, 0f);
     }
 
     private Vector3 GetSpawnPosition(out int spawnSide) {
