@@ -22,7 +22,7 @@ public class AsteroidController : MonoBehaviour {
     private void Awake() => Instance = this;
 
     private void Start() {
-        CameraFollow.OnAsteroidPassing += CameraFollow_OnAsteroidPassingAction;
+        FlightCamera.OnAsteroidPassing += FlightCamera_OnAsteroidPassingAction;
     }
     
     private void Update() {
@@ -79,7 +79,7 @@ public class AsteroidController : MonoBehaviour {
         currentAsteroidCount--;
     }
 
-    private void CameraFollow_OnAsteroidPassingAction(object sender, CameraFollow.AsteroidPassingEventArgs e) {
+    private void FlightCamera_OnAsteroidPassingAction(object sender, FlightCamera.AsteroidPassingEventArgs e) {
         if(e.isEntering) outOfCameraTimes.Remove(e.asteroid);
         else outOfCameraTimes.Add(e.asteroid, 0f);
     }
