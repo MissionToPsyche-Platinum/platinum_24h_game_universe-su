@@ -30,12 +30,12 @@ public class AsteroidFlight : MonoBehaviour {
         }
     }
 
-    private void Awake() => speed = UnityEngine.Random.Range(.5f, 8f);
-
-    private void Update() => transform.position += direction * speed * Time.deltaTime;
-    
-
-    private void OnCollisionEnter2D(Collision2D collision) {
-        Debug.Log("collide");
+    private void Awake() {
+        speed = UnityEngine.Random.Range(.5f, 8f);
     }
+
+    private void Start() {
+        GetComponent<Rigidbody2D>().linearVelocity = direction * speed;
+    }
+    
 }
