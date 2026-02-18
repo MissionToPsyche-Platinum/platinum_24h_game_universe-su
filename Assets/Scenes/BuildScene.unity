@@ -848,7 +848,6 @@ MonoBehaviour:
   spacecraft: {fileID: 1823052787}
   gridVisualizer: {fileID: 211881093}
   highlightTransform: {fileID: 1605103874}
-  highlightSprite: {fileID: 1605103875}
 --- !u!4 &2104685397
 Transform:
   m_ObjectHideFlags: 0
