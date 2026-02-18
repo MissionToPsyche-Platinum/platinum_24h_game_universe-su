@@ -17,9 +17,15 @@ public class AsteroidController : MonoBehaviour {
     
     private int currentAsteroidCount;
     private float timeUntilNextAsteroidSpawn = 5f;
+    private float maxHorizontalSpawnRange;
+    private float maxVerticalSpawnRange;
 
     private Dictionary<GameObject, float> outOfCameraTimes = new();
-    private void Awake() => Instance = this;
+    private void Awake() {
+        Instance = this;
+        maxHorizontalSpawnRange = (camera.GetComponent<FlightCamera>().GetCameraWidth() / 2) + 2;
+        maxVerticalSpawnRange = (camera.GetComponent<FlightCamera>().GetCameraHeight() / 2) + 2;
+    }
 
     private void Start() {
         FlightCamera.OnAsteroidPassing += FlightCamera_OnAsteroidPassingAction;
@@ -57,16 +63,16 @@ public class AsteroidController : MonoBehaviour {
         
         switch (spawnSide) {
             case 0: //Spawn above camera
-                offset = new Vector3(UnityEngine.Random.Range(-11f, 11f), 8, camera.transform.position.z * -1);
+                offset = new Vector3(UnityEngine.Random.Range(-maxHorizontalSpawnRange, maxHorizontalSpawnRange), maxVerticalSpawnRange, -camera.transform.position.z);
                 break;
             case 1: //below
-                offset = new Vector3(UnityEngine.Random.Range(-11f, 11f), -8, camera.transform.position.z * -1);
+                offset = new Vector3(UnityEngine.Random.Range(-maxHorizontalSpawnRange, maxHorizontalSpawnRange), -maxVerticalSpawnRange, -camera.transform.position.z);
                 break;
             case 2: //left
-                offset = new Vector3(-11, UnityEngine.Random.Range(-8f, 8f), camera.transform.position.z * -1);
+                offset = new Vector3(-maxHorizontalSpawnRange, UnityEngine.Random.Range(-maxVerticalSpawnRange, maxVerticalSpawnRange), -camera.transform.position.z);
                 break;
             case 4: //right
-                offset = new Vector3(11, UnityEngine.Random.Range(-8f, 8f), camera.transform.position.z * -1);
+                offset = new Vector3(maxHorizontalSpawnRange, UnityEngine.Random.Range(-maxVerticalSpawnRange, maxVerticalSpawnRange), -camera.transform.position.z);
                 break;
         }
         
