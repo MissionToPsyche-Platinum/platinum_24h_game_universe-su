@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  isTrigger: 1
+  isTrigger: 0
   destroyOnCollision: 0
   disableAfterCollision: 0
 --- !u!114 &1176317800986292651
