@@ -7,6 +7,9 @@ using System.Collections;
 /// This is attached to the camera in the flight scene.
 /// </summary>
 public class FlightCamera : MonoBehaviour {
+    
+    private const float DEFAULT_CAM_WIDTH = 3.55f;
+    private const float DEFAULT_CAM_HEIGHT = 2f;
     public static event EventHandler<AsteroidPassingEventArgs> OnAsteroidPassing;
     
     public class AsteroidPassingEventArgs : EventArgs {
@@ -34,13 +37,10 @@ public class FlightCamera : MonoBehaviour {
     
     private void SetColliderSize() {
         BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
-        Camera cam = GetComponent<Camera>();
-
-        const float DEFAULT_CAM_WIDTH = 3.55f;
-        const float DEFAULT_CAM_HEIGHT = 2f;
+        
         const float ADDITIONAL_SIZE = .75f;
-        float boxX = cam.orthographicSize * DEFAULT_CAM_WIDTH + ADDITIONAL_SIZE;
-        float boxY = cam.orthographicSize * DEFAULT_CAM_HEIGHT + ADDITIONAL_SIZE;
+        float boxX = GetCameraWidth() + ADDITIONAL_SIZE;
+        float boxY = GetCameraHeight() + ADDITIONAL_SIZE;
 
         boxCollider.size = new Vector2(boxX, boxY);
     }
@@ -67,4 +67,8 @@ public class FlightCamera : MonoBehaviour {
         
         OnAsteroidPassing?.Invoke(this, new AsteroidPassingEventArgs(otherObject, false));
     }
+
+    public float GetCameraWidth() => GetComponent<Camera>().orthographicSize * DEFAULT_CAM_WIDTH;
+    
+    public float GetCameraHeight() => GetComponent<Camera>().orthographicSize * DEFAULT_CAM_HEIGHT;
 }
