@@ -45,7 +45,10 @@ public class FlightCamera : MonoBehaviour {
         boxCollider.size = new Vector2(boxX, boxY);
     }
     
-    private void LateUpdate() => transform.position = target.position + offset;
+    private void LateUpdate() {
+        if (target == null) return;
+        transform.position = target.position + offset;
+    }
 
     private void OnTriggerEnter2D(Collider2D objectCollider) {
         GameObject otherObject = objectCollider.gameObject;
