@@ -19,12 +19,13 @@ public class AsteroidController : MonoBehaviour {
     private float timeUntilNextAsteroidSpawn = 5f;
     private float maxHorizontalSpawnRange;
     private float maxVerticalSpawnRange;
+    private float distanceFromCameraBorder = 2f;
 
     private Dictionary<GameObject, float> outOfCameraTimes = new();
     private void Awake() {
         Instance = this;
-        maxHorizontalSpawnRange = (camera.GetComponent<FlightCamera>().GetCameraWidth() / 2) + 2;
-        maxVerticalSpawnRange = (camera.GetComponent<FlightCamera>().GetCameraHeight() / 2) + 2;
+        maxHorizontalSpawnRange = (camera.GetComponent<FlightCamera>().GetCameraWidth() / 2) + distanceFromCameraBorder;
+        maxVerticalSpawnRange = (camera.GetComponent<FlightCamera>().GetCameraHeight() / 2) + distanceFromCameraBorder;
     }
 
     private void Start() {
@@ -45,16 +46,21 @@ public class AsteroidController : MonoBehaviour {
 
     private void SpawnAsteroid() {
         GameObject nextAsteroid = allAsteroidPrefabs[UnityEngine.Random.Range(0, 18)];
-        if (outOfCameraTimes.ContainsKey(nextAsteroid)) return;
-        timeUntilNextAsteroidSpawn = UnityEngine.Random.Range(2, 4); //Adjust asteroid spawn frequency here
-        currentAsteroidCount++;
-
         int spawnSide;
         Vector3 spawnPosition = GetSpawnPosition(out spawnSide);
-
+        Collider2D[] spawnPositionOverlaps = Physics2D.OverlapCircleAll(spawnPosition, (float)(distanceFromCameraBorder - .1));
+        
+        foreach (Collider2D c in spawnPositionOverlaps) {
+            if (!c.gameObject.CompareTag("Gravity")) return;
+        }
+        if (outOfCameraTimes.ContainsKey(nextAsteroid)) return;
+        
         GameObject asteroid = Instantiate(nextAsteroid, spawnPosition, Quaternion.identity);
         asteroid.GetComponent<AsteroidFlight>().spawnSide = spawnSide;
+        
         outOfCameraTimes.Add(asteroid, 0f);
+        timeUntilNextAsteroidSpawn = UnityEngine.Random.Range(2, 4); //Adjust asteroid spawn frequency here
+        currentAsteroidCount++;
     }
 
     private Vector3 GetSpawnPosition(out int spawnSide) {
