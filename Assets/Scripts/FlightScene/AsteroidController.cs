@@ -71,7 +71,7 @@ public class AsteroidController : MonoBehaviour {
             case 2: //left
                 offset = new Vector3(-maxHorizontalSpawnRange, UnityEngine.Random.Range(-maxVerticalSpawnRange, maxVerticalSpawnRange), -camera.transform.position.z);
                 break;
-            case 4: //right
+            case 3: //right
                 offset = new Vector3(maxHorizontalSpawnRange, UnityEngine.Random.Range(-maxVerticalSpawnRange, maxVerticalSpawnRange), -camera.transform.position.z);
                 break;
         }
