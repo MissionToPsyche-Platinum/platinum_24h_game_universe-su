@@ -237,6 +237,7 @@ GameObject:
   - component: {fileID: 115347376}
   - component: {fileID: 115347377}
   - component: {fileID: 115347378}
+  - component: {fileID: 115347379}
   m_Layer: 0
   m_Name: PsycheAsteroid
   m_TagString: Untagged
@@ -253,8 +254,8 @@ Transform:
   m_GameObject: {fileID: 115347372}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.8, y: 45.6, z: 0}
-  m_LocalScale: {x: 4.352213, y: 4.352213, z: 1.0079}
+  m_LocalPosition: {x: 2.7, y: 15.3, z: 0}
+  m_LocalScale: {x: 4.3181, y: 4.3181, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 451929600}
@@ -323,6 +324,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &115347379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115347372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c80ec551d111e409d15f49172e8664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  victoryDistance: 5
 --- !u!1 &208672717
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,7 +991,6 @@ GameObject:
   m_Component:
   - component: {fileID: 451929600}
   - component: {fileID: 451929601}
-  - component: {fileID: 451929602}
   m_Layer: 0
   m_Name: PsycheAsteroidVisual
   m_TagString: Untagged
@@ -1055,19 +1068,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &451929602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 451929599}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c80ec551d111e409d15f49172e8664, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  victoryDistance: 23.37
 --- !u!1001 &466687988
 PrefabInstance:
   m_ObjectHideFlags: 0
