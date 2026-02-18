@@ -36,17 +36,16 @@ public class FlightCamera : MonoBehaviour {
         BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
         Camera cam = GetComponent<Camera>();
 
-        float boxX = (float)(cam.orthographicSize * 3.55 + .75);
-        float boxY = (float)(cam.orthographicSize * 2 + .75);
+        const float DEFAULT_CAM_WIDTH = 3.55f;
+        const float DEFAULT_CAM_HEIGHT = 2f;
+        const float ADDITIONAL_SIZE = .75f;
+        float boxX = cam.orthographicSize * DEFAULT_CAM_WIDTH + ADDITIONAL_SIZE;
+        float boxY = cam.orthographicSize * DEFAULT_CAM_HEIGHT + ADDITIONAL_SIZE;
 
         boxCollider.size = new Vector2(boxX, boxY);
     }
     
-    private void LateUpdate() {
-        // Rigidbody2D interpolation handles smooth rendering between physics steps,
-        // so we can follow the target position directly with no lag
-        transform.position = target.position + offset;
-    }
+    private void LateUpdate() => transform.position = target.position + offset;
 
     private void OnTriggerEnter2D(Collider2D objectCollider) {
         GameObject otherObject = objectCollider.gameObject;
