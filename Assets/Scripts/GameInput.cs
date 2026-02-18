@@ -197,12 +197,7 @@ public class GameInput : MonoBehaviour {
     public void SetGameOverScene(bool victory) {
         // Destroy the old spacecraft so any path out of game over starts fresh
         Spacecraft spacecraft = Spacecraft.GetInstance();
-        if (spacecraft != null) {
-            Destroy(spacecraft.gameObject);
-        }
-
-        // Reset static engine count so new engines get IDs 1-4 again
-        Engine.totalEngineCount = 0;
+        if (spacecraft != null) Destroy(spacecraft.gameObject);
 
         GameOverUI.isVictory = victory;
         SceneManager.LoadScene("GameOverScene");
