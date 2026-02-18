@@ -40,7 +40,7 @@ public class AsteroidController : MonoBehaviour {
     private void SpawnAsteroid() {
         GameObject nextAsteroid = allAsteroidPrefabs[UnityEngine.Random.Range(0, 18)];
         if (outOfCameraTimes.ContainsKey(nextAsteroid)) return;
-        timeUntilNextAsteroidSpawn = UnityEngine.Random.Range(2, 7); //Adjust asteroid spawn frequency here
+        timeUntilNextAsteroidSpawn = UnityEngine.Random.Range(2, 4); //Adjust asteroid spawn frequency here
         currentAsteroidCount++;
 
         int spawnSide;
