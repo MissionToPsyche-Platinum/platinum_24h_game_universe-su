@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class PsycheVictoryTrigger : MonoBehaviour
 {
-    [SerializeField] private float victoryDistance = 15f;
+    [SerializeField] private float victoryDistance;
 
     private Spacecraft spacecraft;
     private bool triggered = false;
