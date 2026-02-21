@@ -29,17 +29,11 @@ public class PanelPartDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
-        Debug.Log("Begin drag");
-        Debug.Log($"PartData: {partData}, PartData Part: {partData.part}");
         if (partData == null || partData.part == null) return;
         if (!Spacecraft.IsBuildMode) return;
-        Debug.Log("begin drag 2");
 
         SpriteRenderer partVisual = partData.part.GetComponentInChildren<SpriteRenderer>();
-        Debug.Log($"PartVisual: {partVisual}, PartVisual.sprite: {partVisual.sprite}");
         if (partVisual == null || partVisual.sprite == null) return;
-        
-        Debug.Log("begin drag 3");
 
         ghostPreview = new GameObject("GhostPreview");
         ghostSprite = ghostPreview.AddComponent<SpriteRenderer>();
@@ -52,13 +46,11 @@ public class PanelPartDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     }
 
     public void OnDrag(PointerEventData eventData) {
-        Debug.Log(" drag");
         if (ghostPreview == null) return;
         UpdateGhostPosition(eventData);
     }
 
     public void OnEndDrag(PointerEventData eventData) {
-        Debug.Log("End drag");
         if (ghostPreview == null) return;
 
         ShipBuildingGrid grid = ShipBuildingGrid.Instance;
