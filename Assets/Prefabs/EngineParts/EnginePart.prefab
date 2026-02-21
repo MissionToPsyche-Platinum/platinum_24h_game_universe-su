@@ -254,6 +254,10 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.pivot.y
       value: 0.28866667
       objectReference: {fileID: 0}
+    - target: {fileID: 2606864848460444891, guid: 619b723e6666b834e91465e459776085, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3329860403273148835, guid: 619b723e6666b834e91465e459776085, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.21
