@@ -187,6 +187,13 @@ public class GameInput : MonoBehaviour {
         inputActions.SpacecraftBuilding.Disable();
     }
 
+    public void SetMissionFactsScene() {
+        SceneManager.LoadScene("MissionFactsScene");
+
+        inputActions.Spacecraft.Disable();
+        inputActions.SpacecraftBuilding.Disable();
+    }
+
     public void SetMainMenuScene() {
         SceneManager.LoadScene("MainMenuScene");
 

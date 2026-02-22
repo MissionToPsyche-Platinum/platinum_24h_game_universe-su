@@ -204,7 +204,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 871147818}
         m_TargetAssemblyTypeName: GameInput, Scripts
-        m_MethodName: SetBuildScene
+        m_MethodName: SetMissionFactsScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
