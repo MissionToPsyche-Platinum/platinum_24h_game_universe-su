@@ -89,7 +89,7 @@ public class PartDrag : MonoBehaviour {
         if (shipGrid == null || partCollider == null) return;
 
         objectSprite.color = baseColor;
-        SetSortingLayer("Default");
+        SetSortingLayer(defaultLayer);
 
         transform.rotation = lockedRotation;
 
