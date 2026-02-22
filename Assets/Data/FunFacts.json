@@ -1,0 +1,108 @@
+{
+  "missionOverview": {
+    "title": "NASA's Psyche Mission",
+    "description": "Psyche is a NASA mission to explore a unique metal-rich asteroid, also named Psyche, orbiting the Sun between Mars and Jupiter. The mission aims to help scientists understand the building blocks of planet formation by studying a body that may be the exposed core of an early planet."
+  },
+  "funFacts": [
+    {
+      "category": "The Asteroid",
+      "fact": "Asteroid 16 Psyche is one of the most massive objects in the main asteroid belt, with an estimated diameter of about 140 miles (226 km) — roughly the size of Massachusetts."
+    },
+    {
+      "category": "The Asteroid",
+      "fact": "Unlike most asteroids that are rocky or icy, Psyche appears to be largely made of iron and nickel — similar to Earth's core."
+    },
+    {
+      "category": "The Asteroid",
+      "fact": "Scientists believe Psyche may be the exposed metallic core of a protoplanet that lost its rocky outer layers due to violent collisions billions of years ago."
+    },
+    {
+      "category": "The Asteroid",
+      "fact": "Psyche orbits the Sun between Mars and Jupiter at a distance ranging from 235 to 309 million miles (378 to 497 million km) from the Sun."
+    },
+    {
+      "category": "The Asteroid",
+      "fact": "If Psyche's metal could be brought to Earth, it would be worth an estimated $10,000 quadrillion — far more than the entire world economy."
+    },
+    {
+      "category": "The Asteroid",
+      "fact": "A day on Psyche lasts just over 4 hours. The asteroid completes one full rotation on its axis in about 4.196 hours."
+    },
+    {
+      "category": "The Asteroid",
+      "fact": "Psyche was discovered in 1852 by Italian astronomer Annibale de Gasparis and was named after the Greek goddess of the soul."
+    },
+    {
+      "category": "The Spacecraft",
+      "fact": "The Psyche spacecraft is about the size of a tennis court with its solar panels deployed, measuring roughly 81 feet (24.76 m) long and 24 feet (7.34 m) wide."
+    },
+    {
+      "category": "The Spacecraft",
+      "fact": "Psyche is the first NASA deep-space mission to use Hall-effect thrusters for propulsion. These super-efficient electric engines use xenon gas and electromagnetic fields to generate thrust."
+    },
+    {
+      "category": "The Spacecraft",
+      "fact": "The spacecraft's solar electric propulsion system produces a gentle glow of blue ionized xenon gas, creating a sci-fi-worthy blue exhaust trail."
+    },
+    {
+      "category": "The Spacecraft",
+      "fact": "Despite using advanced thrusters, the maximum thrust is only about the force you'd feel holding three quarters in your hand — but in the vacuum of space, that's enough to reach incredible speeds over time."
+    },
+    {
+      "category": "The Spacecraft",
+      "fact": "The spacecraft carries about 2,030 pounds (922 kg) of xenon propellant in its two tanks — enough to fill a small car's trunk."
+    },
+    {
+      "category": "The Mission",
+      "fact": "Psyche launched on October 13, 2023, aboard a SpaceX Falcon Heavy rocket from Kennedy Space Center in Florida."
+    },
+    {
+      "category": "The Mission",
+      "fact": "The spacecraft will travel roughly 2.2 billion miles (3.6 billion km) through the solar system before arriving at asteroid Psyche in August 2029."
+    },
+    {
+      "category": "The Mission",
+      "fact": "Psyche performed a Mars gravity assist flyby in May 2026, using Mars's gravitational pull to slingshot toward the asteroid belt."
+    },
+    {
+      "category": "The Mission",
+      "fact": "The mission is led by Arizona State University. NASA's Jet Propulsion Laboratory manages the mission and built the spacecraft."
+    },
+    {
+      "category": "The Mission",
+      "fact": "Psyche is the 14th mission selected as part of NASA's Discovery Program, which supports lower-cost, highly focused science investigations."
+    },
+    {
+      "category": "Science Instruments",
+      "fact": "The Magnetometer will detect and measure any remnant magnetic field on Psyche. If one exists, it would confirm the asteroid was once a planetary core."
+    },
+    {
+      "category": "Science Instruments",
+      "fact": "The Multispectral Imager uses two cameras with color filters to capture images of Psyche's surface, helping scientists map its geology and mineral composition."
+    },
+    {
+      "category": "Science Instruments",
+      "fact": "The Gamma-Ray and Neutron Spectrometer will determine what chemical elements make up Psyche's surface by detecting gamma rays and neutrons emitted from the asteroid."
+    },
+    {
+      "category": "Science Instruments",
+      "fact": "Psyche also carries an experimental Deep Space Optical Communication (DSOC) system that uses lasers instead of radio waves to send data, achieving record-breaking data rates from deep space."
+    },
+    {
+      "category": "Science Instruments",
+      "fact": "The Gravity Science experiment uses the spacecraft's radio system to measure Psyche's gravity field, which reveals clues about the asteroid's interior structure and composition."
+    },
+    {
+      "category": "Why It Matters",
+      "fact": "We can never visit Earth's own core — it lies about 1,800 miles beneath our feet under extreme pressure and heat. Psyche gives us a chance to study a planetary core directly."
+    },
+    {
+      "category": "Why It Matters",
+      "fact": "Understanding Psyche could teach us how rocky planets like Earth, Mars, and Mercury formed and differentiated into layers of crust, mantle, and core."
+    },
+    {
+      "category": "Why It Matters",
+      "fact": "The Psyche mission will help answer a fundamental question: what happens during the most violent chapters of a planetary system's early history, when planetary bodies collide and lose their outer layers?"
+    }
+  ]
+}
