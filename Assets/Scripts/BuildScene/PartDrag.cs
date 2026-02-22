@@ -89,7 +89,6 @@ public class PartDrag : MonoBehaviour {
         if (shipGrid == null || partCollider == null) return;
 
         objectSprite.color = baseColor;
-        SetSortingLayer(defaultLayer);
 
         transform.rotation = lockedRotation;
 
@@ -100,41 +99,56 @@ public class PartDrag : MonoBehaviour {
         Vector3 gridSnapPosition = (Vector3)nullableGridSnapPosition;
 
         if (shipGrid.GetGridCellValue(shipGrid.UnityPositionToGridCoordinates(gridSnapPosition)) == -1) {
-            if (TryPlacePart(part, gridSnapPosition)) {
-                SetSortingLayer(defaultLayer);
-                SetLayer(defaultLayer);
-                return;
-            }
+            if (TryPlacePart(part, gridSnapPosition)) return;
         } else {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Collider2D partToBeSwapped = Physics2D.OverlapPoint(mousePos, LayerMask.GetMask(defaultLayer));
-            Debug.Log(partToBeSwapped);
-            //if (TrySwapPart(part, gridSnapPosition)) return;
+            Collider2D partToBeSwapped = Physics2D.OverlapPoint(gridSnapPosition, LayerMask.GetMask(defaultLayer));
+            if (partToBeSwapped != null && TrySwapPart(part, originalPosition, partToBeSwapped.gameObject, gridSnapPosition)) return;
         }
         
-        SetSortingLayer(defaultLayer);
-        SetLayer(defaultLayer);
-        
-        transform.position = originalPosition;
-        shipGrid.SetGridCellValueByUnityPosition(originalPosition, partDB.GetPartID(part));
-
-        // Reconnect joint and disable physics before returning
-        ReconnectPart();
+        PlacePart(gameObject, originalPosition);
     }
 
     private bool TryPlacePart(GameObject part, Vector3 worldPosition) {
         if (!shipGrid.CanPlacePart(part, shipGrid.UnityPositionToGridCoordinates(worldPosition))) return false;
         
-        transform.position = worldPosition;
-        shipGrid.SetGridCellValueByUnityPosition(transform.position, partDB.GetPartID(part));
-        
-        // Reconnect joint and disable physics
-        ReconnectPart();
+        PlacePart(part, worldPosition);
         return true;
     }
 
-    private bool TrySwapPart(GameObject part1, Vector3 worldPosition1, GameObject part2, Vector3 worldPosition2) {
-        return false;
+    private void PlacePart(GameObject part, Vector3 worldPosition) {
+        part.transform.position = worldPosition;
+        shipGrid.SetGridCellValueByUnityPosition(part.transform.position, partDB.GetPartID(part));
+        
+        SetSortingLayer(defaultLayer);
+        SetLayer(defaultLayer);
+        
+        // Reconnect joint and disable physics
+        ReconnectPart();
+    }
+
+    private bool TrySwapPart(GameObject draggedPart, Vector3 draggedOGPosition, GameObject otherPart, Vector3 otherOGPosition) {
+        int otherID = partDB.GetPartID(otherPart);
+        int draggedID = partDB.GetPartID(draggedPart);
+        
+        shipGrid.SetGridCellValueByUnityPosition(otherOGPosition, -1);
+        shipGrid.SetGridCellValueByUnityPosition(draggedOGPosition, otherID);
+        bool canPlaceDraggedPart = shipGrid.CanPlacePart(draggedPart, shipGrid.UnityPositionToGridCoordinates(otherOGPosition));
+        shipGrid.SetGridCellValueByUnityPosition(draggedOGPosition, -1);
+        
+        shipGrid.SetGridCellValueByUnityPosition(otherOGPosition, draggedID);
+        bool canPlaceOtherPart = shipGrid.CanPlacePart(otherPart, shipGrid.UnityPositionToGridCoordinates(draggedOGPosition));
+        shipGrid.SetGridCellValueByUnityPosition(otherOGPosition, -1);
+        
+        if (!canPlaceDraggedPart || !canPlaceOtherPart) {
+            shipGrid.SetGridCellValueByUnityPosition(otherOGPosition, otherID);
+            shipGrid.SetGridCellValueByUnityPosition(draggedOGPosition, draggedID);
+            return false;
+        }
+        
+        PlacePart(draggedPart, otherOGPosition);
+        PlacePart(otherPart, draggedOGPosition);
+        
+        return true;
     }
 
     private void ReconnectPart() {
