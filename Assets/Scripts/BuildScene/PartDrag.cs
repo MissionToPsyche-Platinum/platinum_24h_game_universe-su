@@ -100,10 +100,6 @@ public class PartDrag : MonoBehaviour {
 
         if (shipGrid.GetGridCellValue(shipGrid.UnityPositionToGridCoordinates(gridSnapPosition)) == -1) {
             if (TryPlacePart(part, gridSnapPosition)) return;
-        } else {
-            //gameObject.
-            //GameObject partToBeSwapped
-            //if (TrySwapPart(part, gridSnapPosition)) return;
         }
         
         transform.position = originalPosition;
