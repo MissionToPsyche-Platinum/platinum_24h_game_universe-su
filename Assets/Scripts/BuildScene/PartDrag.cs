@@ -16,6 +16,8 @@ public class PartDrag : MonoBehaviour {
     private ShipBuildingGrid shipGrid;
     private SpacecraftPartDatabase partDB;
     private SpriteRenderer objectSprite;
+    private string midDragLayer = "MidDrag";
+    private string defaultLayer = "Default";
 
     private void Awake() {
         partCollider = GetComponent<Collider2D>();
@@ -37,13 +39,12 @@ public class PartDrag : MonoBehaviour {
         shipGrid.SetGridCellValueByUnityPosition(originalPosition, -1);
         shipGrid.SetSelectedPart(gameObject);
 
-        SetSortingLayer("MidDrag");
+        SetSortingLayer(midDragLayer);
+        SetLayer(midDragLayer);
 
         // Temporarily disconnect from joints while dragging
         FixedJoint2D joint = GetComponent<FixedJoint2D>();
-        if (joint != null) {
-            joint.enabled = false;
-        }
+        if (joint != null) joint.enabled = false;
         
         // Enable physics temporarily for dragging
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
@@ -65,8 +66,6 @@ public class PartDrag : MonoBehaviour {
     void OnMouseUp() {
         if (!Spacecraft.IsBuildMode) return;
         if (shipGrid == null || partCollider == null) return;
-        
-        SetSortingLayer("Default");
 
         transform.rotation = lockedRotation;
 
@@ -77,12 +76,20 @@ public class PartDrag : MonoBehaviour {
         Vector3 gridSnapPosition = (Vector3)nullableGridSnapPosition;
 
         if (shipGrid.GetGridCellValue(shipGrid.UnityPositionToGridCoordinates(gridSnapPosition)) == -1) {
-            if (TryPlacePart(part, gridSnapPosition)) return;
+            if (TryPlacePart(part, gridSnapPosition)) {
+                SetSortingLayer(defaultLayer);
+                SetLayer(defaultLayer);
+                return;
+            }
         } else {
-            //gameObject.
-            //GameObject partToBeSwapped
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Collider2D partToBeSwapped = Physics2D.OverlapPoint(mousePos, LayerMask.GetMask(defaultLayer));
+            Debug.Log(partToBeSwapped);
             //if (TrySwapPart(part, gridSnapPosition)) return;
         }
+        
+        SetSortingLayer(defaultLayer);
+        SetLayer(defaultLayer);
         
         transform.position = originalPosition;
         shipGrid.SetGridCellValueByUnityPosition(originalPosition, partDB.GetPartID(part));
@@ -119,7 +126,7 @@ public class PartDrag : MonoBehaviour {
         }
     }
 
-    private void SetSortingLayer(string layer) {
+    private void SetSortingLayer(string layer) { 
         objectSprite.sortingLayerName = layer;
 
         Canvas canvas = GetComponentInChildren<Canvas>();
@@ -127,6 +134,8 @@ public class PartDrag : MonoBehaviour {
 
         canvas.sortingLayerName = layer;
     }
+
+    private void SetLayer(string layer) => gameObject.layer = LayerMask.NameToLayer(layer);
     
     private void Update() {
         if (transform.rotation != lockedRotation) transform.rotation = lockedRotation;
