@@ -1,0 +1,88 @@
+{
+  "flightOverview": {
+    "title": "Flight Briefing",
+    "description": "Your spacecraft is built and ready for launch. You will navigate through the asteroid belt using Hall-effect thrusters powered by solar electric propulsion. Use your engines carefully to avoid collisions and reach asteroid Psyche."
+  },
+  "funFacts": [
+    {
+      "category": "Propulsion",
+      "fact": "The Psyche spacecraft uses Hall-effect thrusters that ionize xenon gas and accelerate it with electromagnetic fields, producing a beautiful blue glow as exhaust."
+    },
+    {
+      "category": "Propulsion",
+      "fact": "Solar electric propulsion is incredibly efficient — the Psyche spacecraft can change its velocity by over 3.1 miles per second (5 km/s) using only about 2,030 pounds of xenon fuel."
+    },
+    {
+      "category": "Propulsion",
+      "fact": "At maximum power, the spacecraft's thrusters produce only about 240 millinewtons of force — roughly the weight of three quarters sitting in your hand."
+    },
+    {
+      "category": "Navigation",
+      "fact": "Despite what movies show, the asteroid belt is mostly empty space. The average distance between asteroids is about 600,000 miles (1 million km)."
+    },
+    {
+      "category": "Navigation",
+      "fact": "The Psyche spacecraft uses star trackers — cameras that photograph star patterns — to determine its exact orientation in space at all times."
+    },
+    {
+      "category": "Navigation",
+      "fact": "NASA's Deep Space Network, with antennas in California, Spain, and Australia, communicates with the Psyche spacecraft as it travels through deep space."
+    },
+    {
+      "category": "Navigation",
+      "fact": "At its farthest point, radio signals from the Psyche spacecraft take over 25 minutes to reach Earth, traveling at the speed of light."
+    },
+    {
+      "category": "The Journey",
+      "fact": "The Psyche spacecraft will travel roughly 2.2 billion miles (3.6 billion km) over nearly six years to reach asteroid Psyche in August 2029."
+    },
+    {
+      "category": "The Journey",
+      "fact": "In May 2026, Psyche performed a gravity assist flyby of Mars, using the planet's gravitational pull to slingshot toward the asteroid belt and save fuel."
+    },
+    {
+      "category": "The Journey",
+      "fact": "The spacecraft's five-panel solar arrays span 75 feet (22.9 m) tip to tip and generate over 20 kilowatts of power near Earth — enough to power several homes."
+    },
+    {
+      "category": "Space Flight",
+      "fact": "In the vacuum of space, there is no friction or air resistance. Once an object starts moving, it will continue at the same speed forever unless another force acts on it."
+    },
+    {
+      "category": "Space Flight",
+      "fact": "To slow down in space, you have to fire your engines in the opposite direction of travel. There are no brakes in the vacuum of space."
+    },
+    {
+      "category": "Space Flight",
+      "fact": "Orbital mechanics is counterintuitive: to catch up to something ahead of you in orbit, you actually need to slow down first, dropping to a lower, faster orbit."
+    },
+    {
+      "category": "Hazards",
+      "fact": "Even a paint flake traveling at orbital speeds (17,500 mph / 28,000 km/h) can crack a spacecraft window. Micrometeorites are a constant danger in space."
+    },
+    {
+      "category": "Hazards",
+      "fact": "Solar storms can damage spacecraft electronics and disrupt communications. The Psyche spacecraft is designed to withstand the harsh radiation environment of deep space."
+    },
+    {
+      "category": "Hazards",
+      "fact": "Space debris in low Earth orbit travels at about 17,500 mph (28,000 km/h) — roughly 10 times faster than a bullet. Even tiny fragments can cause catastrophic damage."
+    },
+    {
+      "category": "Technology",
+      "fact": "The Psyche mission carries an experimental Deep Space Optical Communication (DSOC) system that uses near-infrared lasers to send data 10 to 100 times faster than radio."
+    },
+    {
+      "category": "Technology",
+      "fact": "The spacecraft's computer processes commands autonomously since real-time control is impossible with communication delays of up to 25 minutes each way."
+    },
+    {
+      "category": "Technology",
+      "fact": "Psyche's Multispectral Imager uses filters to see in wavelengths invisible to the human eye, revealing the asteroid's mineral composition from orbit."
+    },
+    {
+      "category": "Fun Physics",
+      "fact": "If you could throw a baseball at 99.9% the speed of light, it would hit with the force of a nuclear bomb — but in space, even slow objects carry enormous kinetic energy over vast distances."
+    }
+  ]
+}

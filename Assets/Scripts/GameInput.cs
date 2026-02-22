@@ -36,14 +36,18 @@ public class GameInput : MonoBehaviour {
     }
     
     public void Awake() {
+        if (Instance != null) {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
         DontDestroyOnLoad(this);
-        
+
         inputActions = new InputSystem_Actions();
-        
+
         if (SceneManager.GetActiveScene().name == "FlightScene") inputActions.Spacecraft.Enable();
         else inputActions.SpacecraftBuilding.Enable();
-        
+
         inputActions.General.Enable();
     }
 
@@ -154,23 +158,30 @@ public class GameInput : MonoBehaviour {
     
     private void SceneSwitch_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
         if (SceneManager.GetActiveScene().name == "FlightScene") SetBuildScene();
-        else SetFlightScene();
+        else SetFlightFactsScene();
     }
 
     public void SetBuildScene() {
         SceneManager.LoadScene("BuildScene");
-        
+
         inputActions.Spacecraft.Disable();
         inputActions.SpacecraftBuilding.Enable();
     }
 
-    private void SetFlightScene() {
+    public void SetFlightScene() {
         SceneManager.LoadScene("FlightScene");
-        
+
         inputActions.SpacecraftBuilding.Disable();
         inputActions.Spacecraft.Enable();
-        
+
         OnSetFlightScenePerformedAction?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void SetFlightFactsScene() {
+        SceneManager.LoadScene("FlightFactsScene");
+
+        inputActions.Spacecraft.Disable();
+        inputActions.SpacecraftBuilding.Disable();
     }
 
     public void SetCreditsScene() {

@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs:*)",
+      "Bash(git -C \"d:\\\\25.15 WebGame\\\\CS-26-15\" log --oneline --format=\"%h %ad %s\" --date=short -10)",
+      "Bash(git -C \"d:\\\\25.15 WebGame\\\\CS-26-15\" log --oneline --format=\"%h %ad %s\" --date=short --after=\"2026-01-12\" --all)",
+      "Bash(find:*)",
+      "Bash(git log:*)",
+      "Bash(git checkout:*)",
+      "Bash(ls:*)"
+    ]
+  }
+}
