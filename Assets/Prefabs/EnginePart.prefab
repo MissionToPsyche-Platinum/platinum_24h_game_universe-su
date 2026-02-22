@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7245473696524162913}
   - component: {fileID: 2284212888895707738}
   - component: {fileID: 2720730538049329284}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 6255648071414878637}
   - component: {fileID: 2933362044451360083}
   - component: {fileID: 3681482721264449841}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,9 +314,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnginePartVisual
       objectReference: {fileID: 0}
+    - target: {fileID: 5791201175396930333, guid: 619b723e6666b834e91465e459776085, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6185069549927734299, guid: 619b723e6666b834e91465e459776085, type: 3}
       propertyPath: m_Name
       value: EnginePart
+      objectReference: {fileID: 0}
+    - target: {fileID: 6185069549927734299, guid: 619b723e6666b834e91465e459776085, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6599898052947377947, guid: 619b723e6666b834e91465e459776085, type: 3}
       propertyPath: m_Sprite
