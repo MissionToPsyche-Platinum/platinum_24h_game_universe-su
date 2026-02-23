@@ -73,7 +73,7 @@ public class PartDrag : MonoBehaviour {
                 transform.position = (Vector3)snapPos;
                 (int, int) coords = shipGrid.UnityPositionToGridCoordinates((Vector3)snapPos);
                 GameObject part = partDB.GetPartGameObject(selectedObject.name);
-                bool valid = shipGrid.CanPlacePart(part, coords);
+                bool valid = shipGrid.CanPlacePart(part, coords) || CanSwapPart(part, originalPosition);
                 objectSprite.color = valid ? colorValid : colorInvalid;
             } else {
                 transform.position = curPosition;
@@ -126,7 +126,7 @@ public class PartDrag : MonoBehaviour {
         ReconnectPart();
     }
 
-    private bool TrySwapPart(GameObject draggedPart, Vector3 draggedOGPosition, GameObject otherPart, Vector3 otherOGPosition) {
+    private bool CanSwapPart(GameObject draggedPart, Vector3 draggedOGPosition, GameObject otherPart, Vector3 otherOGPosition) {
         int otherID = partDB.GetPartID(otherPart);
         int draggedID = partDB.GetPartID(draggedPart);
         
@@ -139,11 +139,26 @@ public class PartDrag : MonoBehaviour {
         bool canPlaceOtherPart = shipGrid.CanPlacePart(otherPart, shipGrid.UnityPositionToGridCoordinates(draggedOGPosition));
         shipGrid.SetGridCellValueByUnityPosition(otherOGPosition, -1);
         
-        if (!canPlaceDraggedPart || !canPlaceOtherPart) {
-            shipGrid.SetGridCellValueByUnityPosition(otherOGPosition, otherID);
-            shipGrid.SetGridCellValueByUnityPosition(draggedOGPosition, draggedID);
-            return false;
-        }
+        shipGrid.SetGridCellValueByUnityPosition(otherOGPosition, otherID);
+        
+        if (canPlaceDraggedPart && canPlaceOtherPart) return true;
+        
+        return false;
+    }
+
+    private bool CanSwapPart(GameObject draggedPart, Vector3 draggedOGPosition) {
+        Vector3? nullableGridSnapPosition = shipGrid.PostionToGridPosition(transform.position);
+        if (nullableGridSnapPosition == null) return false;
+        Vector3 gridSnapPosition = (Vector3)nullableGridSnapPosition;
+        
+        Collider2D partToBeSwapped = Physics2D.OverlapPoint(gridSnapPosition, LayerMask.GetMask(defaultLayer));
+        if (partToBeSwapped == null) return false;
+
+        return CanSwapPart(draggedPart, draggedOGPosition, partToBeSwapped.gameObject, gridSnapPosition);
+    }
+
+    private bool TrySwapPart(GameObject draggedPart, Vector3 draggedOGPosition, GameObject otherPart, Vector3 otherOGPosition) {
+        if (!CanSwapPart(draggedPart, draggedOGPosition, otherPart, otherOGPosition)) return false;
         
         PlacePart(draggedPart, otherOGPosition);
         PlacePart(otherPart, draggedOGPosition);
