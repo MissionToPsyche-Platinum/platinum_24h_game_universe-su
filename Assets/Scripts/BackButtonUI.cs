@@ -10,12 +10,10 @@ public class BackButtonUI : MonoBehaviour
 {
     private void Start()
     {
-        // Prevent creating multiple copies if this script runs again
         if (GameObject.Find("BackgroundCanvas") != null || GameObject.Find("BackButtonCanvas") != null)
         {
             return;
         }
-
         // Background canvas renders BEHIND the scene content
         GameObject bgCanvasObj = new GameObject("BackgroundCanvas");
         Canvas bgCanvas = bgCanvasObj.AddComponent<Canvas>();
@@ -26,9 +24,6 @@ public class BackButtonUI : MonoBehaviour
         bgScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         bgScaler.referenceResolution = new Vector2(1920, 1080);
         bgScaler.matchWidthOrHeight = 0.5f;
-
-        // Optional
-        bgCanvasObj.AddComponent<GraphicRaycaster>();
 
         GameObject panelObj = new GameObject("BackgroundPanel");
         panelObj.transform.SetParent(bgCanvasObj.transform, false);
@@ -90,6 +85,7 @@ public class BackButtonUI : MonoBehaviour
         text.alignment = TextAlignmentOptions.Center;
         text.color = new Color(0.15f, 0.15f, 0.15f, 1f);
 
+        // Make existing scene text readable
         MakeSceneTextReadable();
     }
 
