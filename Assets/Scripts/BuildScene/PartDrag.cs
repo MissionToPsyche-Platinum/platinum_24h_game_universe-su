@@ -20,6 +20,8 @@ public class PartDrag : MonoBehaviour {
     private SpacecraftPartDatabase partDB;
     private SpriteRenderer objectSprite;
     private Color baseColor;
+    private string midDragLayer = "MidDrag";
+    private string defaultLayer = "Default";
 
     private void Awake() {
         partCollider = GetComponent<Collider2D>();
@@ -42,13 +44,12 @@ public class PartDrag : MonoBehaviour {
         shipGrid.SetGridCellValueByUnityPosition(originalPosition, -1);
         shipGrid.SetSelectedPart(gameObject);
 
-        SetSortingLayer("MidDrag");
+        SetSortingLayer(midDragLayer);
+        SetLayer(midDragLayer);
 
         // Temporarily disconnect from joints while dragging
         FixedJoint2D joint = GetComponent<FixedJoint2D>();
-        if (joint != null) {
-            joint.enabled = false;
-        }
+        if (joint != null) joint.enabled = false;
         
         // Enable physics temporarily for dragging
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
@@ -72,7 +73,7 @@ public class PartDrag : MonoBehaviour {
                 transform.position = (Vector3)snapPos;
                 (int, int) coords = shipGrid.UnityPositionToGridCoordinates((Vector3)snapPos);
                 GameObject part = partDB.GetPartGameObject(selectedObject.name);
-                bool valid = shipGrid.CanPlacePart(part, coords);
+                bool valid = shipGrid.CanPlacePart(part, coords) || CanSwapPart(part, originalPosition);
                 objectSprite.color = valid ? colorValid : colorInvalid;
             } else {
                 transform.position = curPosition;
@@ -88,7 +89,6 @@ public class PartDrag : MonoBehaviour {
         if (shipGrid == null || partCollider == null) return;
 
         objectSprite.color = baseColor;
-        SetSortingLayer("Default");
 
         transform.rotation = lockedRotation;
 
@@ -101,31 +101,69 @@ public class PartDrag : MonoBehaviour {
         if (shipGrid.GetGridCellValue(shipGrid.UnityPositionToGridCoordinates(gridSnapPosition)) == -1) {
             if (TryPlacePart(part, gridSnapPosition)) return;
         } else {
-            //gameObject.
-            //GameObject partToBeSwapped
-            //if (TrySwapPart(part, gridSnapPosition)) return;
+            Collider2D partToBeSwapped = Physics2D.OverlapPoint(gridSnapPosition, LayerMask.GetMask(defaultLayer));
+            if (partToBeSwapped != null && TrySwapPart(part, originalPosition, partToBeSwapped.gameObject, gridSnapPosition)) return;
         }
         
-        transform.position = originalPosition;
-        shipGrid.SetGridCellValueByUnityPosition(originalPosition, partDB.GetPartID(part));
-
-        // Reconnect joint and disable physics before returning
-        ReconnectPart();
+        PlacePart(gameObject, originalPosition);
     }
 
     private bool TryPlacePart(GameObject part, Vector3 worldPosition) {
         if (!shipGrid.CanPlacePart(part, shipGrid.UnityPositionToGridCoordinates(worldPosition))) return false;
         
-        transform.position = worldPosition;
-        shipGrid.SetGridCellValueByUnityPosition(transform.position, partDB.GetPartID(part));
-        
-        // Reconnect joint and disable physics
-        ReconnectPart();
+        PlacePart(part, worldPosition);
         return true;
     }
 
-    private bool TrySwapPart(GameObject part1, Vector3 worldPosition1, GameObject part2, Vector3 worldPosition2) {
+    private void PlacePart(GameObject part, Vector3 worldPosition) {
+        part.transform.position = worldPosition;
+        shipGrid.SetGridCellValueByUnityPosition(part.transform.position, partDB.GetPartID(part));
+        
+        SetSortingLayer(defaultLayer);
+        SetLayer(defaultLayer);
+        
+        // Reconnect joint and disable physics
+        ReconnectPart();
+    }
+
+    private bool CanSwapPart(GameObject draggedPart, Vector3 draggedOGPosition, GameObject otherPart, Vector3 otherOGPosition) {
+        int otherID = partDB.GetPartID(otherPart);
+        int draggedID = partDB.GetPartID(draggedPart);
+        
+        shipGrid.SetGridCellValueByUnityPosition(otherOGPosition, -1);
+        shipGrid.SetGridCellValueByUnityPosition(draggedOGPosition, otherID);
+        bool canPlaceDraggedPart = shipGrid.CanPlacePart(draggedPart, shipGrid.UnityPositionToGridCoordinates(otherOGPosition));
+        shipGrid.SetGridCellValueByUnityPosition(draggedOGPosition, -1);
+        
+        shipGrid.SetGridCellValueByUnityPosition(otherOGPosition, draggedID);
+        bool canPlaceOtherPart = shipGrid.CanPlacePart(otherPart, shipGrid.UnityPositionToGridCoordinates(draggedOGPosition));
+        shipGrid.SetGridCellValueByUnityPosition(otherOGPosition, -1);
+        
+        shipGrid.SetGridCellValueByUnityPosition(otherOGPosition, otherID);
+        
+        if (canPlaceDraggedPart && canPlaceOtherPart) return true;
+        
         return false;
+    }
+
+    private bool CanSwapPart(GameObject draggedPart, Vector3 draggedOGPosition) {
+        Vector3? nullableGridSnapPosition = shipGrid.PostionToGridPosition(transform.position);
+        if (nullableGridSnapPosition == null) return false;
+        Vector3 gridSnapPosition = (Vector3)nullableGridSnapPosition;
+        
+        Collider2D partToBeSwapped = Physics2D.OverlapPoint(gridSnapPosition, LayerMask.GetMask(defaultLayer));
+        if (partToBeSwapped == null) return false;
+
+        return CanSwapPart(draggedPart, draggedOGPosition, partToBeSwapped.gameObject, gridSnapPosition);
+    }
+
+    private bool TrySwapPart(GameObject draggedPart, Vector3 draggedOGPosition, GameObject otherPart, Vector3 otherOGPosition) {
+        if (!CanSwapPart(draggedPart, draggedOGPosition, otherPart, otherOGPosition)) return false;
+        
+        PlacePart(draggedPart, otherOGPosition);
+        PlacePart(otherPart, draggedOGPosition);
+        
+        return true;
     }
 
     private void ReconnectPart() {
@@ -149,6 +187,8 @@ public class PartDrag : MonoBehaviour {
 
         canvas.sortingLayerName = layer;
     }
+
+    private void SetLayer(string layer) => gameObject.layer = LayerMask.NameToLayer(layer);
     
     private void Update() {
         if (transform.rotation != lockedRotation) transform.rotation = lockedRotation;

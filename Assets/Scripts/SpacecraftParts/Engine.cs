@@ -57,7 +57,7 @@ public class Engine : MonoBehaviour {
         if(active && TryConsumeFuel()) ActivateEngine(); //Only activates if engine is active and there is fuel.
     }
 
-    private void ActivateEngine() => engineRigidbody2D.AddForce(speed * transform.up * Time.fixedDeltaTime);
+    private void ActivateEngine() => engineRigidbody2D.AddForce(transform.up * (speed * Time.fixedDeltaTime));
     
     private void GameInput_OnEngineAction(object sender, GameInput.EngineEventArgs e) { 
         if(engineID == e.engineNum) active = e.activated;

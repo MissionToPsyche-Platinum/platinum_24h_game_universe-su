@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class PanelPartDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
-    private PartScriptableObject partData;
+    [SerializeField] private PartScriptableObject partData;
     private GameObject ghostPreview;
     private SpriteRenderer ghostSprite;
     private Color baseColor = Color.white;
@@ -20,6 +20,11 @@ public class PanelPartDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         // Cache the part's visual color for the ghost preview
         SpriteRenderer sr = part.part.GetComponentInChildren<SpriteRenderer>();
+        if (sr != null) baseColor = sr.color;
+    }
+
+    private void Awake() {
+        SpriteRenderer sr = partData.part.GetComponentInChildren<SpriteRenderer>();
         if (sr != null) baseColor = sr.color;
     }
 

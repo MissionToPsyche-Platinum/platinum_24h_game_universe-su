@@ -44,10 +44,6 @@ public class ShipBuildingGrid : MonoBehaviour {
         gameInput.OnNumKeyPerformedAction += GameInput_OnNumKeyAction;
         gameInput.OnDeletePartPerformedAction += GameInput_OnDeletePartPerformedAction;
         gameInput.OnLeftMouseClickPerformedAction += GameInput_OnLeftMouseClickAction;
-
-        // Auto-create the build panel UI
-        GameObject panelObj = new GameObject("BuildPanelUI");
-        panelObj.AddComponent<BuildPanelUI>();
     }
 
     private void CreateSpacecraft() {
