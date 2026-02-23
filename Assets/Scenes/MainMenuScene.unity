@@ -202,8 +202,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 871147818}
-        m_TargetAssemblyTypeName: GameInput, Scripts
+      - m_Target: {fileID: 1120682994}
+        m_TargetAssemblyTypeName: SceneNavigator, Scripts
         m_MethodName: SetMissionFactsScene
         m_Mode: 1
         m_Arguments:
@@ -750,6 +750,50 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &1120682993
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1120682995}
+  - component: {fileID: 1120682994}
+  m_Layer: 0
+  m_Name: SceneNavigator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1120682994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120682993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1120682995
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120682993}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1151931552
 GameObject:
   m_ObjectHideFlags: 0
@@ -1322,8 +1366,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 871147818}
-        m_TargetAssemblyTypeName: GameInput, Scripts
+      - m_Target: {fileID: 1120682994}
+        m_TargetAssemblyTypeName: SceneNavigator, Scripts
         m_MethodName: SetMissionDetailsScene
         m_Mode: 1
         m_Arguments:
@@ -1455,8 +1499,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 871147818}
-        m_TargetAssemblyTypeName: GameInput, Scripts
+      - m_Target: {fileID: 1120682994}
+        m_TargetAssemblyTypeName: SceneNavigator, Scripts
         m_MethodName: SetCreditsScene
         m_Mode: 1
         m_Arguments:
@@ -1513,3 +1557,4 @@ SceneRoots:
   - {fileID: 903485403}
   - {fileID: 1680607865}
   - {fileID: 871147819}
+  - {fileID: 1120682995}
