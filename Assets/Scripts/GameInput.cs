@@ -36,14 +36,18 @@ public class GameInput : MonoBehaviour {
     }
     
     public void Awake() {
+        if (Instance != null) {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
         DontDestroyOnLoad(this);
-        
+
         inputActions = new InputSystem_Actions();
-        
+
         if (SceneManager.GetActiveScene().name == "FlightScene") inputActions.Spacecraft.Enable();
         else inputActions.SpacecraftBuilding.Enable();
-        
+
         inputActions.General.Enable();
     }
 
@@ -70,6 +74,7 @@ public class GameInput : MonoBehaviour {
         inputActions.SpacecraftBuilding.LeftMouseClick.performed += LeftMouseClick_performed;
     
         inputActions.General.SceneSwitch.performed += SceneSwitch_performed;
+        inputActions.General.ReturnToMenu.performed += ReturnToMenu_performed;
     }
     
     private void EngineOne_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
@@ -154,23 +159,34 @@ public class GameInput : MonoBehaviour {
     
     private void SceneSwitch_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
         if (SceneManager.GetActiveScene().name == "FlightScene") SetBuildScene();
-        else SetFlightScene();
+        else SetFlightFactsScene();
+    }
+    
+    private void ReturnToMenu_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+        SetMainMenuScene();
     }
 
     public void SetBuildScene() {
         SceneManager.LoadScene("BuildScene");
-        
+
         inputActions.Spacecraft.Disable();
         inputActions.SpacecraftBuilding.Enable();
     }
 
-    private void SetFlightScene() {
+    public void SetFlightScene() {
         SceneManager.LoadScene("FlightScene");
-        
+
         inputActions.SpacecraftBuilding.Disable();
         inputActions.Spacecraft.Enable();
-        
+
         OnSetFlightScenePerformedAction?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void SetFlightFactsScene() {
+        SceneManager.LoadScene("FlightFactsScene");
+
+        inputActions.Spacecraft.Disable();
+        inputActions.SpacecraftBuilding.Disable();
     }
 
     public void SetCreditsScene() {
@@ -187,6 +203,13 @@ public class GameInput : MonoBehaviour {
         inputActions.SpacecraftBuilding.Disable();
     }
 
+    public void SetMissionFactsScene() {
+        SceneManager.LoadScene("MissionFactsScene");
+
+        inputActions.Spacecraft.Disable();
+        inputActions.SpacecraftBuilding.Disable();
+    }
+
     public void SetMainMenuScene() {
         SceneManager.LoadScene("MainMenuScene");
 
@@ -197,12 +220,7 @@ public class GameInput : MonoBehaviour {
     public void SetGameOverScene(bool victory) {
         // Destroy the old spacecraft so any path out of game over starts fresh
         Spacecraft spacecraft = Spacecraft.GetInstance();
-        if (spacecraft != null) {
-            Destroy(spacecraft.gameObject);
-        }
-
-        // Reset static engine count so new engines get IDs 1-4 again
-        Engine.totalEngineCount = 0;
+        if (spacecraft != null) Destroy(spacecraft.gameObject);
 
         GameOverUI.isVictory = victory;
         SceneManager.LoadScene("GameOverScene");

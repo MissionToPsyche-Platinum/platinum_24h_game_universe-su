@@ -10,6 +10,10 @@ public class BackButtonUI : MonoBehaviour
 {
     private void Start()
     {
+        if (GameObject.Find("BackgroundCanvas") != null || GameObject.Find("BackButtonCanvas") != null)
+        {
+            return;
+        }
         // Background canvas renders BEHIND the scene content
         GameObject bgCanvasObj = new GameObject("BackgroundCanvas");
         Canvas bgCanvas = bgCanvasObj.AddComponent<Canvas>();
@@ -32,6 +36,7 @@ public class BackButtonUI : MonoBehaviour
 
         Image panelImage = panelObj.AddComponent<Image>();
         panelImage.color = new Color(0.03f, 0.03f, 0.08f, 0.92f);
+        panelImage.raycastTarget = false;   // IMPORTANT: don't block UI clicks
 
         // Button canvas renders ABOVE the scene content
         GameObject btnCanvasObj = new GameObject("BackButtonCanvas");
