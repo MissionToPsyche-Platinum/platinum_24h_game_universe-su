@@ -74,6 +74,7 @@ public class GameInput : MonoBehaviour {
         inputActions.SpacecraftBuilding.LeftMouseClick.performed += LeftMouseClick_performed;
     
         inputActions.General.SceneSwitch.performed += SceneSwitch_performed;
+        inputActions.General.ReturnToMenu.performed += ReturnToMenu_performed;
     }
     
     private void EngineOne_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
@@ -159,6 +160,10 @@ public class GameInput : MonoBehaviour {
     private void SceneSwitch_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
         if (SceneManager.GetActiveScene().name == "FlightScene") SetBuildScene();
         else SetFlightFactsScene();
+    }
+    
+    private void ReturnToMenu_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+        SetMainMenuScene();
     }
 
     public void SetBuildScene() {
