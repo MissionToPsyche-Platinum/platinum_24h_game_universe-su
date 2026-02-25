@@ -41,7 +41,6 @@ public class ShipBuildingGrid : MonoBehaviour {
     } 
     
     private void Start() {
-        gameInput.OnNumKeyPerformedAction += GameInput_OnNumKeyAction;
         gameInput.OnDeletePartPerformedAction += GameInput_OnDeletePartPerformedAction;
         gameInput.OnLeftMouseClickPerformedAction += GameInput_OnLeftMouseClickAction;
     }
@@ -83,14 +82,6 @@ public class ShipBuildingGrid : MonoBehaviour {
         return (x, y);
     }
     
-    private void GameInput_OnNumKeyAction(object sender, GameInput.NumKeyEventArgs e) {
-        int x = selectedTileCoords.Item1;
-        int y = selectedTileCoords.Item2;
-        GameObject part = partDB.GetPartGameObject(e.key);
-        
-        if (!someTileSelected) return;
-        if (CanPlacePart(part, (x, y))) PlacePart(part, (x, y));
-    }
 
     private void GameInput_OnDeletePartPerformedAction(object sender, System.EventArgs e) {
         if (partDB.GetPartID(selectedPart) == 2) AdjustEngineIDsForDeletion(selectedPart);
