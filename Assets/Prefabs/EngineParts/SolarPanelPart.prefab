@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 3033503194899937510}
   - component: {fileID: 4862306525171706928}
   - component: {fileID: 1397320101164581373}
+  - component: {fileID: 8273626326462585906}
   m_Layer: 0
   m_Name: SolarPanelPart
   m_TagString: Untagged
@@ -233,3 +234,16 @@ FixedJoint2D:
   m_ConnectedAnchor: {x: -1.1881146, y: 0.92709}
   m_DampingRatio: 0
   m_Frequency: 0
+--- !u!114 &8273626326462585906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7421062647158426556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d54494c76a83f414ea8ee0e3784b0968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partType: 6

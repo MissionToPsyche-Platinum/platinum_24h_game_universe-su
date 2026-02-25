@@ -99,10 +99,42 @@ public class GameInput : MonoBehaviour {
     private void LeftMouseClick_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
         OnLeftMouseClickPerformedAction?.Invoke(this, EventArgs.Empty); 
     }
-    
-    private void SceneSwitch_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
-        if (SceneManager.GetActiveScene().name == "FlightScene") SetBuildScene();
-        else SetFlightFactsScene();
+
+    private void SceneSwitch_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+        Debug.Log("SceneSwitch pressed in: " + sceneName);
+
+        if (sceneName == "BuildScene")
+        {
+            BuildRequirements requirements = FindObjectOfType<BuildRequirements>();
+
+            if (requirements == null)
+            {
+                Debug.LogWarning("No BuildRequirements found in BuildScene.");
+                return;
+            }
+
+            bool ready = requirements.IsReadyForFlight(out string message);
+            Debug.Log("ReadyForFlight? " + ready + " | " + message);
+
+            if (!ready)
+            {
+                return;
+            }
+
+            SetFlightFactsScene(); // or SetFlightScene()
+            return;
+        }
+
+        if (sceneName == "FlightScene")
+        {
+            SetBuildScene();
+        }
+        else
+        {
+            SetFlightFactsScene();
+        }
     }
 
     public void SetBuildScene() {
@@ -113,6 +145,22 @@ public class GameInput : MonoBehaviour {
     }
 
     public void SetFlightScene() {
+        // Only enforce requirements if we are currently in the BuildScene
+        if (SceneManager.GetActiveScene().name == "BuildScene") {
+            BuildRequirements requirements = FindObjectOfType<BuildRequirements>();
+
+            if (requirements == null) {
+                Debug.LogWarning("No BuildRequirements found in BuildScene. Add it to a BuildManager object.");
+                return;
+            }
+
+            if (!requirements.IsReadyForFlight(out string message)) {
+                Debug.Log(message); // Example: "Missing parts: SolarPanel, SatelliteDish"
+                return; // Stop here -> do NOT load FlightScene
+            }
+        }
+
+        // Passed requirements -> go to FlightScene
         SceneManager.LoadScene("FlightScene");
 
         inputActions.SpacecraftBuilding.Disable();
