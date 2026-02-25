@@ -22,12 +22,14 @@ public class PlanetGravitySource : MonoBehaviour
 
     private readonly HashSet<Rigidbody2D> bodiesInZone = new HashSet<Rigidbody2D>();
     private CircleCollider2D gravityTrigger;
+    private int spacecraftLayerIndex;
 
     private void Awake()
     {
         gravityTrigger = GetComponent<CircleCollider2D>();
         gravityTrigger.isTrigger = true;
         gravityTrigger.radius = gravityRadius;
+        spacecraftLayerIndex = LayerMask.NameToLayer("SpaceCraft");
     }
 
     private void FixedUpdate()
@@ -38,6 +40,7 @@ public class PlanetGravitySource : MonoBehaviour
         }
 
         Vector2 planetCenter = transform.position;
+        bool spacecraftGravityApplied = false;
 
         foreach (Rigidbody2D rb in bodiesInZone)
         {
@@ -46,20 +49,35 @@ public class PlanetGravitySource : MonoBehaviour
                 continue;
             }
 
-            Vector2 direction = planetCenter - rb.position;
-            float distance = direction.magnitude;
-
-            if (distance < 0.001f)
+            // For spacecraft parts, apply gravity only once to the main body
+            if (rb.gameObject.layer == spacecraftLayerIndex)
             {
+                if (spacecraftGravityApplied) continue;
+                spacecraftGravityApplied = true;
+
+                Spacecraft spacecraft = Spacecraft.GetInstance();
+                if (spacecraft == null) continue;
+                Rigidbody2D mainRb = spacecraft.GetComponent<Rigidbody2D>();
+                if (mainRb == null) continue;
+
+                ApplyGravity(mainRb, planetCenter);
                 continue;
             }
 
-            direction.Normalize();
-
-            float acceleration = CalculateGravity(distance);
-
-            rb.AddForce(direction * acceleration * rb.mass, ForceMode2D.Force);
+            ApplyGravity(rb, planetCenter);
         }
+    }
+
+    private void ApplyGravity(Rigidbody2D rb, Vector2 planetCenter)
+    {
+        Vector2 direction = planetCenter - rb.position;
+        float distance = direction.magnitude;
+
+        if (distance < 0.001f) return;
+
+        direction.Normalize();
+        float acceleration = CalculateGravity(distance);
+        rb.AddForce(direction * acceleration * rb.mass, ForceMode2D.Force);
     }
 
     private float CalculateGravity(float distance)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 //Class defines the behavior of the engine part. 
 public class Engine : MonoBehaviour {
-    [SerializeField] private int speed;
+    [SerializeField] private int speed = 15;
     [SerializeField] private Rigidbody2D engineRigidbody2D;
     [SerializeField] private SpriteRenderer engineVisual;
     [SerializeField] private TextMeshProUGUI idUI;
@@ -57,7 +57,10 @@ public class Engine : MonoBehaviour {
         if(active && TryConsumeFuel()) ActivateEngine(); //Only activates if engine is active and there is fuel.
     }
 
-    private void ActivateEngine() => engineRigidbody2D.AddForce(transform.up * (speed * Time.fixedDeltaTime));
+    private void ActivateEngine() {
+        Rigidbody2D target = Spacecraft.GetInstance()?.GetComponent<Rigidbody2D>() ?? engineRigidbody2D;
+        target.AddForce(transform.up * speed);
+    }
     
     private void GameInput_OnEngineAction(object sender, GameInput.EngineEventArgs e) { 
         if(engineID == e.engineNum) active = e.activated;
