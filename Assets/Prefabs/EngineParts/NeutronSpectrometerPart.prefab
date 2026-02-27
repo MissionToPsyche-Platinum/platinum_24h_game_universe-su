@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6800226028636775354}
   - component: {fileID: 3478179588951603072}
   - component: {fileID: -2478395606005774657}
+  - component: {fileID: -6573763368943879995}
   m_Layer: 0
   m_Name: NeutronSpectrometerPart
   m_TagString: Untagged
@@ -160,6 +161,19 @@ FixedJoint2D:
   m_ConnectedAnchor: {x: -1.1881146, y: 0.92709}
   m_DampingRatio: 0
   m_Frequency: 0
+--- !u!114 &-6573763368943879995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3898192504596313925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d54494c76a83f414ea8ee0e3784b0968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partType: 4
 --- !u!1 &3941638623089757362
 GameObject:
   m_ObjectHideFlags: 0

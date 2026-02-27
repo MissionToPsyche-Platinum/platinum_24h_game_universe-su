@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 398190188706771762}
   - component: {fileID: 6952641627509782601}
   - component: {fileID: -9142783913395746958}
+  - component: {fileID: -8936569572055432537}
   m_Layer: 0
   m_Name: MagnetometerPart
   m_TagString: Untagged
@@ -147,6 +148,19 @@ FixedJoint2D:
   m_ConnectedAnchor: {x: 0, y: 0}
   m_DampingRatio: 0
   m_Frequency: 0
+--- !u!114 &-8936569572055432537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22678911187016829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d54494c76a83f414ea8ee0e3784b0968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partType: 2
 --- !u!1 &7919251410440097260
 GameObject:
   m_ObjectHideFlags: 0
