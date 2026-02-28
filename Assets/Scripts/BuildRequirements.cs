@@ -4,6 +4,7 @@ using UnityEngine;
 public class BuildRequirements : MonoBehaviour
 {
     [SerializeField] private Transform shipRoot;
+    [SerializeField] private bool bypassBuildRequirements;
 
     private readonly SpacePartType[] requiredParts = {
         SpacePartType.GammaRay,
@@ -15,6 +16,11 @@ public class BuildRequirements : MonoBehaviour
     };
 
     public bool IsReadyForFlight(out string message) {
+        if (bypassBuildRequirements) {
+            message = "Ready for flight!";
+            return true;
+        }
+        
         if (shipRoot == null) {
             message = "Ship root not set.";
             return false;
