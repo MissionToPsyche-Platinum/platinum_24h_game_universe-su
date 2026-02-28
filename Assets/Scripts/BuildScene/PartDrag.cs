@@ -127,6 +127,8 @@ public class PartDrag : MonoBehaviour {
     }
 
     private bool CanSwapPart(GameObject draggedPart, Vector3 draggedOGPosition, GameObject otherPart, Vector3 otherOGPosition) {
+        if (partDB.GetPartID(otherPart) == 0) return false;
+        
         int otherID = partDB.GetPartID(otherPart);
         int draggedID = partDB.GetPartID(draggedPart);
         
