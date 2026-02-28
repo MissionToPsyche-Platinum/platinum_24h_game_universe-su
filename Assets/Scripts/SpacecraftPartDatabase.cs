@@ -17,11 +17,11 @@ public class SpacecraftPartDatabase : MonoBehaviour {
     
     public int GetPartID(GameObject part) {
         if (part.name.Contains("(Clone)")) return GetPartID(GetPartGameObject(part.name));
-            
+        
         foreach (PartScriptableObject partSO in allParts) {
-            if (partSO.part == part) return partSO.partID;
+            if (partSO.part.name == part.name) return partSO.partID;
         }
-
+        
         return -1;
     }
     
