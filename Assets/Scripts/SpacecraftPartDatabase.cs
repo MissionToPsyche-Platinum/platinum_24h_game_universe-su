@@ -16,6 +16,7 @@ public class SpacecraftPartDatabase : MonoBehaviour {
     }
     
     public int GetPartID(GameObject part) {
+        if (part == null) return -1;
         if (part.name.Contains("(Clone)")) return GetPartID(GetPartGameObject(part.name));
             
         foreach (PartScriptableObject partSO in allParts) {
