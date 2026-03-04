@@ -59,8 +59,7 @@ public class PartDrag : MonoBehaviour {
 
         // Enable physics temporarily for dragging
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
+        if (rb != null) {
             rb.bodyType = RigidbodyType2D.Dynamic;
             rb.simulated = true;
         }

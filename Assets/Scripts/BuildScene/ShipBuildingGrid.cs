@@ -140,8 +140,7 @@ public class ShipBuildingGrid : MonoBehaviour {
         StartCoroutine(HandleLeftClickNextFrame());
     }
 
-    private System.Collections.IEnumerator HandleLeftClickNextFrame()
-    {
+    private System.Collections.IEnumerator HandleLeftClickNextFrame() {
         yield return null;
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) yield break;
 
@@ -246,8 +245,7 @@ public class ShipBuildingGrid : MonoBehaviour {
     public int GridWidth => gridWidth;
     public int GridHeight => gridHeight;
 
-    public void PlacePartAtCoordinates(GameObject part, (int, int) coordinates)
-    {
+    public void PlacePartAtCoordinates(GameObject part, (int, int) coordinates) {
         // If something already exists here, destroy it first (true swap)
         if (placedParts.TryGetValue(coordinates, out GameObject existing) && existing != null) {
             // Don't allow swapping the base/root part (optional safety)
