@@ -49,7 +49,13 @@ public class ShipBuildingGrid : MonoBehaviour {
 
     private void CreateSpacecraft() {
         spacecraft.transform.position = GridCoordinatesToUnityPosition(gridWidth / 2, gridHeight / 2);
-        grid.SetValue(gridWidth / 2, gridHeight / 2, partDB.GetPartID(partDB.GetPartGameObject(0)));
+
+        int baseID = partDB.GetPartID(partDB.GetPartGameObject(0));
+        (int, int) baseCoords = (gridWidth / 2, gridHeight / 2);
+
+        // Mark the base tile as occupied in the int grid
+        grid.SetValue(baseCoords.Item1, baseCoords.Item2, baseID);
+
     }
 
     public void SetGridCellValue((int, int) coordinates, int value) {
@@ -85,49 +91,57 @@ public class ShipBuildingGrid : MonoBehaviour {
     }
 
 
-private void GameInput_OnDeletePartPerformedAction(object sender, System.EventArgs e) {
-    if (!someTileSelected) return;
+    private void GameInput_OnDeletePartPerformedAction(object sender, System.EventArgs e) {
+        if (!someTileSelected) return;
 
-    // Find the real part object in this tile
-    if (!placedParts.TryGetValue(selectedTileCoords, out GameObject partToDelete) || partToDelete == null) return;
+        // Find the real part object in this tile
+        if (!placedParts.TryGetValue(selectedTileCoords, out GameObject partToDelete) || partToDelete == null) return;
 
-    if (partDB.GetPartID(partToDelete) == 2) {
-        AdjustEngineIDsForDeletion(partToDelete);
-    }
+        // Don't allow deleting the base/root part (optional safety)
+        if (partToDelete == spacecraft) return;
 
-    Destroy(partToDelete);
-    placedParts.Remove(selectedTileCoords);
+        if (partToDelete.TryGetComponent<Engine>(out _))
+        {
+            AdjustEngineIDsForDeletion(partToDelete);
+        }
 
-    selectedPart = null;
-    grid.SetValue(selectedTileCoords.Item1, selectedTileCoords.Item2, -1);
-    highlightSprite.color = colorHighlightInvisible;
-    someTileSelected = false;
+        Destroy(partToDelete);
+        placedParts.Remove(selectedTileCoords);
+
+        selectedPart = null;
+        grid.SetValue(selectedTileCoords.Item1, selectedTileCoords.Item2, -1);
+
+        highlightSprite.color = colorHighlightInvisible;
+        someTileSelected = false;
     }
 
     private void AdjustEngineIDsForDeletion(GameObject engineToBeDeleted) {
-        int engineID = engineToBeDeleted.GetComponent<Engine>().engineID;
+        if (!engineToBeDeleted.TryGetComponent<Engine>(out Engine deletedEngine)) return;
+        int engineID = deletedEngine.engineID;
         int totalEngines = Engine.totalEngineCount;
-        
-        Engine.totalEngineCount--;
-        
-        if (engineID == totalEngines) return;
-        //If the above is not true, that means we are not deleting the most recently placed engine. This means that the
-        //engine ID's will not be perfectly sequential (ex: we will have engines 1 and 3 but not 2). So we need to fix
-        //that with everything below.
-        
-        foreach (Transform child in spacecraft.transform) {
-            Engine otherEngine;
-            if (!child.TryGetComponent(out otherEngine)) continue;
 
-            if (otherEngine.engineID > engineID) otherEngine.engineID--;
+        Engine.totalEngineCount--;
+
+        if (engineID == totalEngines) return;
+
+        foreach (Transform child in spacecraft.transform) {
+            if (!child.TryGetComponent(out Engine otherEngine)) continue;
+
+            if (otherEngine.engineID > engineID) {
+                otherEngine.engineID--;
+
+                // If you have UI text tied to engineID, update it here:
+                // otherEngine.UpdateEngineLabel();
+            }
         }
     }
-    
+
     private void GameInput_OnLeftMouseClickAction(object sender, System.EventArgs e) {
         StartCoroutine(HandleLeftClickNextFrame());
     }
 
-    private System.Collections.IEnumerator HandleLeftClickNextFrame() {
+    private System.Collections.IEnumerator HandleLeftClickNextFrame()
+    {
         yield return null;
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) yield break;
 
@@ -136,26 +150,23 @@ private void GameInput_OnDeletePartPerformedAction(object sender, System.EventAr
         (int, int) clickCoords;
         grid.GetXY(mousePosition, out clickCoords.Item1, out clickCoords.Item2);
 
-        if (clickCoords.Item1 < 0 || clickCoords.Item2 < 0 ||
-            clickCoords.Item1 >= gridWidth || clickCoords.Item2 >= gridHeight) {
-                
+        if (clickCoords.Item1 < 0 || clickCoords.Item2 < 0 || clickCoords.Item1 >= gridWidth || clickCoords.Item2 >= gridHeight) {
             highlightSprite.color = colorHighlightInvisible;
             someTileSelected = false;
+            selectedPart = null;
             yield break;
         }
 
-        if (grid.GetValue(clickCoords.Item1, clickCoords.Item2) == -1) selectedPart = null;
-        highlightTransform.transform.position = (Vector3) PostionToGridPosition(mousePosition);
+        highlightTransform.transform.position = (Vector3)PostionToGridPosition(mousePosition);
         highlightSprite.color = colorHighlight;
+
         someTileSelected = true;
         selectedTileCoords = clickCoords;
-        // Set selectedPart to the actual object in that tile
-        if (placedParts.TryGetValue(selectedTileCoords, out GameObject partInTile))
-        {
+
+        // select actual object tracked in that tile
+        if (placedParts.TryGetValue(selectedTileCoords, out GameObject partInTile)) {
             selectedPart = partInTile;
-        }
-        else
-        {
+        } else {
             selectedPart = null;
         }
     }
@@ -188,17 +199,9 @@ private void GameInput_OnDeletePartPerformedAction(object sender, System.EventAr
         
         return false;
     }
-    
+
     private void PlacePart(GameObject part, (int, int) coordinates) {
-        grid.SetValue(coordinates.Item1, coordinates.Item2, partDB.GetPartID(part));
-        
-        GameObject spacecraftPart = Instantiate(part, spacecraft.transform);
-        
-        spacecraftPart.SetActive(true);
-        spacecraftPart.transform.position = GridCoordinatesToUnityPosition(selectedTileCoords);
-        
-        // Connect the part to the main spacecraft rigidbody
-        ConnectPartToSpacecraft(spacecraftPart);
+        PlacePartAtCoordinates(part, coordinates);
     }
 
     private void ConnectPartToSpacecraft(GameObject part) {
@@ -246,19 +249,48 @@ private void GameInput_OnDeletePartPerformedAction(object sender, System.EventAr
     public void PlacePartAtCoordinates(GameObject part, (int, int) coordinates)
     {
         // If something already exists here, destroy it first (true swap)
-        if (placedParts.TryGetValue(coordinates, out GameObject existing) && existing != null)
-        {
+        if (placedParts.TryGetValue(coordinates, out GameObject existing) && existing != null) {
+            // Don't allow swapping the base/root part (optional safety)
+            if (existing == spacecraft) return;
+
+            // If we are replacing an engine, adjust IDs first
+            if (existing.TryGetComponent<Engine>(out _)){
+                AdjustEngineIDsForDeletion(existing);
+            }
+
             Destroy(existing);
+            placedParts.Remove(coordinates);
+            grid.SetValue(coordinates.Item1, coordinates.Item2, -1);
         }
 
+        // Set grid value
         grid.SetValue(coordinates.Item1, coordinates.Item2, partDB.GetPartID(part));
 
+        // Spawn part
         GameObject spacecraftPart = Instantiate(part, spacecraft.transform);
         spacecraftPart.SetActive(true);
         spacecraftPart.transform.position = GridCoordinatesToUnityPosition(coordinates);
 
+        // Connect physics/joint
         ConnectPartToSpacecraft(spacecraftPart);
 
+        // Track in dictionary
         placedParts[coordinates] = spacecraftPart;
+
+        // Keep selection synced if placing in selected tile
+        if (someTileSelected && selectedTileCoords.Equals(coordinates)){
+            selectedPart = spacecraftPart;
+        }
+    }
+
+
+    public void RemovePlacedPartAtWorldPosition(Vector3 worldPos){
+        (int, int) coords = UnityPositionToGridCoordinates(worldPos);
+        placedParts.Remove(coords);
+    }
+
+    public void SetPlacedPartAtWorldPosition(Vector3 worldPos, GameObject partObject){
+        (int, int) coords = UnityPositionToGridCoordinates(worldPos);
+        placedParts[coords] = partObject;
     }
 }
