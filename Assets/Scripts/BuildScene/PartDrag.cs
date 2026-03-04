@@ -41,9 +41,9 @@ public class PartDrag : MonoBehaviour {
         screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
         offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
         
+        Debug.Log($"Part is connected: {shipGrid.PartIsConnected(shipGrid.UnityPositionToGridCoordinates(transform.position))}");
         shipGrid.SetGridCellValueByUnityPosition(originalPosition, -1);
         shipGrid.SetSelectedPart(gameObject);
-
         SetSortingLayer(midDragLayer);
         SetLayer(midDragLayer);
 
