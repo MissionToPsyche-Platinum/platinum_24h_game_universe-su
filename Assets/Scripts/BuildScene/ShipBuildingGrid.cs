@@ -230,4 +230,60 @@ public class ShipBuildingGrid : MonoBehaviour {
 
         ConnectPartToSpacecraft(spacecraftPart);
     }
+
+    public bool PartIsConnected((int, int) coordinates) => PartIsConnectedHelper(coordinates, new HashSet<(int, int)>());
+
+    private bool PartIsConnectedHelper((int, int) coordinates, HashSet<(int, int)> visitedCells) {
+        visitedCells.Add(coordinates);
+        
+        int partID = GetGridCellValue(coordinates);
+        int x = coordinates.Item1;
+        int y = coordinates.Item2;
+
+        List<string> snapableDirections = partDB.GetSnapableDirections(partID);
+
+        foreach (string dir in snapableDirections) {
+            int otherPart;
+            switch (dir) {
+                case "above":
+                    otherPart = GetGridCellValue((x, y + 1));
+                    if (otherPart == 0) return true;
+                    if (otherPart > 0 && !visitedCells.Contains((x, y + 1))) {
+                        if (!PartCanConnect(otherPart, "below")) continue;
+                        if (PartIsConnectedHelper((x, y + 1), visitedCells)) return true;
+                    }
+                    break;
+                case "below":
+                    otherPart = GetGridCellValue((x, y - 1));
+                    if (otherPart == 0) return true;
+                    if (otherPart > 0 && !visitedCells.Contains((x, y - 1))) {
+                        if (!PartCanConnect(otherPart, "above")) continue;
+                        if (PartIsConnectedHelper((x, y - 1), visitedCells)) return true;
+                    }
+                    break;
+                case "left":
+                    otherPart = GetGridCellValue((x - 1, y));
+                    if (otherPart == 0) return true;
+                    if (otherPart > 0 && !visitedCells.Contains((x - 1, y))) {
+                        if (!PartCanConnect(otherPart, "right")) continue;
+                        if (PartIsConnectedHelper((x - 1, y), visitedCells)) return true;
+                    }
+                    break;
+                case "right":
+                    otherPart = GetGridCellValue((x + 1, y));
+                    if (otherPart == 0) return true;
+                    if (otherPart > 0 && !visitedCells.Contains((x + 1, y))) {
+                        if (!PartCanConnect(otherPart, "left")) continue;
+                        if (PartIsConnectedHelper((x + 1, y), visitedCells)) return true;
+                    }
+                    break;
+                default:
+                    continue;
+            }
+        }
+        
+        return false;
+    }
+    
+    
 }
