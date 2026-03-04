@@ -323,3 +323,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partData: {fileID: 11400000, guid: 9389f319bd62f4933a429d043327b12f, type: 2}
+  buildFactsPopup: {fileID: 3482455314024892015, guid: 6315cf51e7bda594f98738862a6a2ade, type: 3}

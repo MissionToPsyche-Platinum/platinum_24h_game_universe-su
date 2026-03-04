@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb330e8931746bf99d864951b78e1c, type: 3}
-  m_Name: MultispectrallmagerPart
+  m_Name: MultispectralImagerPart
   m_EditorClassIdentifier: 
   part: {fileID: 4834617215245572854, guid: 2e82c3b80717b854ea0cd30a7d0bdd24, type: 3}
   partID: 8
