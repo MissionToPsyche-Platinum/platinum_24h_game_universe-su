@@ -85,7 +85,7 @@ public class AsteroidController : MonoBehaviour {
         return camera.transform.position + offset;
     }
 
-    private void DestroyAsteroid(GameObject asteroid) {
+    public void DestroyAsteroid(GameObject asteroid) {
         outOfCameraTimes.Remove(asteroid);
         Destroy(asteroid);
         currentAsteroidCount--;
