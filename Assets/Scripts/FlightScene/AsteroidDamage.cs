@@ -14,7 +14,7 @@ public class AsteroidDamage : MonoBehaviour {
     
     [Header("Behavior Settings")]
     [Tooltip("Destroy this asteroid on collision with spacecraft")]
-    [SerializeField] private bool destroyOnCollision = false;
+    [SerializeField] private bool destroyOnCollision = true;
     
     [Tooltip("Disable this component after first collision")]
     [SerializeField] private bool disableAfterCollision = false;
@@ -54,7 +54,7 @@ public class AsteroidDamage : MonoBehaviour {
 
         // Handle post-collision behavior
         if (destroyOnCollision) {
-            Destroy(gameObject);
+            AsteroidController.Instance.DestroyAsteroid(gameObject);
         } else if (disableAfterCollision) {
             enabled = false;
         }
