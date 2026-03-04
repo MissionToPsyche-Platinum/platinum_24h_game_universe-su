@@ -54,9 +54,7 @@ public class ShipBuildingGrid : MonoBehaviour {
         grid.SetValue(coordinates.Item1, coordinates.Item2, value);
     }
     
-    public int GetGridCellValue((int, int) coordinates) {
-        return grid.GetValue(coordinates.Item1, coordinates.Item2);
-    }
+    public int GetGridCellValue((int, int) coordinates) => grid.GetValue(coordinates);
 
     public void SetGridCellValueByUnityPosition(Vector3 position, int value) {
         (int, int) coordinates = UnityPositionToGridCoordinates(position);
@@ -132,7 +130,7 @@ public class ShipBuildingGrid : MonoBehaviour {
             yield break;
         }
 
-        if (grid.GetValue(clickCoords.Item1, clickCoords.Item2) == -1) selectedPart = null;
+        if (grid.GetValue(clickCoords) == -1) selectedPart = null;
         highlightTransform.transform.position = (Vector3) PostionToGridPosition(mousePosition);
         highlightSprite.color = colorHighlight;
         someTileSelected = true;
@@ -144,21 +142,21 @@ public class ShipBuildingGrid : MonoBehaviour {
         int x = coords.Item1;
         int y = coords.Item2;
         
-        if (grid.GetValue(x, y) != -1) return false; 
+        if (grid.GetValue(coords) != -1) return false; 
 
         foreach (string snapableDirection in possibleConnectionsOfPartToBePlaced) {
             switch (snapableDirection) {
                 case "above":
-                    if (PartCanConnect(grid.GetValue(x, y + 1), "below")) return true;
+                    if (PartCanConnect(grid.GetValue((x, y + 1)), "below")) return true;
                     break;
                 case "below":
-                    if (PartCanConnect(grid.GetValue(x, y - 1), "above")) return true;
+                    if (PartCanConnect(grid.GetValue((x, y - 1)), "above")) return true;
                     break;
                 case "left":
-                    if (PartCanConnect(grid.GetValue(x - 1, y), "right")) return true;
+                    if (PartCanConnect(grid.GetValue((x - 1, y)), "right")) return true;
                     break;
                 case "right":
-                    if (PartCanConnect(grid.GetValue(x + 1, y), "left"))  return true;
+                    if (PartCanConnect(grid.GetValue((x + 1, y)), "left"))  return true;
                     break;
                 default:
                     continue;
@@ -196,6 +194,7 @@ public class ShipBuildingGrid : MonoBehaviour {
         }
     }
 
+    //Ex: If part is bottomEngine, and the connectingDirection is "above" it can connect
     private bool PartCanConnect(int partID, string connectingDirection) {
         if (partID < 0) return false;
         
