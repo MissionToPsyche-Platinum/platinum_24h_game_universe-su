@@ -229,6 +229,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5505991369549460705, guid: a8ded188f06cb4f39b60eb2d5f3a5784, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8928962328480588919, guid: a8ded188f06cb4f39b60eb2d5f3a5784, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -525,6 +529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipRoot: {fileID: 1823052788}
+  bypassBuildRequirements: 1
 --- !u!4 &643110848
 Transform:
   m_ObjectHideFlags: 0
@@ -534,7 +539,7 @@ Transform:
   m_GameObject: {fileID: 643110846}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3970.5898, y: -1095.8285, z: -49.479244}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

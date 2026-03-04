@@ -48,8 +48,10 @@ public class Grid {
         GetXY(worldPosition, out x, out y);
         SetValue(x, y, value);
     }
-
-    public int GetValue(int x, int y) {
+    
+    public int GetValue((int, int) coordinates) {
+        int x = coordinates.Item1;
+        int y = coordinates.Item2;
         if(IsInGridRange(x, y)) return gridArray[x, y];
         
         return -2; //returns -2 if out of bounds
@@ -61,7 +63,7 @@ public class Grid {
         
         GetXY(worldPosition, out x, out y);
 
-        return GetValue(x, y);
+        return GetValue((x, y));
     }
     
     private bool IsInGridRange(int x, int y) => (x >= 0 && y >= 0 && x < width && y < height);
