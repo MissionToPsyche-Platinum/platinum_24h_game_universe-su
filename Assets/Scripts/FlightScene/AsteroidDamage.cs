@@ -28,6 +28,7 @@ public class AsteroidDamage : MonoBehaviour {
     private void Start() {
         damageCooldown = AsteroidController.Instance.GetDamageCoolDown();
         spacecraftLayer = LayerMask.NameToLayer("SpaceCraft");
+        destroyOnCollision = true;
     }
     
     private void OnCollisionEnter2D(Collision2D collision) => HandleCollision(collision.gameObject);
