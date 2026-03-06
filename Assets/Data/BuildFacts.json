@@ -17,7 +17,7 @@
         "fact": "The Gamma-Ray and Neutron Spectrometer will determine what chemical elements make up Psyche's surface by detecting gamma rays and neutrons emitted from the asteroid."
         },
         {
-        "part": "SatteliteDishPart",
+        "part": "SatelliteDishPart",
         "fact": "Psyche also carries an experimental Deep Space Optical Communication (DSOC) system that uses lasers instead of radio waves to send data, achieving record-breaking data rates from deep space."
         },
         {

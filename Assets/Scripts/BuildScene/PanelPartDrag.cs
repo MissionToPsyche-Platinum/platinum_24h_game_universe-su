@@ -33,16 +33,6 @@ public class PanelPartDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         buildFactsPopup = GameObject.Find("BuildFactsPopup").GetComponent<BuildFactsPopup>();
     }
-
-    private void Awake() {
-        SpriteRenderer sr = partData.part.GetComponentInChildren<SpriteRenderer>();
-        if (sr != null) baseColor = sr.color;
-    }
-
-    private void Start()
-    {
-        buildFactsPopup = GameObject.Find("BuildFactsPopup").GetComponent<BuildFactsPopup>();
-    }
     public void OnBeginDrag(PointerEventData eventData) {
         if (partData == null || partData.part == null) return;
         if (!Spacecraft.IsBuildMode) return;
