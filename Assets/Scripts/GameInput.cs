@@ -9,8 +9,6 @@ public class GameInput : MonoBehaviour {
     public static GameInput Instance { get; private set; }
     public event EventHandler<EngineEventArgs> OnEnginePerformedAction;
     public event EventHandler<EngineEventArgs> OnEngineCanceledAction;
-    public event EventHandler<NumKeyEventArgs> OnNumKeyPerformedAction;
-
     public event EventHandler OnLeftMouseClickPerformedAction;
 
     public event EventHandler OnDeletePartPerformedAction;
@@ -27,12 +25,6 @@ public class GameInput : MonoBehaviour {
             this.activated = activated;
             this.engineNum = engineNum;
         }
-    }
-    
-    public class NumKeyEventArgs : EventArgs {
-        public int key;
-    
-        public NumKeyEventArgs(int key) => this.key = key;
     }
     
     public void Awake() {
@@ -60,15 +52,6 @@ public class GameInput : MonoBehaviour {
         inputActions.Spacecraft.EngineThree.canceled += EngineThree_canceled;
         inputActions.Spacecraft.EngineFour.performed += EngineFour_performed;
         inputActions.Spacecraft.EngineFour.canceled += EngineFour_canceled;
-        
-        inputActions.SpacecraftBuilding.KeyOne.performed += KeyOne_performed;
-        inputActions.SpacecraftBuilding.KeyTwo.performed += KeyTwo_performed;
-        inputActions.SpacecraftBuilding.KeyThree.performed += KeyThree_performed;
-        inputActions.SpacecraftBuilding.KeyFour.performed += KeyFour_performed;
-        inputActions.SpacecraftBuilding.KeyFive.performed += KeyFive_performed;
-        inputActions.SpacecraftBuilding.KeySix.performed += KeySix_performed;
-        inputActions.SpacecraftBuilding.KeySeven.performed += KeySeven_performed;
-        inputActions.SpacecraftBuilding.KeyEight.performed += KeyEight_performed;
 
         inputActions.SpacecraftBuilding.DeletePart.performed += DeletePart_performed;
         inputActions.SpacecraftBuilding.LeftMouseClick.performed += LeftMouseClick_performed;
@@ -109,45 +92,6 @@ public class GameInput : MonoBehaviour {
         OnEngineCanceledAction?.Invoke(this, new EngineEventArgs(false, 4)); 
     }
     
-    
-    
-    private void KeyOne_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) { 
-        OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(1)); 
-    }
-    
-    private void KeyTwo_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
-        OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(2)); 
-    }
-    
-    private void KeyThree_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(3));
-    }
-    
-    private void KeyFour_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(4));
-    }
-    
-    private void KeyFive_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(5));
-    }
-    
-    private void KeySix_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(6));
-    }
-    
-    private void KeySeven_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(7));
-    }
-    
-    private void KeyEight_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        OnNumKeyPerformedAction?.Invoke(this, new NumKeyEventArgs(8));
-    }
 
     private void DeletePart_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
         OnDeletePartPerformedAction?.Invoke(this, EventArgs.Empty);
@@ -156,10 +100,42 @@ public class GameInput : MonoBehaviour {
     private void LeftMouseClick_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
         OnLeftMouseClickPerformedAction?.Invoke(this, EventArgs.Empty); 
     }
-    
-    private void SceneSwitch_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
-        if (SceneManager.GetActiveScene().name == "FlightScene") SetBuildScene();
-        else SetFlightFactsScene();
+
+    private void SceneSwitch_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+        Debug.Log("SceneSwitch pressed in: " + sceneName);
+
+        if (sceneName == "BuildScene")
+        {
+            BuildRequirements requirements = FindObjectOfType<BuildRequirements>();
+
+            if (requirements == null)
+            {
+                Debug.LogWarning("No BuildRequirements found in BuildScene.");
+                return;
+            }
+
+            bool ready = requirements.IsReadyForFlight(out string message);
+            Debug.Log("ReadyForFlight? " + ready + " | " + message);
+
+            if (!ready)
+            {
+                return;
+            }
+
+            SetFlightFactsScene(); // or SetFlightScene()
+            return;
+        }
+
+        if (sceneName == "FlightScene")
+        {
+            SetBuildScene();
+        }
+        else
+        {
+            SetFlightFactsScene();
+        }
     }
     
     private void ReturnToMenu_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
@@ -174,6 +150,22 @@ public class GameInput : MonoBehaviour {
     }
 
     public void SetFlightScene() {
+        // Only enforce requirements if we are currently in the BuildScene
+        if (SceneManager.GetActiveScene().name == "BuildScene") {
+            BuildRequirements requirements = FindObjectOfType<BuildRequirements>();
+
+            if (requirements == null) {
+                Debug.LogWarning("No BuildRequirements found in BuildScene. Add it to a BuildManager object.");
+                return;
+            }
+
+            if (!requirements.IsReadyForFlight(out string message)) {
+                Debug.Log(message); // Example: "Missing parts: SolarPanel, SatelliteDish"
+                return; // Stop here -> do NOT load FlightScene
+            }
+        }
+
+        // Passed requirements -> go to FlightScene
         SceneManager.LoadScene("FlightScene");
 
         inputActions.SpacecraftBuilding.Disable();
@@ -254,15 +246,7 @@ public class GameInput : MonoBehaviour {
             inputActions.Spacecraft.EngineThree.canceled -= EngineThree_canceled;
             inputActions.Spacecraft.EngineFour.performed -= EngineFour_performed;
             inputActions.Spacecraft.EngineFour.canceled -= EngineFour_canceled;
-            
-            inputActions.SpacecraftBuilding.KeyOne.performed -= KeyOne_performed;
-            inputActions.SpacecraftBuilding.KeyTwo.performed -= KeyTwo_performed;
-            inputActions.SpacecraftBuilding.KeyThree.performed -= KeyThree_performed;
-            inputActions.SpacecraftBuilding.KeyFour.performed -= KeyFour_performed;
-            inputActions.SpacecraftBuilding.KeyFive.performed -= KeyFive_performed;
-            inputActions.SpacecraftBuilding.KeySix.performed -= KeySix_performed;
-            inputActions.SpacecraftBuilding.KeySeven.performed -= KeySeven_performed;
-            inputActions.SpacecraftBuilding.KeyEight.performed -= KeyEight_performed;
+
             inputActions.SpacecraftBuilding.LeftMouseClick.performed -= LeftMouseClick_performed;
             
             // Always disable the action maps (safe to call even if already disabled)

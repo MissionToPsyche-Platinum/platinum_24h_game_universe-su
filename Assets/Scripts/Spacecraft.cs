@@ -16,6 +16,10 @@ public class Spacecraft : MonoBehaviour {
     private Rigidbody2D rb;
     private FixedJoint2D[] partJoints;
     private Rigidbody2D[] partRigidbodies;
+
+    // Layer names
+    private const string SpaceCraftLayer = "SpaceCraft";
+    private const string DefaultLayer = "Default";
     
     // Cache original joint connections to preserve part-to-part links
     private System.Collections.Generic.Dictionary<FixedJoint2D, Rigidbody2D> originalJointConnections;
@@ -130,6 +134,9 @@ public class Spacecraft : MonoBehaviour {
             collider.enabled = true;
         }
         
+        // Set all parts to Default layer for build mode (so drag/drop OverlapPoint works)
+        SetAllPartsLayer(DefaultLayer);
+
         // Make all parts kinematic but keep simulation enabled for mouse events
         foreach (Rigidbody2D partRb in partRigidbodies) {
             if (partRb != rb) {
@@ -137,7 +144,7 @@ public class Spacecraft : MonoBehaviour {
                 partRb.simulated = true;  // Keep simulated = true so mouse events work
             }
         }
-        
+
         // Set main spacecraft to kinematic but keep simulation enabled
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.simulated = true;  // Keep simulated = true so mouse events work
@@ -171,6 +178,9 @@ public class Spacecraft : MonoBehaviour {
         // Get all colliders
         Collider2D[] partColliders = GetComponentsInChildren<Collider2D>();
         
+        // Set all parts to the SpaceCraft damage layer
+        SetAllPartsLayer(SpaceCraftLayer);
+
         // DISABLE PartDrag components in flight mode so parts can't be dragged
         PartDrag[] partDrags = GetComponentsInChildren<PartDrag>();
         foreach (PartDrag partDrag in partDrags) {
@@ -287,6 +297,14 @@ public class Spacecraft : MonoBehaviour {
         OnHealthChanged?.Invoke(this, HealthPercentage);
     }
     
+    private void SetAllPartsLayer(string layerName) {
+        int layer = LayerMask.NameToLayer(layerName);
+        gameObject.layer = layer;
+        foreach (Transform child in transform) {
+            child.gameObject.layer = layer;
+        }
+    }
+
     private void HandleDeath() {
         Debug.Log("Spacecraft destroyed!");
         GameInput.Instance.SetGameOverScene(false);

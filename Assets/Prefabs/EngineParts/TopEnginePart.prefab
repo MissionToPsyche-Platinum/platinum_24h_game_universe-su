@@ -402,7 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 850c3c51dbcba4bec9934c8a05b0f594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2000
+  speed: 50
   engineRigidbody2D: {fileID: 398841305246215798}
   engineVisual: {fileID: 383230240694097690}
   idUI: {fileID: 1516800545626777781}

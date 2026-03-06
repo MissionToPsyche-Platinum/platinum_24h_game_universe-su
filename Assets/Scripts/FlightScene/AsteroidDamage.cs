@@ -21,77 +21,43 @@ public class AsteroidDamage : MonoBehaviour {
     
     private float lastDamageTime = -1f;
     private float damageCooldown;
+    private int spacecraftLayer;
     
 
-    //Start func is used for this bc AsteroidController Instance is defined after this Awake() method is called. 
-    private void Start() => damageCooldown = AsteroidController.Instance.GetDamageCoolDown();
+    //Start func is used for this bc AsteroidController Instance is defined after this Awake() method is called.
+    private void Start() {
+        damageCooldown = AsteroidController.Instance.GetDamageCoolDown();
+        spacecraftLayer = LayerMask.NameToLayer("SpaceCraft");
+    }
     
     private void OnCollisionEnter2D(Collision2D collision) => HandleCollision(collision.gameObject);
     
     private void HandleCollision(GameObject other) {
-        // Only work in FlightScene
-        string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        if (currentScene != "FlightScene") {
+        // Only damage objects on the SpaceCraft layer
+        if (other.layer != spacecraftLayer) {
             return;
         }
-        
+
         // Check cooldown
         if (damageCooldown > 0f && Time.time < lastDamageTime + damageCooldown) {
             return;
         }
-        
-        // Check if the colliding object is part of the spacecraft
-        Spacecraft spacecraft = GetSpacecraftFromGameObject(other);
-        
-        if (spacecraft != null) {
-            // Deal damage to the spacecraft
-            spacecraft.TakeDamage(damage);
-            lastDamageTime = Time.time;
-            
-            Debug.Log($"Asteroid dealt {damage} damage to spacecraft! Health: {spacecraft.CurrentHealth}/{spacecraft.MaxHealth}");
-            
-            // Handle post-collision behavior
-            if (destroyOnCollision) {
-                Destroy(gameObject);
-            } else if (disableAfterCollision) {
-                enabled = false;
-            }
+
+        Spacecraft spacecraft = Spacecraft.GetInstance();
+        if (spacecraft == null) return;
+
+        // Deal damage to the spacecraft
+        spacecraft.TakeDamage(damage);
+        lastDamageTime = Time.time;
+
+        Debug.Log($"Asteroid dealt {damage} damage to spacecraft! Health: {spacecraft.CurrentHealth}/{spacecraft.MaxHealth}");
+
+        // Handle post-collision behavior
+        if (destroyOnCollision) {
+            Destroy(gameObject);
+        } else if (disableAfterCollision) {
+            enabled = false;
         }
-    }
-    
-    private Spacecraft GetSpacecraftFromGameObject(GameObject obj) {
-        if (obj == null) return null;
-        
-        // Check if this GameObject has a Spacecraft component
-        Spacecraft spacecraft = obj.GetComponent<Spacecraft>();
-        if (spacecraft != null) {
-            return spacecraft;
-        }
-        
-        // Check if this GameObject is a child of the spacecraft
-        Transform parent = obj.transform.parent;
-        while (parent != null) {
-            spacecraft = parent.GetComponent<Spacecraft>();
-            if (spacecraft != null) {
-                return spacecraft;
-            }
-            parent = parent.parent;
-        }
-        
-        // Check all parts of the spacecraft using the static instance
-        Spacecraft spacecraftInstance = Spacecraft.GetInstance();
-        if (spacecraftInstance != null) {
-            // Check if the colliding object is part of the spacecraft
-            Transform objTransform = obj.transform;
-            Transform spacecraftTransform = spacecraftInstance.transform;
-            
-            // Check if obj is a child of spacecraft
-            if (objTransform.IsChildOf(spacecraftTransform)) {
-                return spacecraftInstance;
-            }
-        }
-        
-        return null;
     }
     
     public void SetDamage(float newDamage) {

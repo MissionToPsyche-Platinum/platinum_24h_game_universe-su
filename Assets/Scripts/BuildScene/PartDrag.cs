@@ -33,15 +33,24 @@ public class PartDrag : MonoBehaviour {
         partDB = SpacecraftPartDatabase.Instance;
     }
 
-    void OnMouseDown() {
+    void OnMouseDown()
+    {
         if (!Spacecraft.IsBuildMode) return;
-        
+
         originalPosition = transform.position;
         baseColor = objectSprite.color;
         screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
-        offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
-        
+
+        offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(
+            new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z)
+        );
+
+        Debug.Log($"Part is connected: {shipGrid.PartIsConnected(shipGrid.UnityPositionToGridCoordinates(transform.position))}");
+
+        // Clear BOTH grid + dictionary at the original cell
         shipGrid.SetGridCellValueByUnityPosition(originalPosition, -1);
+        shipGrid.RemovePlacedPartAtWorldPosition(originalPosition);
+
         shipGrid.SetSelectedPart(gameObject);
 
         SetSortingLayer(midDragLayer);
@@ -92,10 +101,15 @@ public class PartDrag : MonoBehaviour {
 
         transform.rotation = lockedRotation;
 
-        GameObject part = partDB.GetPartGameObject(selectedObject.name);
-        
+        GameObject part = gameObject;
+
         Vector3? nullableGridSnapPosition = shipGrid.PostionToGridPosition(transform.position);
-        if (nullableGridSnapPosition == null) return;
+        if (nullableGridSnapPosition == null) {
+            // Put it back and re-register it
+            PlacePart(gameObject, originalPosition);
+            return;
+        }
+
         Vector3 gridSnapPosition = (Vector3)nullableGridSnapPosition;
 
         if (shipGrid.GetGridCellValue(shipGrid.UnityPositionToGridCoordinates(gridSnapPosition)) == -1) {
@@ -109,6 +123,8 @@ public class PartDrag : MonoBehaviour {
     }
 
     private bool TryPlacePart(GameObject part, Vector3 worldPosition) {
+        GameObject partPrefab = partDB.GetPartGameObject(selectedObject.name);
+
         if (!shipGrid.CanPlacePart(part, shipGrid.UnityPositionToGridCoordinates(worldPosition))) return false;
         
         PlacePart(part, worldPosition);
@@ -117,16 +133,21 @@ public class PartDrag : MonoBehaviour {
 
     private void PlacePart(GameObject part, Vector3 worldPosition) {
         part.transform.position = worldPosition;
+
+        // Update BOTH grid + dictionary at the new cell
         shipGrid.SetGridCellValueByUnityPosition(part.transform.position, partDB.GetPartID(part));
-        
+        shipGrid.SetPlacedPartAtWorldPosition(part.transform.position, part.gameObject);
+
         SetSortingLayer(defaultLayer);
         SetLayer(defaultLayer);
-        
+
         // Reconnect joint and disable physics
         ReconnectPart();
     }
 
     private bool CanSwapPart(GameObject draggedPart, Vector3 draggedOGPosition, GameObject otherPart, Vector3 otherOGPosition) {
+        if (partDB.GetPartID(otherPart) == 0) return false;
+        
         int otherID = partDB.GetPartID(otherPart);
         int draggedID = partDB.GetPartID(draggedPart);
         

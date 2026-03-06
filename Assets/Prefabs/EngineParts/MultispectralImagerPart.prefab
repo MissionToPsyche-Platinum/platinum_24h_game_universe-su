@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 5075375811201617869}
   - component: {fileID: 9032401727984843951}
   - component: {fileID: 8623995989884812775}
+  - component: {fileID: 8237277530272754229}
   m_Layer: 0
   m_Name: MultispectralImagerPart
   m_TagString: Untagged
@@ -243,3 +244,16 @@ FixedJoint2D:
   m_ConnectedAnchor: {x: -1.1881146, y: 0.92709}
   m_DampingRatio: 0
   m_Frequency: 0
+--- !u!114 &8237277530272754229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4834617215245572854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d54494c76a83f414ea8ee0e3784b0968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partType: 3
