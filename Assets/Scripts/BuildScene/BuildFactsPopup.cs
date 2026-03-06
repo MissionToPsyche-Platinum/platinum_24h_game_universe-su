@@ -128,7 +128,6 @@ public class BuildFactsPopup : MonoBehaviour
         if (!textboxInUse)
         {
             textboxInUse = true;
-            Debug.Log(textboxInUse);
             if (ApplyPartFactText(partName))
             {
                 yield return StartCoroutine(Fade(0f, 1f, fadeDuration));
@@ -137,7 +136,6 @@ public class BuildFactsPopup : MonoBehaviour
                 yield return new WaitForSeconds(timeBetweenFacts);
             }
             textboxInUse = false;
-            Debug.Log(textboxInUse);
         }
     }
 
@@ -155,7 +153,6 @@ public class BuildFactsPopup : MonoBehaviour
 
     private bool ApplyPartFactText(string partName)
     {
-        Debug.Log("partName = " + partName);
         for (int i = 0; i < factsData.funFacts.Length; i++)
         {
             FunFactEntry entry = factsData.funFacts[i];
