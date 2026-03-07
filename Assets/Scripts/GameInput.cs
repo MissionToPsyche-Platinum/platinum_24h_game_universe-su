@@ -121,9 +121,8 @@ public class GameInput : MonoBehaviour {
                 return;
             }
 
-            if (ShipBuildingGrid.Instance != null && ShipBuildingGrid.Instance.HasDisconnectedParts()) {
+            if (ShipBuildingGrid.Instance != null && ShipBuildingGrid.Instance.HighlightDisconnectedParts()) {
                 Debug.Log("Warning: Some ship parts are not connected to the spacecraft core.");
-                return;
             }
 
             SetFlightFactsScene(); // or SetFlightScene()
@@ -164,9 +163,8 @@ public class GameInput : MonoBehaviour {
                 Debug.Log(message); // Example: "Missing parts: SolarPanel, SatelliteDish"
                 return; // Stop here -> do NOT load FlightScene
             }
-            if (ShipBuildingGrid.Instance != null && ShipBuildingGrid.Instance.HasDisconnectedParts()) {
+            if (ShipBuildingGrid.Instance != null && ShipBuildingGrid.Instance.HighlightDisconnectedParts()) {
                 Debug.Log("Warning: Some ship parts are not connected to the spacecraft core.");
-                return; // Stop here -> do NOT load FlightScene
             }
         }
 
