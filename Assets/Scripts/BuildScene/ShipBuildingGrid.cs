@@ -350,9 +350,21 @@ public class ShipBuildingGrid : MonoBehaviour {
                     continue;
             }
         }
-        
         return false;
     }
-    
-    
+
+    public bool HasDisconnectedParts(){
+        foreach (var placedPart in placedParts){
+            (int, int) coords = placedPart.Key;
+
+            if (!PartIsConnected(coords))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
 }
