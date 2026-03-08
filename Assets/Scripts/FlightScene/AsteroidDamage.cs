@@ -18,28 +18,42 @@ public class AsteroidDamage : MonoBehaviour {
     
     [Tooltip("Disable this component after first collision")]
     [SerializeField] private bool disableAfterCollision = false;
+
+    private AsteroidController asteroidController;
     
-    private float lastDamageTime = -1f;
+    private float lastDamageTime;
     private float damageCooldown;
     private int spacecraftLayer;
+    private int asteroidLayer;
     
 
     //Start func is used for this bc AsteroidController Instance is defined after this Awake() method is called.
     private void Start() {
-        damageCooldown = AsteroidController.Instance.GetDamageCoolDown();
+        asteroidController = AsteroidController.Instance;
+        damageCooldown = asteroidController.GetDamageCoolDown();
+        lastDamageTime = Time.time;
         spacecraftLayer = LayerMask.NameToLayer("SpaceCraft");
+        asteroidLayer = LayerMask.NameToLayer("Asteroid");
     }
     
     private void OnCollisionEnter2D(Collision2D collision) => HandleCollision(collision.gameObject);
     
     private void HandleCollision(GameObject other) {
-        // Only damage objects on the SpaceCraft layer
-        if (other.layer != spacecraftLayer) {
-            return;
-        }
 
         // Check cooldown
         if (damageCooldown > 0f && Time.time < lastDamageTime + damageCooldown) {
+            return;
+        }
+
+        if (other.layer == asteroidLayer)
+        {
+            Debug.Log("collided with asteroid");
+            asteroidController.SplitAsteroid(this.gameObject);
+            Destroy(gameObject);
+        }
+
+        // Only damage objects on the SpaceCraft layer
+        if (other.layer != spacecraftLayer) {
             return;
         }
 

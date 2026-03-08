@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9040109196141931009}
   - component: {fileID: 2834161615387689075}
   - component: {fileID: 6970692235467492818}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AsterSmall1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +186,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  isTrigger: 1
   destroyOnCollision: 0
   disableAfterCollision: 0
 --- !u!114 &6970692235467492818

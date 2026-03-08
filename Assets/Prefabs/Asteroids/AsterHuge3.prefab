@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1946422648533965699}
   - component: {fileID: 1984025946118133465}
   - component: {fileID: -2639484463144552422}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AsterHuge3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  isTrigger: 1
   destroyOnCollision: 0
   disableAfterCollision: 0
 --- !u!114 &-2639484463144552422
@@ -227,3 +226,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 877e04dc7cd7748e2b14ac73abcce5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  asteroidSize: 3
