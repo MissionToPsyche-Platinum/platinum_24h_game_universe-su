@@ -106,12 +106,10 @@ public class GameInput : MonoBehaviour {
         string sceneName = SceneManager.GetActiveScene().name;
         Debug.Log("SceneSwitch pressed in: " + sceneName);
 
-        if (sceneName == "BuildScene")
-        {
+        if (sceneName == "BuildScene") {
             BuildRequirements requirements = FindObjectOfType<BuildRequirements>();
 
-            if (requirements == null)
-            {
+            if (requirements == null) {
                 Debug.LogWarning("No BuildRequirements found in BuildScene.");
                 return;
             }
@@ -119,17 +117,19 @@ public class GameInput : MonoBehaviour {
             bool ready = requirements.IsReadyForFlight(out string message);
             Debug.Log("ReadyForFlight? " + ready + " | " + message);
 
-            if (!ready)
-            {
+            if (!ready) {
                 return;
+            }
+
+            if (ShipBuildingGrid.Instance != null && ShipBuildingGrid.Instance.HighlightDisconnectedParts()) {
+                Debug.Log("Warning: Some ship parts are not connected to the spacecraft core.");
             }
 
             SetFlightFactsScene(); // or SetFlightScene()
             return;
         }
 
-        if (sceneName == "FlightScene")
-        {
+        if (sceneName == "FlightScene") {
             SetBuildScene();
         }
         else
@@ -162,6 +162,9 @@ public class GameInput : MonoBehaviour {
             if (!requirements.IsReadyForFlight(out string message)) {
                 Debug.Log(message); // Example: "Missing parts: SolarPanel, SatelliteDish"
                 return; // Stop here -> do NOT load FlightScene
+            }
+            if (ShipBuildingGrid.Instance != null && ShipBuildingGrid.Instance.HighlightDisconnectedParts()) {
+                Debug.Log("Warning: Some ship parts are not connected to the spacecraft core.");
             }
         }
 

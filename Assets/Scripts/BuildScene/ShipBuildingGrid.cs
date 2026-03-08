@@ -20,7 +20,9 @@ public class ShipBuildingGrid : MonoBehaviour {
     private Vector3 gridOriginPosition = new(-2.5f, -4f);
     private static readonly Color colorHighlight   = new Color(1f, 1f, 0.3f, 0.4f);
     private static readonly Color colorHighlightInvisible   = new Color(1f, 1f, 0.3f, 0f);
-    
+    private static readonly Color colorDisconnected = new Color(1f, 0.4f, 0.4f, 1f);
+    private readonly Dictionary<SpriteRenderer, Color> originalSpriteColors = new();
+
 
     private GameObject selectedPart;
     private (int, int) selectedTileCoords;
@@ -276,6 +278,7 @@ public class ShipBuildingGrid : MonoBehaviour {
         GameObject spacecraftPart = Instantiate(part, spacecraft.transform);
         spacecraftPart.SetActive(true);
         spacecraftPart.transform.position = GridCoordinatesToUnityPosition(coordinates);
+        CacheOriginalSpriteColors(spacecraftPart);
 
         // Connect physics/joint
         ConnectPartToSpacecraft(spacecraftPart);
@@ -287,8 +290,8 @@ public class ShipBuildingGrid : MonoBehaviour {
         if (someTileSelected && selectedTileCoords.Equals(coordinates)){
             selectedPart = spacecraftPart;
         }
+        ClearDisconnectedHighlights();
     }
-
 
     public void RemovePlacedPartAtWorldPosition(Vector3 worldPos){
         (int, int) coords = UnityPositionToGridCoordinates(worldPos);
@@ -350,9 +353,97 @@ public class ShipBuildingGrid : MonoBehaviour {
                     continue;
             }
         }
-        
         return false;
     }
-    
-    
+
+    // Checks every placed part to see if it is connected to the spacecraft core.
+    // If a part is not connected, it highlights that part by changing its sprite color.
+    // Returns true if any disconnected parts were found.
+    public bool HighlightDisconnectedParts() {
+        // Track whether we find at least one disconnected part
+        bool foundDisconnectedPart = false;
+
+        // First clear any previous highlights so we start fresh
+        ClearDisconnectedHighlights();
+
+        // Loop through all parts currently placed on the ship grid
+        foreach (var placedPart in placedParts) {
+            // Get the grid coordinates of the part
+            (int, int) coords = placedPart.Key;
+
+            // Get the actual GameObject for that part
+            GameObject partObject = placedPart.Value;
+
+            // Skip if the part object no longer exists
+            if (partObject == null) continue;
+
+            // Use the existing connectivity function to check
+            // whether this part can reach the spacecraft core
+            if (!PartIsConnected(coords)) {
+                // Get all sprite renderers belonging to this part
+                // (some parts may have sprites on child objects)
+                SpriteRenderer[] spriteRenderers = partObject.GetComponentsInChildren<SpriteRenderer>();
+
+                // Highlight the disconnected part by setting its color
+                foreach (SpriteRenderer sr in spriteRenderers) {
+                    sr.color = colorDisconnected;
+                }
+
+                // Mark that we found at least one disconnected part
+                foundDisconnectedPart = true;
+            }
+        }
+
+        // Return whether any disconnected parts were found
+        return foundDisconnectedPart;
+    }
+
+    // Restores all ship parts to their original sprite colors.
+    // This is called before we check for disconnected parts so that
+    // previously highlighted parts do not stay red after the ship is fixed.
+    private void ClearDisconnectedHighlights() {
+
+        // Loop through every part currently placed on the ship grid
+        foreach (var placedPart in placedParts) {
+            // Get the actual GameObject for the part
+            GameObject partObject = placedPart.Value;
+
+            // Skip if the object was destroyed or is missing
+            if (partObject == null) continue;
+
+            // Get all sprite renderers on the part and its children
+            // (some parts may have multiple sprites or child objects)
+            SpriteRenderer[] spriteRenderers = partObject.GetComponentsInChildren<SpriteRenderer>();
+
+            // Restore the original color of each sprite renderer
+            foreach (SpriteRenderer sr in spriteRenderers) {
+                // If we cached the sprite's original color earlier,
+                // restore it instead of leaving the highlight color
+                if (sr != null && originalSpriteColors.TryGetValue(sr, out Color originalColor)) {
+                    sr.color = originalColor;
+                }
+            }
+        }
+    }
+
+    private void CacheOriginalSpriteColors(GameObject partObject) {
+        // If the part object does not exist, exit early
+        if (partObject == null) return;
+
+        // Get all sprite renderers on the part and any of its children
+        // Some parts may have multiple sprites or nested objects
+        SpriteRenderer[] spriteRenderers = partObject.GetComponentsInChildren<SpriteRenderer>();
+
+        // Loop through each sprite renderer found
+        foreach (SpriteRenderer sr in spriteRenderers) {
+            // Only cache the color if:
+            // 1. The sprite renderer exists
+            // 2. We haven't already stored its original color
+            if (sr != null && !originalSpriteColors.ContainsKey(sr)) {
+                // Store the sprite renderer and its original color
+                // so we can restore it later after removing highlights
+                originalSpriteColors[sr] = sr.color;
+            }
+        }
+    }
 }
