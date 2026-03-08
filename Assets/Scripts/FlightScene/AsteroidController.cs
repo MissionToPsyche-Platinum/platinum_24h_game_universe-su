@@ -59,7 +59,7 @@ public class AsteroidController : MonoBehaviour {
         asteroid.GetComponent<AsteroidFlight>().spawnSide = spawnSide;
         
         outOfCameraTimes.Add(asteroid, 0f);
-        timeUntilNextAsteroidSpawn = UnityEngine.Random.Range(1, 1); //Adjust asteroid spawn frequency here
+        timeUntilNextAsteroidSpawn = UnityEngine.Random.Range(2, 4); //Adjust asteroid spawn frequency here
         currentAsteroidCount++;
     }
 
@@ -85,7 +85,7 @@ public class AsteroidController : MonoBehaviour {
         return camera.transform.position + offset;
     }
 
-    public void DestroyAsteroid(GameObject asteroid) {
+    private void DestroyAsteroid(GameObject asteroid) {
         outOfCameraTimes.Remove(asteroid);
         Destroy(asteroid);
         currentAsteroidCount--;

@@ -52,13 +52,14 @@ public class PartDrag : MonoBehaviour {
         shipGrid.RemovePlacedPartAtWorldPosition(originalPosition);
 
         shipGrid.SetSelectedPart(gameObject);
+
         SetSortingLayer(midDragLayer);
         SetLayer(midDragLayer);
 
         // Temporarily disconnect from joints while dragging
         FixedJoint2D joint = GetComponent<FixedJoint2D>();
         if (joint != null) joint.enabled = false;
-
+        
         // Enable physics temporarily for dragging
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null) {
@@ -97,6 +98,7 @@ public class PartDrag : MonoBehaviour {
         if (shipGrid == null || partCollider == null) return;
 
         objectSprite.color = baseColor;
+
         transform.rotation = lockedRotation;
 
         GameObject part = gameObject;
@@ -112,12 +114,11 @@ public class PartDrag : MonoBehaviour {
 
         if (shipGrid.GetGridCellValue(shipGrid.UnityPositionToGridCoordinates(gridSnapPosition)) == -1) {
             if (TryPlacePart(part, gridSnapPosition)) return;
-        }
-        else {
+        } else {
             Collider2D partToBeSwapped = Physics2D.OverlapPoint(gridSnapPosition, LayerMask.GetMask(defaultLayer));
             if (partToBeSwapped != null && TrySwapPart(part, originalPosition, partToBeSwapped.gameObject, gridSnapPosition)) return;
         }
-
+        
         PlacePart(gameObject, originalPosition);
     }
 

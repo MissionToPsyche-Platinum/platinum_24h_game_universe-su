@@ -187,6 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partData: {fileID: 11400000, guid: 7ff37e993e45d41b08c65d6bc9916096, type: 2}
+  buildFactsPopup: {fileID: 3482455314024892015, guid: 6315cf51e7bda594f98738862a6a2ade, type: 3}
 --- !u!1 &6803083869412585941
 GameObject:
   m_ObjectHideFlags: 0

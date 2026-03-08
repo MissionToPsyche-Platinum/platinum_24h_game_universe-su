@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 public class PanelPartDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
     [SerializeField] private PartScriptableObject partData;
+    private BuildFactsPopup buildFactsPopup;
     private GameObject ghostPreview;
     private SpriteRenderer ghostSprite;
     private Color baseColor = Color.white;
@@ -28,6 +29,10 @@ public class PanelPartDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (sr != null) baseColor = sr.color;
     }
 
+    private void Start()
+    {
+        buildFactsPopup = GameObject.Find("BuildFactsPopup").GetComponent<BuildFactsPopup>();
+    }
     public void OnBeginDrag(PointerEventData eventData) {
         if (partData == null || partData.part == null) return;
         if (!Spacecraft.IsBuildMode) return;
@@ -62,6 +67,7 @@ public class PanelPartDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 (int, int) coords = grid.UnityPositionToGridCoordinates((Vector3)snapPos);
                 if (grid.CanPlacePart(partData.part, coords)) {
                     grid.PlacePartAtCoordinates(partData.part, coords);
+                    buildFactsPopup.Popup(partData.name);
                 }
             }
         }

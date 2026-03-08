@@ -14,7 +14,7 @@ public class AsteroidDamage : MonoBehaviour {
     
     [Header("Behavior Settings")]
     [Tooltip("Destroy this asteroid on collision with spacecraft")]
-    [SerializeField] private bool destroyOnCollision = true;
+    [SerializeField] private bool destroyOnCollision = false;
     
     [Tooltip("Disable this component after first collision")]
     [SerializeField] private bool disableAfterCollision = false;
@@ -28,7 +28,6 @@ public class AsteroidDamage : MonoBehaviour {
     private void Start() {
         damageCooldown = AsteroidController.Instance.GetDamageCoolDown();
         spacecraftLayer = LayerMask.NameToLayer("SpaceCraft");
-        destroyOnCollision = true;
     }
     
     private void OnCollisionEnter2D(Collision2D collision) => HandleCollision(collision.gameObject);
@@ -55,7 +54,7 @@ public class AsteroidDamage : MonoBehaviour {
 
         // Handle post-collision behavior
         if (destroyOnCollision) {
-            AsteroidController.Instance.DestroyAsteroid(gameObject);
+            Destroy(gameObject);
         } else if (disableAfterCollision) {
             enabled = false;
         }

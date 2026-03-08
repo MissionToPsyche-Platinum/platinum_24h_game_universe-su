@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
+using System.Collections;
 
 /// <summary>
 /// The manager of the spacecraft as a whole. responsible for managing what mode each piece is in as well as activating engines
@@ -281,7 +282,7 @@ public class Spacecraft : MonoBehaviour {
         // Check if health is depleted
         if (currentHealth <= 0) {
             OnHealthDepleted?.Invoke(this, EventArgs.Empty);
-            HandleDeath();
+            StartCoroutine(HandleDeath());
         }
     }
     
@@ -305,8 +306,15 @@ public class Spacecraft : MonoBehaviour {
         }
     }
 
-    private void HandleDeath() {
+    private IEnumerator HandleDeath() {
         Debug.Log("Spacecraft destroyed!");
+        FixedJoint2D[] joints = GetComponentsInChildren<FixedJoint2D>();
+        foreach (FixedJoint2D joint in joints)
+        {
+            joint.enabled = false;
+        }
+        GetComponent<Rigidbody2D>().simulated = false;
+        yield return new WaitForSeconds(3f);
         GameInput.Instance.SetGameOverScene(false);
     }
 
