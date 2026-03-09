@@ -107,19 +107,12 @@ public class GameInput : MonoBehaviour {
         Debug.Log("SceneSwitch pressed in: " + sceneName);
 
         if (sceneName == "BuildScene") {
-            BuildRequirements requirements = FindObjectOfType<BuildRequirements>();
-
-            if (requirements == null) {
-                Debug.LogWarning("No BuildRequirements found in BuildScene.");
-                return;
-            }
+            BuildRequirements requirements = BuildRequirements.Instance;
 
             bool ready = requirements.IsReadyForFlight(out string message);
             Debug.Log("ReadyForFlight? " + ready + " | " + message);
 
-            if (!ready) {
-                return;
-            }
+            if (!ready) return;
 
             if (ShipBuildingGrid.Instance != null && ShipBuildingGrid.Instance.HighlightDisconnectedParts()) {
                 Debug.Log("Warning: Some ship parts are not connected to the spacecraft core.");
@@ -152,12 +145,7 @@ public class GameInput : MonoBehaviour {
     public void SetFlightScene() {
         // Only enforce requirements if we are currently in the BuildScene
         if (SceneManager.GetActiveScene().name == "BuildScene") {
-            BuildRequirements requirements = FindObjectOfType<BuildRequirements>();
-
-            if (requirements == null) {
-                Debug.LogWarning("No BuildRequirements found in BuildScene. Add it to a BuildManager object.");
-                return;
-            }
+            BuildRequirements requirements = BuildRequirements.Instance;
 
             if (!requirements.IsReadyForFlight(out string message)) {
                 Debug.Log(message); // Example: "Missing parts: SolarPanel, SatelliteDish"

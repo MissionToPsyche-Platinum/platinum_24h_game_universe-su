@@ -94,25 +94,26 @@ public class ShipBuildingGrid : MonoBehaviour {
     private void GameInput_OnDeletePartPerformedAction(object sender, System.EventArgs e) {
         if (!someTileSelected) return;
 
+        DeletePart(selectedTileCoords);
+    }
+
+    private void DeletePart((int, int) partCoords) {
         // Find the real part object in this tile
-        if (!placedParts.TryGetValue(selectedTileCoords, out GameObject partToDelete) || partToDelete == null) return;
+        if (!placedParts.TryGetValue(partCoords, out GameObject partToDelete) || partToDelete == null) return;
 
         // Don't allow deleting the base/root part (optional safety)
         if (partToDelete == spacecraft) return;
 
-        if (partToDelete.TryGetComponent<Engine>(out _))
-        {
+        if (partToDelete.TryGetComponent<Engine>(out _)) {
             AdjustEngineIDsForDeletion(partToDelete);
         }
+        
+        if(selectedPart == partToDelete) DeselectPart();
 
         Destroy(partToDelete);
-        placedParts.Remove(selectedTileCoords);
-
-        selectedPart = null;
-        grid.SetValue(selectedTileCoords.Item1, selectedTileCoords.Item2, -1);
-
-        highlightSprite.color = colorHighlightInvisible;
-        someTileSelected = false;
+        
+        placedParts.Remove(partCoords);
+        grid.SetValue(partCoords.Item1, partCoords.Item2, -1);
     }
 
     private void AdjustEngineIDsForDeletion(GameObject engineToBeDeleted) {
@@ -127,42 +128,29 @@ public class ShipBuildingGrid : MonoBehaviour {
         foreach (Transform child in spacecraft.transform) {
             if (!child.TryGetComponent(out Engine otherEngine)) continue;
 
-            if (otherEngine.engineID > engineID) {
-                otherEngine.engineID--;
-
-                // If you have UI text tied to engineID, update it here:
-                // otherEngine.UpdateEngineLabel();
-            }
+            if (otherEngine.engineID > engineID) otherEngine.engineID--;
         }
     }
 
     private void GameInput_OnLeftMouseClickAction(object sender, System.EventArgs e) {
-        StartCoroutine(HandleLeftClickNextFrame());
+        HandleLeftClick();
     }
-
-    private System.Collections.IEnumerator HandleLeftClickNextFrame() {
-        yield return null;
-        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) yield break;
-
+    
+    private void HandleLeftClick() {
         Vector3 mousePosition = Mouse.GetMouseWorldPosition();
 
         (int, int) clickCoords;
         grid.GetXY(mousePosition, out clickCoords.Item1, out clickCoords.Item2);
 
-        if (clickCoords.Item1 < 0 || clickCoords.Item2 < 0 || clickCoords.Item1 >= gridWidth || clickCoords.Item2 >= gridHeight) {
-            highlightSprite.color = colorHighlightInvisible;
-            someTileSelected = false;
-            selectedPart = null;
-            yield break;
+        if (CoordinatesAreOutsideGrid(clickCoords)) {
+            DeselectPart();
+            return;
         }
 
         Vector3? snapped = PostionToGridPosition(mousePosition);
-        if (snapped == null)
-        {
-            highlightSprite.color = colorHighlightInvisible;
-            someTileSelected = false;
-            selectedPart = null;
-            yield break;
+        if (snapped == null) {
+            DeselectPart();
+            return;
         }
 
         highlightTransform.transform.position = snapped.Value;
@@ -177,6 +165,12 @@ public class ShipBuildingGrid : MonoBehaviour {
         } else {
             selectedPart = null;
         }
+    }
+
+    private void DeselectPart() {
+        highlightSprite.color = colorHighlightInvisible;
+        someTileSelected = false;
+        selectedPart = null;
     }
 
     public bool CanPlacePart(GameObject partToBePlaced, (int, int) coords) {
@@ -208,10 +202,6 @@ public class ShipBuildingGrid : MonoBehaviour {
         return false;
     }
 
-    private void PlacePart(GameObject part, (int, int) coordinates) {
-        PlacePartAtCoordinates(part, coordinates);
-    }
-
     private void ConnectPartToSpacecraft(GameObject part) {
         FixedJoint2D joint = part.GetComponent<FixedJoint2D>();
         if (joint != null) {
@@ -241,19 +231,12 @@ public class ShipBuildingGrid : MonoBehaviour {
         (int, int) tileCoords;
         grid.GetXY(originalPosition, out tileCoords.Item1, out tileCoords.Item2);
 
-        if (tileCoords.Item1 < 0 || tileCoords.Item2 < 0 ||
-            tileCoords.Item1 >= gridWidth || tileCoords.Item2 >= gridHeight) {
-            
-            return null;
-        }
+        if (CoordinatesAreOutsideGrid(tileCoords)) return null;
         
         return GridCoordinatesToUnityPosition(tileCoords);
     }
 
     public void SetSelectedPart(GameObject part) => selectedPart = part;
-
-    public int GridWidth => gridWidth;
-    public int GridHeight => gridHeight;
 
     public void PlacePartAtCoordinates(GameObject part, (int, int) coordinates) {
         // If something already exists here, destroy it first (true swap)
@@ -293,6 +276,17 @@ public class ShipBuildingGrid : MonoBehaviour {
         ClearDisconnectedHighlights();
     }
 
+    private bool CoordinatesAreOutsideGrid((int, int) coordinates) {
+        if (coordinates.Item1 < 0 || coordinates.Item2 < 0 ||
+            coordinates.Item1 >= gridWidth || coordinates.Item2 >= gridHeight) {
+            
+            return true;
+        }
+
+        return false;
+    }
+
+
     public void RemovePlacedPartAtWorldPosition(Vector3 worldPos){
         (int, int) coords = UnityPositionToGridCoordinates(worldPos);
         placedParts.Remove(coords);
@@ -303,15 +297,25 @@ public class ShipBuildingGrid : MonoBehaviour {
         placedParts[coords] = partObject;
     }
 
+    public void RemoveDisconnectedParts() {
+        for (int i = 0; i < gridWidth; i++) {
+            for (int j = 0; j < gridHeight; j++) {
+                if(!PartIsConnected((i, j))) DeletePart((i, j));
+            }
+        }
+    }
+
     public bool PartIsConnected((int, int) coordinates) => PartIsConnectedHelper(coordinates, new HashSet<(int, int)>());
 
     private bool PartIsConnectedHelper((int, int) coordinates, HashSet<(int, int)> visitedCells) {
+        if (!placedParts.ContainsKey(coordinates)) return false;
+        
         visitedCells.Add(coordinates);
         
         int partID = GetGridCellValue(coordinates);
         int x = coordinates.Item1;
         int y = coordinates.Item2;
-
+        
         List<string> snapableDirections = partDB.GetSnapableDirections(partID);
 
         foreach (string dir in snapableDirections) {

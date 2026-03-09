@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildRequirements : MonoBehaviour
-{
+public class BuildRequirements : MonoBehaviour {
+    public static BuildRequirements Instance { get; private set; }
+    
     [SerializeField] private Transform shipRoot;
     [SerializeField] private bool bypassBuildRequirements;
 
@@ -14,6 +15,8 @@ public class BuildRequirements : MonoBehaviour
         SpacePartType.SatelliteDish,
         SpacePartType.SolarPanel
     };
+    
+    private void Awake() => Instance = this;
 
     public bool IsReadyForFlight(out string message) {
         if (bypassBuildRequirements) {
