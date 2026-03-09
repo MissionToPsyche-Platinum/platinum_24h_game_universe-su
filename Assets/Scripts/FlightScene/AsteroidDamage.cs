@@ -30,7 +30,14 @@ public class AsteroidDamage : MonoBehaviour {
         spacecraftLayer = LayerMask.NameToLayer("SpaceCraft");
     }
     
-    private void OnCollisionEnter2D(Collision2D collision) => HandleCollision(collision.gameObject);
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag("Gravity") ||
+            collision.gameObject.GetComponentInChildren<PlanetGravitySource>() != null) {
+            AsteroidController.Instance.DestroyAsteroid(gameObject);
+            return;
+        }
+        HandleCollision(collision.gameObject);
+    }
     
     private void HandleCollision(GameObject other) {
         // Only damage objects on the SpaceCraft layer
