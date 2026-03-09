@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9088776688448199041}
   - component: {fileID: -6225992320308330934}
   - component: {fileID: -2618017991542954654}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AsterMed4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +190,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  isTrigger: 1
   destroyOnCollision: 0
   disableAfterCollision: 0
 --- !u!114 &-2618017991542954654
@@ -205,3 +204,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 877e04dc7cd7748e2b14ac73abcce5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  asteroidSize: 1

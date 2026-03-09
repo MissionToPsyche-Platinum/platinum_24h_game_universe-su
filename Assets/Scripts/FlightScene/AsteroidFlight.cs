@@ -4,7 +4,8 @@ using Random = System.Random;
 
 public class AsteroidFlight : MonoBehaviour {
     
-    private Vector3 direction;
+    [SerializeField] public int asteroidSize;
+    public Vector3 direction;
     private float speed;
     private int _spawnSide;
     public int spawnSide {

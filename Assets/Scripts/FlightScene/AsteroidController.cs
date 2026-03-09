@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Numerics;
+using Vector3 = UnityEngine.Vector3;
+using Quaternion = UnityEngine.Quaternion;
 
 //Static class used to keep track of asteroids, spawning them in and destroying them and stuff
 public class AsteroidController : MonoBehaviour {
@@ -55,12 +58,41 @@ public class AsteroidController : MonoBehaviour {
         }
         if (outOfCameraTimes.ContainsKey(nextAsteroid)) return;
         
-        GameObject asteroid = Instantiate(nextAsteroid, spawnPosition, Quaternion.identity);
+        GameObject asteroid = Instantiate(nextAsteroid, spawnPosition, UnityEngine.Quaternion.identity);
         asteroid.GetComponent<AsteroidFlight>().spawnSide = spawnSide;
         
         outOfCameraTimes.Add(asteroid, 0f);
-        timeUntilNextAsteroidSpawn = UnityEngine.Random.Range(2, 4); //Adjust asteroid spawn frequency here
+        timeUntilNextAsteroidSpawn = UnityEngine.Random.Range(1, 2); //Adjust asteroid spawn frequency here
         currentAsteroidCount++;
+    }
+
+    public void SplitAsteroid(GameObject sourceAsteroid)
+    {
+        AsteroidFlight sourceFlight = sourceAsteroid.GetComponent<AsteroidFlight>();
+        Transform sourceTransform = sourceAsteroid.GetComponent<Transform>();
+        
+        int sourceAsteroidSize = sourceFlight.asteroidSize;
+        GameObject nextAsteroid;
+        switch (sourceAsteroidSize) {
+            case 3:
+                nextAsteroid = allAsteroidPrefabs[UnityEngine.Random.Range(0, 4)];
+                break;
+            case 2:
+                nextAsteroid = allAsteroidPrefabs[UnityEngine.Random.Range(7, 12)];
+                break;
+            case 1:
+                nextAsteroid = allAsteroidPrefabs[UnityEngine.Random.Range(12, 18)];
+                break;
+            default:
+                return;
+        }
+
+        GameObject asteroidLeft = Instantiate(nextAsteroid, sourceTransform.position, Quaternion.identity);
+        asteroidLeft.GetComponent<AsteroidFlight>().direction = Quaternion.Euler(0,0,-120) * sourceFlight.direction;
+        outOfCameraTimes.Add(asteroidLeft, 0f);
+        GameObject asteroidRight = Instantiate(nextAsteroid, sourceTransform.position, Quaternion.identity);
+        asteroidRight.GetComponent<AsteroidFlight>().direction = Quaternion.Euler(0,0,120) * sourceFlight.direction;
+        outOfCameraTimes.Add(asteroidRight, 0f);
     }
 
     private Vector3 GetSpawnPosition(out int spawnSide) {
