@@ -48,7 +48,7 @@ public class AsteroidController : MonoBehaviour {
     }
 
     private void SpawnAsteroid() {
-        GameObject nextAsteroid = allAsteroidPrefabs[UnityEngine.Random.Range(0, 18)];
+        GameObject nextAsteroid = allAsteroidPrefabs[UnityEngine.Random.Range(0, 12)];
         int spawnSide;
         Vector3 spawnPosition = GetSpawnPosition(out spawnSide);
         Collider2D[] spawnPositionOverlaps = Physics2D.OverlapCircleAll(spawnPosition, (float)(distanceFromCameraBorder - .1));

@@ -55,9 +55,15 @@ public class AsteroidDamage : MonoBehaviour {
 
         if (other.layer == asteroidLayer)
         {
-            Debug.Log("collided with asteroid");
             asteroidController.SplitAsteroid(this.gameObject);
             Destroy(gameObject);
+        }
+
+        // Handle post-collision behavior
+        if (destroyOnCollision) {
+            Destroy(gameObject);
+        } else if (disableAfterCollision) {
+            enabled = false;
         }
 
         // Only damage objects on the SpaceCraft layer
@@ -73,13 +79,6 @@ public class AsteroidDamage : MonoBehaviour {
         lastDamageTime = Time.time;
 
         Debug.Log($"Asteroid dealt {damage} damage to spacecraft! Health: {spacecraft.CurrentHealth}/{spacecraft.MaxHealth}");
-
-        // Handle post-collision behavior
-        if (destroyOnCollision) {
-            Destroy(gameObject);
-        } else if (disableAfterCollision) {
-            enabled = false;
-        }
     }
     
     public void SetDamage(float newDamage) {

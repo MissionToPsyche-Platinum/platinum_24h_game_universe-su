@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  destroyOnCollision: 0
+  destroyOnCollision: 1
   disableAfterCollision: 0
 --- !u!114 &-6809580775993762356
 MonoBehaviour:
@@ -221,3 +221,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   asteroidSize: 3
+  direction: {x: 0, y: 0, z: 0}

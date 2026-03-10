@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  destroyOnCollision: 0
+  destroyOnCollision: 1
   disableAfterCollision: 0
 --- !u!114 &-2523550061619209041
 MonoBehaviour:
@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   asteroidSize: 2
+  direction: {x: 0, y: 0, z: 0}
 --- !u!60 &4973212891923086917
 PolygonCollider2D:
   m_ObjectHideFlags: 0

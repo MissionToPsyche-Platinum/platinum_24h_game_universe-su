@@ -37,6 +37,7 @@ public class AsteroidFlight : MonoBehaviour {
 
     private void Start() {
         GetComponent<Rigidbody2D>().linearVelocity = direction * speed;
+        transform.position += direction * 2; // offset to prevent asteroids from clipping into eachother during splitting
     }
     
 }
