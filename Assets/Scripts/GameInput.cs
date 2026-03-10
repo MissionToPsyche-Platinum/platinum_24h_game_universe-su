@@ -114,9 +114,9 @@ public class GameInput : MonoBehaviour {
 
             if (!ready) return;
 
-            if (ShipBuildingGrid.Instance != null && ShipBuildingGrid.Instance.HighlightDisconnectedParts()) {
+            if (ShipBuildingGrid.Instance != null && ShipBuildingGrid.Instance.HighlightDisconnectedParts())
                 DisconnectedPartsWarningManager.Instance.DisplayWarning();
-            } else SetFlightFactsScene(); // or SetFlightScene()
+            else SetFlightFactsScene(); // or SetFlightScene()
             
             return;
         }
