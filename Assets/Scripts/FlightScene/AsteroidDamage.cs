@@ -39,6 +39,7 @@ public class AsteroidDamage : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Gravity") ||
             collision.gameObject.GetComponentInChildren<PlanetGravitySource>() != null) {
+            
             AsteroidController.Instance.DestroyAsteroid(gameObject);
             return;
         }
