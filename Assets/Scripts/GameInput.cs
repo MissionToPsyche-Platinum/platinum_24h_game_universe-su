@@ -130,8 +130,11 @@ public class GameInput : MonoBehaviour {
             SetFlightFactsScene();
         }
     }
-    
+
     private void ReturnToMenu_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+        if (SceneManager.GetActiveScene().name == "FlightScene") {
+            return;
+        }
         SetMainMenuScene();
     }
 
