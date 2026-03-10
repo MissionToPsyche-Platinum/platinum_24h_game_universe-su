@@ -123,7 +123,7 @@ public class GameInput : MonoBehaviour {
         }
 
         if (sceneName == "FlightScene") {
-            SetBuildScene();
+            return;
         }
         else
         {
