@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +24,12 @@ public class PlanetGravitySource : MonoBehaviour
     private readonly HashSet<Rigidbody2D> bodiesInZone = new HashSet<Rigidbody2D>();
     private CircleCollider2D gravityTrigger;
     private int spacecraftLayerIndex;
+    
+    public class GravityEventArgs : System.EventArgs {
+        public bool entering;
+        public GravityEventArgs(bool entering) => this.entering = entering;
+    }
+    public event EventHandler<GravityEventArgs> OnEnterGravityRange;
 
     private void Awake()
     {
@@ -34,10 +41,7 @@ public class PlanetGravitySource : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (bodiesInZone.Count == 0)
-        {
-            return;
-        }
+        if (bodiesInZone.Count == 0) return;
 
         Vector2 planetCenter = transform.position;
         bool spacecraftGravityApplied = false;
@@ -112,6 +116,8 @@ public class PlanetGravitySource : MonoBehaviour
         {
             return;
         }
+        
+        OnEnterGravityRange?.Invoke(this, new GravityEventArgs(true));
 
         bodiesInZone.Add(rb);
     }
@@ -129,6 +135,8 @@ public class PlanetGravitySource : MonoBehaviour
         {
             return;
         }
+        
+        OnEnterGravityRange?.Invoke(this, new GravityEventArgs(false));
 
         bodiesInZone.Remove(rb);
     }
