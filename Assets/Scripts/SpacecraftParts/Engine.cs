@@ -12,6 +12,9 @@ public class Engine : MonoBehaviour {
     [Header("Fuel Settings")]
     [SerializeField] private float maxFuel = 10f;
 
+    [Header("Energy Settings")]
+    [SerializeField] private float energyCostPerSecond = 2f;
+
     [SerializeField] private int _engineID;
     public int engineID {
         get => _engineID;
@@ -23,6 +26,7 @@ public class Engine : MonoBehaviour {
     
     public static int totalEngineCount;
     private GameInput gameInput;
+    private Spacecraft spacecraft;
     private bool active;
     private float fuelAmount;
 
@@ -35,6 +39,7 @@ public class Engine : MonoBehaviour {
         
         fuelAmount = maxFuel;
         gameInput = GameInput.Instance;
+        spacecraft = GetComponentInParent<Spacecraft>();
         
         OnFuelChanged?.Invoke(this, FuelPercentage);
     }
@@ -53,7 +58,7 @@ public class Engine : MonoBehaviour {
     }
     
     private void FixedUpdate() {
-        if(active && TryConsumeFuel()) ActivateEngine(); //Only activates if engine is active and there is fuel.
+        if (active && TryConsumeFuel() && TryConsumeEnergy()) ActivateEngine();
     }
 
     private void ActivateEngine() => engineRigidbody2D.AddForce(transform.up * speed);
@@ -65,6 +70,12 @@ public class Engine : MonoBehaviour {
         else engineVisual.color = Color.yellow;
     }
     
+    public void AddFuel(float amount) {
+        if (amount <= 0f) return;
+        fuelAmount = Mathf.Min(fuelAmount + amount, maxFuel);
+        OnFuelChanged?.Invoke(this, FuelPercentage);
+    }
+
     private bool TryConsumeFuel() {
         float fuelConsumptionRate = 1f; // consumption rate
         fuelAmount -= fuelConsumptionRate * Time.fixedDeltaTime;
@@ -78,6 +89,12 @@ public class Engine : MonoBehaviour {
         OnFuelChanged?.Invoke(this, FuelPercentage);
 
         return true;
+    }
+
+    private bool TryConsumeEnergy() {
+        if (spacecraft == null) return false;
+        float energyCost = energyCostPerSecond * Time.fixedDeltaTime;
+        return spacecraft.TryConsumeEnergy(energyCost);
     }
 
     private void OnDestroy() {
