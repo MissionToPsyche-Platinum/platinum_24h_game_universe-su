@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spacecraft: {fileID: 0}
+  chargeRate: 0.5
+  facingThreshold: 0
 --- !u!58 &3033503194899937510
 CircleCollider2D:
   m_ObjectHideFlags: 0
