@@ -30,10 +30,12 @@ public class OrbitAssist : MonoBehaviour {
         }
         
         if (transitioningToOrbit && (psycheAsteroid.position - transform.position).magnitude <= orbitRadius) {
-            inOrbit = true;
+            clockwiseOrbit = ClockwiseOrbit();
             psycheAsteroid.GetComponentInChildren<PlanetGravitySource>().enabled = false;
             Vector2 toShip = transform.position - psycheAsteroid.position;
             angle = Mathf.Atan2(toShip.y, toShip.x);
+            
+            inOrbit = true;
         }
     }
     
@@ -46,7 +48,7 @@ public class OrbitAssist : MonoBehaviour {
     }
 
     void TransitionToOrbit() {
-        // Figure out where we are relative to objectToOrbit as an angle
+        // Figure out where we are relatvie to objectToOrbit as an angle
         Vector2 toShip = transform.position - psycheAsteroid.position;
         float targetAngle = Mathf.Atan2(toShip.y, toShip.x);
 
@@ -103,7 +105,8 @@ public class OrbitAssist : MonoBehaviour {
         Vector3 spacecraftToPsyche = (psycheAsteroid.position - transform.position).normalized;
         Vector3 movementDir = rb.linearVelocity.normalized;
 
-        if (spacecraftToPsyche.y < 0) return movementDir.x > spacecraftToPsyche.x;
+        //Checks if spacecraft is above psyche
+        if (spacecraftToPsyche.y < 0f) return movementDir.x > spacecraftToPsyche.x;
         return movementDir.x < spacecraftToPsyche.x;
     }
 
