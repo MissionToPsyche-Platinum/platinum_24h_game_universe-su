@@ -29,8 +29,7 @@ public class PanelPartDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (sr != null) baseColor = sr.color;
     }
 
-    private void Start()
-    {
+    private void Start() {
         buildFactsPopup = GameObject.Find("BuildFactsPopup").GetComponent<BuildFactsPopup>();
     }
     public void OnBeginDrag(PointerEventData eventData) {
