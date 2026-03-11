@@ -2385,7 +2385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1823052791}
-  orbitRadius: 8
+  orbitRadius: 11
   transitionSpeed: 2
   orbitSpeed: 1
   clockwiseOrbit: 0
