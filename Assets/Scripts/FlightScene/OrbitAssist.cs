@@ -6,8 +6,9 @@ public class OrbitAssist : MonoBehaviour {
     [SerializeField] private float orbitRadius;
     [SerializeField] private float transitionSpeed;
     [SerializeField] private float orbitSpeed;
-    [SerializeField] private bool clockwiseOrbit = false;
-    [SerializeField] private bool transitioningToOrbit = false;
+    [SerializeField] private bool clockwiseOrbit;
+    [SerializeField] private bool transitioningToOrbit;
+    [SerializeField] private bool faceMovementDirectionWhileInOrbit;
     
     private Transform psycheAsteroid;
     private float angle = 0f;
@@ -86,15 +87,16 @@ public class OrbitAssist : MonoBehaviour {
         float y = Mathf.Sin(angle) * orbitRadius;
         transform.position = psycheAsteroid.position + new Vector3(x, y);
 
-        // Face direction of movement
-        // float nextAngle = angle + direction * orbitSpeed * Time.deltaTime;
-        // float nextX = Mathf.Cos(nextAngle) * orbitRadius;
-        // float nextY = Mathf.Sin(nextAngle) * orbitRadius;
-        // Vector2 moveDir = new Vector2(nextX - x, nextY - y);
-        // float rot = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
+        if (!faceMovementDirectionWhileInOrbit) return;
         
-        // targetRotation = Quaternion.Euler(0, 0, rot + rotationOffset);
-        // transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, transitionSpeed * Time.deltaTime);
+        float nextAngle = angle + direction * orbitSpeed * Time.deltaTime;
+        float nextX = Mathf.Cos(nextAngle) * orbitRadius;
+        float nextY = Mathf.Sin(nextAngle) * orbitRadius;
+        Vector2 moveDir = new Vector2(nextX - x, nextY - y);
+        float rot = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
+        
+        targetRotation = Quaternion.Euler(0, 0, rot + rotationOffset);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, transitionSpeed * Time.deltaTime);
     }
 
     private bool ClockwiseOrbit() {
