@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// The manager of the spacecraft as a whole. responsible for managing what mode each piece is in as well as activating engines
@@ -14,7 +16,7 @@ public class Spacecraft : MonoBehaviour {
 
     public static bool IsBuildMode { get; private set; }
     
-    private Rigidbody2D rb;
+    [SerializeField] private Rigidbody2D rb;
     private FixedJoint2D[] partJoints;
     private Rigidbody2D[] partRigidbodies;
 
@@ -23,8 +25,10 @@ public class Spacecraft : MonoBehaviour {
     private const string DefaultLayer = "Default";
     
     // Cache original joint connections to preserve part-to-part links
-    private System.Collections.Generic.Dictionary<FixedJoint2D, Rigidbody2D> originalJointConnections;
+    private Dictionary<FixedJoint2D, Rigidbody2D> originalJointConnections;
 
+    [SerializeField] private OrbitAssist orbitAssist;
+    
     // Health system
     [Header("Health Settings")]
     [SerializeField] private float maxHealth = 100f;
@@ -63,13 +67,21 @@ public class Spacecraft : MonoBehaviour {
         
         // Get Rigidbody2D from self or children (SpacecraftStart)
         rb = GetComponentInChildren<Rigidbody2D>();
-        
+
         // Initialize health and energy
         currentHealth = maxHealth;
         currentEnergy = maxEnergy;
         
         // Cache original joint connections
         CacheOriginalJointConnections();
+    }
+    
+    private void Start() {
+        // Listen for scene changes to update physics mode
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        // Initialize physics mode based on current scene
+        UpdatePhysicsMode();
     }
     
     private void CacheOriginalJointConnections() {
@@ -84,17 +96,10 @@ public class Spacecraft : MonoBehaviour {
             }
         }
     }
-    
-    private void Start() {
-
-        // Listen for scene changes to update physics mode
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
-        // Initialize physics mode based on current scene
-        UpdatePhysicsMode();
-    }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        if(scene.name == "FlightScene") orbitAssist.FindPsycheAsteroid();
+        
         // Delay physics update to next frame to ensure all children are initialized
         StartCoroutine(UpdatePhysicsModeDelayed());
     }
@@ -117,13 +122,6 @@ public class Spacecraft : MonoBehaviour {
     
     private void SetBuildingMode() {
         IsBuildMode = true;
-        if (rb == null) {
-            rb = GetComponentInChildren<Rigidbody2D>();
-            if (rb == null) {
-                Debug.LogError("Spacecraft: Rigidbody2D not found on Spacecraft or in children!");
-                return;
-            }
-        }
         
         // Find all part rigidbodies, joints and engines
         partRigidbodies = GetComponentsInChildren<Rigidbody2D>();
@@ -176,15 +174,6 @@ public class Spacecraft : MonoBehaviour {
     
     private void SetFlightMode() {
         IsBuildMode = false;
-        
-        // Ensure rb is not null - try to find it if missing
-        if (rb == null) {
-            rb = GetComponentInChildren<Rigidbody2D>();
-            if (rb == null) {
-                Debug.LogError("Spacecraft: Rigidbody2D not found on Spacecraft or in children!");
-                return;
-            }
-        }
         
         // Update cached joints if needed
         CacheOriginalJointConnections();
