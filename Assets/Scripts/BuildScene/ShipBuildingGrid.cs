@@ -103,10 +103,6 @@ public class ShipBuildingGrid : MonoBehaviour {
 
         // Don't allow deleting the base/root part (optional safety)
         if (partToDelete == spacecraft) return;
-
-        if (partToDelete.TryGetComponent<Engine>(out _)) {
-            AdjustEngineIDsForDeletion(partToDelete);
-        }
         
         if(selectedPart == partToDelete) DeselectPart();
 
@@ -114,22 +110,6 @@ public class ShipBuildingGrid : MonoBehaviour {
         
         placedParts.Remove(partCoords);
         grid.SetValue(partCoords.Item1, partCoords.Item2, -1);
-    }
-
-    private void AdjustEngineIDsForDeletion(GameObject engineToBeDeleted) {
-        if (!engineToBeDeleted.TryGetComponent<Engine>(out Engine deletedEngine)) return;
-        int engineID = deletedEngine.engineID;
-        int totalEngines = Engine.totalEngineCount;
-
-        Engine.totalEngineCount--;
-
-        if (engineID == totalEngines) return;
-
-        foreach (Transform child in spacecraft.transform) {
-            if (!child.TryGetComponent(out Engine otherEngine)) continue;
-
-            if (otherEngine.engineID > engineID) otherEngine.engineID--;
-        }
     }
 
     private void GameInput_OnLeftMouseClickAction(object sender, System.EventArgs e) {
@@ -243,11 +223,6 @@ public class ShipBuildingGrid : MonoBehaviour {
         if (placedParts.TryGetValue(coordinates, out GameObject existing) && existing != null) {
             // Don't allow swapping the base/root part (optional safety)
             if (existing == spacecraft) return;
-
-            // If we are replacing an engine, adjust IDs first
-            if (existing.TryGetComponent<Engine>(out _)){
-                AdjustEngineIDsForDeletion(existing);
-            }
 
             Destroy(existing);
             placedParts.Remove(coordinates);
