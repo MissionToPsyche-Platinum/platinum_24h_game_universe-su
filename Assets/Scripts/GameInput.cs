@@ -61,34 +61,38 @@ public class GameInput : MonoBehaviour {
     }
     
     private void EngineOne_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+        if (Time.timeScale == 0f) return;
         OnEnginePerformedAction?.Invoke(this, new EngineEventArgs(true, 1)); //"?.Invoke" basically checks if theres any listeners (methods). If there are listeners, calls all of 'em.
     }
     
-    private void EngineOne_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj) { 
-       OnEngineCanceledAction?.Invoke(this, new EngineEventArgs(false, 1)); 
+    private void EngineOne_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+        OnEngineCanceledAction?.Invoke(this, new EngineEventArgs(false, 1)); 
     }
 
-    private void EngineTwo_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) { 
+    private void EngineTwo_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+        if (Time.timeScale == 0f) return;
         OnEnginePerformedAction?.Invoke(this, new EngineEventArgs(true, 2));
     }
      
-    private void EngineTwo_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj) { 
+    private void EngineTwo_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
         OnEngineCanceledAction?.Invoke(this, new EngineEventArgs(false, 2)); 
     }
      
-    private void EngineThree_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) { 
+    private void EngineThree_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+        if (Time.timeScale == 0f) return;
         OnEnginePerformedAction?.Invoke(this, new EngineEventArgs(true, 3));
     }
 
-    private void EngineThree_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj) { 
+    private void EngineThree_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
         OnEngineCanceledAction?.Invoke(this, new EngineEventArgs(false, 3));
     }
 
-    private void EngineFour_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) { 
+    private void EngineFour_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+        if (Time.timeScale == 0f) return;
         OnEnginePerformedAction?.Invoke(this, new EngineEventArgs(true, 4)); 
     }
      
-    private void EngineFour_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj) { 
+    private void EngineFour_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
         OnEngineCanceledAction?.Invoke(this, new EngineEventArgs(false, 4)); 
     }
     
@@ -122,15 +126,18 @@ public class GameInput : MonoBehaviour {
         }
 
         if (sceneName == "FlightScene") {
-            SetBuildScene();
+            return;
         }
         else
         {
             SetFlightFactsScene();
         }
     }
-    
+
     private void ReturnToMenu_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+        if (SceneManager.GetActiveScene().name == "FlightScene") {
+            return;
+        }
         SetMainMenuScene();
     }
 
