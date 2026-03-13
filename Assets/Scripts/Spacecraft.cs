@@ -33,7 +33,7 @@ public class Spacecraft : MonoBehaviour {
     [Header("Health Settings")]
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private float currentHealth;
-    
+
     // Events for health changes
     public event EventHandler<float> OnHealthChanged; // Passes current health percentage (0-1)
     public event EventHandler OnHealthDepleted;
@@ -42,6 +42,17 @@ public class Spacecraft : MonoBehaviour {
     public float MaxHealth => maxHealth;
     public float CurrentHealth => currentHealth;
     public float HealthPercentage => maxHealth > 0 ? currentHealth / maxHealth : 0f;
+
+    // Energy system
+    [Header("Energy Settings")]
+    [SerializeField] private float maxEnergy = 10f;
+    [SerializeField] private float currentEnergy;
+
+    public event EventHandler<float> OnEnergyChanged; // Passes current energy percentage (0-1)
+
+    public float MaxEnergy => maxEnergy;
+    public float CurrentEnergy => currentEnergy;
+    public float EnergyPercentage => maxEnergy > 0 ? currentEnergy / maxEnergy : 0f;
 
 
 
@@ -54,8 +65,12 @@ public class Spacecraft : MonoBehaviour {
         Instance = this;
         DontDestroyOnLoad(gameObject);
         
-        // Initialize health
+        // Get Rigidbody2D from self or children (SpacecraftStart)
+        rb = GetComponentInChildren<Rigidbody2D>();
+
+        // Initialize health and energy
         currentHealth = maxHealth;
+        currentEnergy = maxEnergy;
         
         // Cache original joint connections
         CacheOriginalJointConnections();
@@ -148,6 +163,12 @@ public class Spacecraft : MonoBehaviour {
         // Disable engines
         foreach (Engine e in engineScripts) {
             e.enabled = false;
+        }
+
+        // Disable solar panels
+        SolarPanel[] solarPanels = GetComponentsInChildren<SolarPanel>();
+        foreach (SolarPanel panel in solarPanels) {
+            panel.enabled = false;
         }
     }
     
@@ -252,9 +273,16 @@ public class Spacecraft : MonoBehaviour {
         foreach (Engine e in engineScripts) {
             e.enabled = true;
         }
-        
-        // Reset health when entering flight mode
+
+        // Enable solar panels
+        SolarPanel[] solarPanels = GetComponentsInChildren<SolarPanel>();
+        foreach (SolarPanel panel in solarPanels) {
+            panel.enabled = true;
+        }
+
+        // Reset health and energy when entering flight mode
         ResetHealth();
+        ResetEnergy();
     }
 
     public void TakeDamage(float damage) {
@@ -282,6 +310,25 @@ public class Spacecraft : MonoBehaviour {
     public void ResetHealth() {
         currentHealth = maxHealth;
         OnHealthChanged?.Invoke(this, HealthPercentage);
+    }
+
+    public void AddEnergy(float amount) {
+        if (amount <= 0f) return;
+        Debug.Log($"AddEnergy called: amount={amount:F6}, current={currentEnergy:F2}, max={maxEnergy:F2}");
+        currentEnergy = Mathf.Min(currentEnergy + amount, maxEnergy);
+        OnEnergyChanged?.Invoke(this, EnergyPercentage);
+    }
+
+    public bool TryConsumeEnergy(float amount) {
+        if (amount <= 0f || currentEnergy < amount) return false;
+        currentEnergy -= amount;
+        OnEnergyChanged?.Invoke(this, EnergyPercentage);
+        return true;
+    }
+
+    public void ResetEnergy() {
+        currentEnergy = maxEnergy;
+        OnEnergyChanged?.Invoke(this, EnergyPercentage);
     }
     
     private void SetAllPartsLayer(string layerName) {

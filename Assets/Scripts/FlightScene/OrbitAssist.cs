@@ -43,7 +43,7 @@ public class OrbitAssist : MonoBehaviour {
         GameObject[] allGravitySources = GameObject.FindGameObjectsWithTag("Gravity");
         GameObject psycheGravity = allGravitySources.FirstOrDefault(gravity => gravity.name == "PsycheGravity");
         psycheAsteroid = psycheGravity.GetComponentInParent<Transform>();
-        
+
         psycheGravity.GetComponent<PlanetGravitySource>().OnEnterGravityRange += PlanetGravitySource_OnGravityCrossBorder;
     }
 
