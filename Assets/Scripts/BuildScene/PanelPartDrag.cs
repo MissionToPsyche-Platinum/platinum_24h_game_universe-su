@@ -33,18 +33,11 @@ public class PanelPartDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         buildFactsPopup = GameObject.Find("BuildFactsPopup").GetComponent<BuildFactsPopup>();
     }
     public void OnBeginDrag(PointerEventData eventData) {
-        if (partData == null || partData.part == null) return;
-        if (!Spacecraft.IsBuildMode) return;
-
-        SpriteRenderer partVisual = partData.part.GetComponentInChildren<SpriteRenderer>();
-        if (partVisual == null || partVisual.sprite == null) return;
-
-        ghostPreview = new GameObject("GhostPreview");
-        ghostSprite = ghostPreview.AddComponent<SpriteRenderer>();
-        ghostSprite.sprite = partVisual.sprite;
+        ghostPreview = Instantiate(partData.part);
+        ghostPreview.name = "GhostPreview";
+        ghostSprite = ghostPreview.GetComponentInChildren<SpriteRenderer>();
         ghostSprite.color = new Color(baseColor.r, baseColor.g, baseColor.b, 0.5f);
         ghostSprite.sortingLayerName = "MidDrag";
-        ghostSprite.sortingOrder = 100;
 
         UpdateGhostPosition(eventData);
     }
@@ -70,7 +63,7 @@ public class PanelPartDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 }
             }
         }
-
+        
         Destroy(ghostPreview);
         ghostPreview = null;
         ghostSprite = null;

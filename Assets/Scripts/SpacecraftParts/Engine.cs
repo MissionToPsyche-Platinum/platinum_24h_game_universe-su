@@ -90,6 +90,25 @@ public class Engine : MonoBehaviour {
 
         return true;
     }
+    
+    private void AdjustEngineIDsForDeletion(GameObject engineToBeDeleted) {
+        if (!engineToBeDeleted.TryGetComponent<Engine>(out Engine deletedEngine)) return;
+        int engineID = deletedEngine.engineID;
+        int totalEngines = totalEngineCount;
+
+        totalEngineCount--;
+
+        if (engineID == totalEngines) return;
+
+        Spacecraft spacecraft = Spacecraft.GetInstance();
+        if (spacecraft == null) return;
+        
+        foreach (Transform child in spacecraft.transform) {
+            if (!child.TryGetComponent(out Engine otherEngine)) continue;
+
+            if (otherEngine.engineID > engineID) otherEngine.engineID--;
+        }
+    }
 
     private bool TryConsumeEnergy() {
         if (spacecraft == null) return false;
@@ -100,5 +119,6 @@ public class Engine : MonoBehaviour {
     private void OnDestroy() {
         gameInput.OnEnginePerformedAction -= GameInput_OnEngineAction;
         gameInput.OnEngineCanceledAction -= GameInput_OnEngineAction;
+        AdjustEngineIDsForDeletion(gameObject);
     }
 }
