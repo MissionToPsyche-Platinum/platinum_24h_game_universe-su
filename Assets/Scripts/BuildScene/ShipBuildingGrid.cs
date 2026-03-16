@@ -11,7 +11,7 @@ public class ShipBuildingGrid : MonoBehaviour {
     [SerializeField] private GameInput gameInput;
     [SerializeField] private GameObject spacecraft;
     [SerializeField] private GridVisualizer gridVisualizer;
-    [SerializeField] private GameObject highlightTransform;
+    [SerializeField] private GameObject highlight;
 
     private Grid grid;
     private int gridWidth = 5;
@@ -37,14 +37,18 @@ public class ShipBuildingGrid : MonoBehaviour {
         
         grid = new Grid(gridWidth, gridHeight, cellSize, gridOriginPosition);
         partDB = SpacecraftPartDatabase.Instance;
-        highlightSprite = highlightTransform.GetComponent<SpriteRenderer>();
-        highlightSprite.color = colorHighlightInvisible;
 
         CreateSpacecraft();
         gridVisualizer.VisualizeGrid(grid, gridWidth, gridHeight, cellSize, gridOriginPosition);
     } 
     
     private void Start() {
+        gameInput = GameObject.Find("GameInput").GetComponent<GameInput>();
+        spacecraft = GameObject.Find("Spacecraft");
+        highlight = GameObject.Find("Highlight");
+        highlightSprite = highlight.GetComponent<SpriteRenderer>();
+        highlightSprite.color = colorHighlightInvisible;
+
         gameInput.OnDeletePartPerformedAction += GameInput_OnDeletePartPerformedAction;
         gameInput.OnLeftMouseClickPerformedAction += GameInput_OnLeftMouseClickAction;
     }
@@ -133,7 +137,12 @@ public class ShipBuildingGrid : MonoBehaviour {
             return;
         }
 
-        highlightTransform.transform.position = snapped.Value;
+        if (highlight == null) {
+            highlight = GameObject.Find("Highlight");
+            highlightSprite = highlight.GetComponent<SpriteRenderer>();
+        }
+
+        highlight.transform.position = snapped.Value;
         highlightSprite.color = colorHighlight;
 
         someTileSelected = true;

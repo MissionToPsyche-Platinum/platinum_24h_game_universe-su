@@ -76,6 +76,7 @@ public class PartDrag : MonoBehaviour {
         transform.rotation = lockedRotation;
 
         // Snap to grid and show valid/invalid placement color feedback
+        if (shipGrid == null) shipGrid = ShipBuildingGrid.Instance;
         if (shipGrid != null) {
             Vector3? snapPos = shipGrid.PostionToGridPosition(curPosition);
             if (snapPos != null) {
