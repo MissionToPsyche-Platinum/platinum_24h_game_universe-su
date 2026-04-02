@@ -5,6 +5,9 @@ public class PartScriptableObject : ScriptableObject {
     public GameObject part;
 
     public int partID;
+
+    public int mass;
+    
     //"This parts should only be connectable to the rest of the spacecraft from..."
     public string[] connectingDirections;
 }

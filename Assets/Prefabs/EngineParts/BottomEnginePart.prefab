@@ -334,11 +334,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1824758996045960176}
-  - component: {fileID: 398841305246215798}
-  - component: {fileID: 6875979631783309317}
   - component: {fileID: 3010979542224283937}
   - component: {fileID: 7275421256755735125}
   - component: {fileID: 8090201097484984832}
+  - component: {fileID: -866892011188099394}
   m_Layer: 0
   m_Name: BottomEnginePart
   m_TagString: Untagged
@@ -363,52 +362,6 @@ Transform:
   - {fileID: 1371797969086084352}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &398841305246215798
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6762445239661676325}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!255 &6875979631783309317
-FixedJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6762445239661676325}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_BreakAction: 3
-  m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0}
-  m_DampingRatio: 0
-  m_Frequency: 0
 --- !u!60 &3010979542224283937
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -485,9 +438,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 850c3c51dbcba4bec9934c8a05b0f594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 50
-  engineRigidbody2D: {fileID: 398841305246215798}
+  speed: 5
   engineVisual: {fileID: 383230240694097690}
   idUI: {fileID: 1516800545626777781}
   maxFuel: 10
+  energyCostPerSecond: 2
   _engineID: 0
+--- !u!50 &-866892011188099394
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6762445239661676325}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

@@ -33,8 +33,8 @@ public class PartDrag : MonoBehaviour {
         partDB = SpacecraftPartDatabase.Instance;
     }
 
-    void OnMouseDown()
-    {
+    private void OnMouseDown() {
+        Debug.Log("idk");
         if (!Spacecraft.IsBuildMode) return;
 
         originalPosition = transform.position;
@@ -69,6 +69,7 @@ public class PartDrag : MonoBehaviour {
     }
 
     void OnMouseDrag() {
+        Debug.Log("crap");
         if (!Spacecraft.IsBuildMode) return;
 
         Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);

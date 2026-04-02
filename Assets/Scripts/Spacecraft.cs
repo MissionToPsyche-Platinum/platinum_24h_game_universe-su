@@ -146,7 +146,7 @@ public class Spacecraft : MonoBehaviour {
         }
         
         // Set all parts to Default layer for build mode (so drag/drop OverlapPoint works)
-        SetAllPartsLayer(DefaultLayer);
+        //SetAllPartsLayer(DefaultLayer);
 
         // Make all parts kinematic but keep simulation enabled for mouse events
         foreach (Rigidbody2D partRb in partRigidbodies) {
@@ -336,6 +336,18 @@ public class Spacecraft : MonoBehaviour {
         gameObject.layer = layer;
         foreach (Transform child in transform) {
             child.gameObject.layer = layer;
+        }
+    }
+
+    public void SetPartRigidBodies(bool enabled, RigidbodyType2D type = RigidbodyType2D.Dynamic) {
+        if (enabled) {
+            foreach (Transform child in transform) {
+                child.gameObject.AddComponent<Rigidbody2D>().bodyType = type;
+            }
+        } else {
+            foreach (Transform child in transform) {
+                Destroy(child.gameObject.GetComponent<Rigidbody2D>());
+            }
         }
     }
 

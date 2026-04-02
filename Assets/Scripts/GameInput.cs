@@ -164,7 +164,8 @@ public class GameInput : MonoBehaviour {
 
         // Passed requirements -> go to FlightScene
         SceneManager.LoadScene("FlightScene");
-
+        Spacecraft.GetInstance().SetPartRigidBodies(false);
+        
         inputActions.SpacecraftBuilding.Disable();
         inputActions.Spacecraft.Enable();
 
