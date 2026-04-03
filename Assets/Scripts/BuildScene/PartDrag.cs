@@ -35,7 +35,6 @@ public class PartDrag : MonoBehaviour {
     }
 
     private void OnMouseDown() {
-        Debug.Log("idk");
         if (!Spacecraft.IsBuildMode) return;
 
         originalPosition = transform.position;
@@ -56,10 +55,6 @@ public class PartDrag : MonoBehaviour {
 
         SetSortingLayer(midDragLayer);
         SetLayer(midDragLayer);
-
-        // Temporarily disconnect from joints while dragging
-        FixedJoint2D joint = GetComponent<FixedJoint2D>();
-        if (joint != null) joint.enabled = false;
         
         // Enable physics temporarily for dragging
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
@@ -70,7 +65,6 @@ public class PartDrag : MonoBehaviour {
     }
 
     void OnMouseDrag() {
-        Debug.Log("crap");
         if (!Spacecraft.IsBuildMode) return;
 
         Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
@@ -191,9 +185,6 @@ public class PartDrag : MonoBehaviour {
 
     private void ReconnectPart() {
         if (!Spacecraft.IsBuildMode) return;
-
-        FixedJoint2D joint = GetComponent<FixedJoint2D>();
-        if (joint != null) joint.enabled = true;
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null) {
