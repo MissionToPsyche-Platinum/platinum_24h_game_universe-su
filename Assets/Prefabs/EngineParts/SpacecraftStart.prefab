@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7836783556961581514}
   - component: {fileID: 5437106202384814886}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SpacecraftStartVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 2066312571433341085}
   - component: {fileID: 6101112982560754320}
   - component: {fileID: 4054391179085773193}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SpacecraftStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}

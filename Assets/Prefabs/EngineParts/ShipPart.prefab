@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3329860403273148835}
   - component: {fileID: 6599898052947377947}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ShipPartVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: -528824160874054211}
   - component: {fileID: -6725471293297042678}
   - component: {fileID: -421450692791934760}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ShipPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}

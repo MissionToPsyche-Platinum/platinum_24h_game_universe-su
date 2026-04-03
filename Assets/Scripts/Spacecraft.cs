@@ -11,18 +11,13 @@ using System.Linq;
 public class Spacecraft : MonoBehaviour {
     
     private static Spacecraft Instance;
-
     public static Spacecraft GetInstance() => Instance;
-
+    
     public static bool IsBuildMode { get; private set; }
     
     [SerializeField] private Rigidbody2D rb;
     private FixedJoint2D[] partJoints;
     private Rigidbody2D[] partRigidbodies;
-
-    // Layer names
-    private const string SpaceCraftLayer = "SpaceCraft";
-    private const string DefaultLayer = "Default";
     
     // Cache original joint connections to preserve part-to-part links
     private Dictionary<FixedJoint2D, Rigidbody2D> originalJointConnections;
@@ -53,9 +48,7 @@ public class Spacecraft : MonoBehaviour {
     public float MaxEnergy => maxEnergy;
     public float CurrentEnergy => currentEnergy;
     public float EnergyPercentage => maxEnergy > 0 ? currentEnergy / maxEnergy : 0f;
-
-
-
+    
     private void Awake() {
         // Singleton pattern to prevent duplicate spacecrafts
         if (Instance != null && Instance != this) {
@@ -144,9 +137,6 @@ public class Spacecraft : MonoBehaviour {
         foreach (Collider2D collider in partColliders) {
             collider.enabled = true;
         }
-        
-        // Set all parts to Default layer for build mode (so drag/drop OverlapPoint works)
-        //SetAllPartsLayer(DefaultLayer);
 
         // Make all parts kinematic but keep simulation enabled for mouse events
         foreach (Rigidbody2D partRb in partRigidbodies) {
@@ -185,9 +175,6 @@ public class Spacecraft : MonoBehaviour {
         
         // Get all colliders
         Collider2D[] partColliders = GetComponentsInChildren<Collider2D>();
-        
-        // Set all parts to the SpaceCraft damage layer
-        SetAllPartsLayer(SpaceCraftLayer);
 
         // DISABLE PartDrag components in flight mode so parts can't be dragged
         PartDrag[] partDrags = GetComponentsInChildren<PartDrag>();
@@ -330,19 +317,46 @@ public class Spacecraft : MonoBehaviour {
         currentEnergy = maxEnergy;
         OnEnergyChanged?.Invoke(this, EnergyPercentage);
     }
-    
-    private void SetAllPartsLayer(string layerName) {
-        int layer = LayerMask.NameToLayer(layerName);
-        gameObject.layer = layer;
-        foreach (Transform child in transform) {
-            child.gameObject.layer = layer;
-        }
+
+    public void PrepareForFlight() {
+        HandleSpacecraftMass();
+        SetPartRigidBodies(false);
     }
 
-    public void SetPartRigidBodies(bool enabled, RigidbodyType2D type = RigidbodyType2D.Dynamic) {
+    private void HandleSpacecraftMass() {
+        SpacecraftPartDatabase partDb = SpacecraftPartDatabase.Instance;
+        
+        //To find center of mass, use equation (summation of mp) / totalMass.
+        //Where m is individual part mass and p is the individual part local position relative to the other parts. 
+        float partMass;
+        float totalMass = 0f;
+        Vector2 numerator = new Vector2(0, 0);
+        foreach (Transform part in transform) {
+            partMass = partDb.GetMass(partDb.GetPartGameObject(part.name));
+            totalMass += partMass;
+
+            numerator += partMass * (Vector2)part.localPosition;
+        }
+        
+        rb.mass = totalMass;
+        rb.centerOfMass = numerator / totalMass;
+    }
+
+    private void SetPartRigidBodies(bool enabled, RigidbodyType2D type = RigidbodyType2D.Dynamic,
+        Vector2 linearVelocity = default, bool noisyVelocity = false) {
+        
         if (enabled) {
+            if(linearVelocity == default) linearVelocity = Vector2.zero;
+            
             foreach (Transform child in transform) {
-                child.gameObject.AddComponent<Rigidbody2D>().bodyType = type;
+                Rigidbody2D childRb = child.gameObject.AddComponent<Rigidbody2D>();
+                childRb.bodyType = type;
+                
+                if (noisyVelocity) {
+                    linearVelocity += new Vector2(UnityEngine.Random.Range(-5f, 5f),
+                        UnityEngine.Random.Range(-5f, 5f));
+                }
+                childRb.linearVelocity = linearVelocity;
             }
         } else {
             foreach (Transform child in transform) {
@@ -353,12 +367,10 @@ public class Spacecraft : MonoBehaviour {
 
     private IEnumerator HandleDeath() {
         Debug.Log("Spacecraft destroyed!");
-        FixedJoint2D[] joints = GetComponentsInChildren<FixedJoint2D>();
-        foreach (FixedJoint2D joint in joints)
-        {
-            joint.enabled = false;
-        }
-        GetComponent<Rigidbody2D>().simulated = false;
+        
+        SetPartRigidBodies(true, RigidbodyType2D.Dynamic, rb.linearVelocity, true);
+        
+        rb.simulated = false;
         yield return new WaitForSeconds(3f);
         GameInput.Instance.SetGameOverScene(false);
     }
