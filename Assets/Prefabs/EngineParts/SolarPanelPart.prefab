@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 832169376155678115}
   - component: {fileID: 573275149681660245}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SolarPanelPartVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,9 +100,8 @@ GameObject:
   - component: {fileID: 6556024218918548376}
   - component: {fileID: 3033503194899937510}
   - component: {fileID: 4862306525171706928}
-  - component: {fileID: 1397320101164581373}
   - component: {fileID: 8273626326462585906}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SolarPanelPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +197,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7421062647158426556}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -217,25 +216,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!255 &1397320101164581373
-FixedJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7421062647158426556}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_BreakAction: 3
-  m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -1.1881146, y: 0.92709}
-  m_DampingRatio: 0
-  m_Frequency: 0
 --- !u!114 &8273626326462585906
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,9 +13,8 @@ GameObject:
   - component: {fileID: 8782376569385845512}
   - component: {fileID: 398190188706771762}
   - component: {fileID: 6952641627509782601}
-  - component: {fileID: -9142783913395746958}
   - component: {fileID: -8936569572055432537}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MagnetometerPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +45,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 22678911187016829}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -129,25 +128,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
---- !u!255 &-9142783913395746958
-FixedJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 22678911187016829}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_BreakAction: 3
-  m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0}
-  m_DampingRatio: 0
-  m_Frequency: 0
 --- !u!114 &-8936569572055432537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,7 +151,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6384173195083621375}
   - component: {fileID: 7703516122853168683}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MagnetometerPartVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}

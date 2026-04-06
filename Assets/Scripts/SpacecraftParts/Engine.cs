@@ -4,8 +4,7 @@ using UnityEngine;
 
 //Class defines the behavior of the engine part. 
 public class Engine : MonoBehaviour {
-    [SerializeField] private int speed = 15;
-    [SerializeField] private Rigidbody2D engineRigidbody2D;
+    [SerializeField] private int speed;
     [SerializeField] private SpriteRenderer engineVisual;
     [SerializeField] private TextMeshProUGUI idUI;
     
@@ -27,6 +26,7 @@ public class Engine : MonoBehaviour {
     public static int totalEngineCount;
     private GameInput gameInput;
     private Spacecraft spacecraft;
+    private Rigidbody2D spacecraftRB;
     private bool active;
     private float fuelAmount;
 
@@ -39,7 +39,8 @@ public class Engine : MonoBehaviour {
         
         fuelAmount = maxFuel;
         gameInput = GameInput.Instance;
-        spacecraft = GetComponentInParent<Spacecraft>();
+        spacecraft = Spacecraft.GetInstance();
+        spacecraftRB = spacecraft.gameObject.GetComponent<Rigidbody2D>();
         
         OnFuelChanged?.Invoke(this, FuelPercentage);
     }
@@ -61,7 +62,7 @@ public class Engine : MonoBehaviour {
         if (active && TryConsumeFuel() && TryConsumeEnergy()) ActivateEngine();
     }
 
-    private void ActivateEngine() => engineRigidbody2D.AddForce(transform.up * speed);
+    private void ActivateEngine() => spacecraftRB.AddForceAtPosition(transform.up * speed, transform.position);
     
     private void GameInput_OnEngineAction(object sender, GameInput.EngineEventArgs e) { 
         if(engineID == e.engineNum) active = e.activated;
@@ -99,8 +100,6 @@ public class Engine : MonoBehaviour {
         totalEngineCount--;
 
         if (engineID == totalEngines) return;
-
-        Spacecraft spacecraft = Spacecraft.GetInstance();
         if (spacecraft == null) return;
         
         foreach (Transform child in spacecraft.transform) {
