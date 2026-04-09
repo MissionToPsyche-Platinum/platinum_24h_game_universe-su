@@ -27,8 +27,6 @@ public class AsteroidController : MonoBehaviour {
     private Dictionary<GameObject, float> outOfCameraTimes = new();
     private void Awake() {
         Instance = this;
-        maxHorizontalSpawnRange = (camera.GetComponent<FlightCamera>().GetCameraWidth() / 2) + distanceFromCameraBorder;
-        maxVerticalSpawnRange = (camera.GetComponent<FlightCamera>().GetCameraHeight() / 2) + distanceFromCameraBorder;
     }
 
     private void Start() {
@@ -37,10 +35,22 @@ public class AsteroidController : MonoBehaviour {
     
     private void Update() {
         foreach (GameObject asteroid in outOfCameraTimes.Keys.ToList()) {
-            outOfCameraTimes[asteroid] += Time.deltaTime;
-            if(outOfCameraTimes[asteroid] >= 3f) DestroyAsteroid(asteroid);
+            if (asteroid == null) continue;
+
+            // Check if asteroid is currently visible in camera
+            Vector3 viewportPos = camera.WorldToViewportPoint(asteroid.transform.position);
+            bool isVisible = viewportPos.x >= 0 && viewportPos.x <= 1 &&
+                             viewportPos.y >= 0 && viewportPos.y <= 1;
+
+            if (isVisible) {
+                outOfCameraTimes[asteroid] = 0f; // reset timer if back in view
+            }
+            else {
+                outOfCameraTimes[asteroid] += Time.deltaTime;
+                if (outOfCameraTimes[asteroid] >= 3f) DestroyAsteroid(asteroid);
+            }
         }
-        
+
         if (currentAsteroidCount == maxAsteroids) return;
 
         timeUntilNextAsteroidSpawn -= Time.deltaTime;
@@ -96,24 +106,28 @@ public class AsteroidController : MonoBehaviour {
     }
 
     private Vector3 GetSpawnPosition(out int spawnSide) {
+        FlightCamera flightCamera = camera.GetComponent<FlightCamera>();
+        float maxHorizontalSpawnRange = (flightCamera.GetCameraWidth() / 2) + distanceFromCameraBorder;
+        float maxVerticalSpawnRange = (flightCamera.GetCameraHeight() / 2) + distanceFromCameraBorder;
+
         spawnSide = UnityEngine.Random.Range(0, 4);
         Vector3 offset = new Vector3();
-        
+
         switch (spawnSide) {
-            case 0: //Spawn above camera
+            case 0:
                 offset = new Vector3(UnityEngine.Random.Range(-maxHorizontalSpawnRange, maxHorizontalSpawnRange), maxVerticalSpawnRange, -camera.transform.position.z);
                 break;
-            case 1: //below
+            case 1:
                 offset = new Vector3(UnityEngine.Random.Range(-maxHorizontalSpawnRange, maxHorizontalSpawnRange), -maxVerticalSpawnRange, -camera.transform.position.z);
                 break;
-            case 2: //left
+            case 2:
                 offset = new Vector3(-maxHorizontalSpawnRange, UnityEngine.Random.Range(-maxVerticalSpawnRange, maxVerticalSpawnRange), -camera.transform.position.z);
                 break;
-            case 3: //right
+            case 3:
                 offset = new Vector3(maxHorizontalSpawnRange, UnityEngine.Random.Range(-maxVerticalSpawnRange, maxVerticalSpawnRange), -camera.transform.position.z);
                 break;
         }
-        
+
         return camera.transform.position + offset;
     }
 
