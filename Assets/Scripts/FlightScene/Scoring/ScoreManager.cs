@@ -9,6 +9,9 @@ public class ScoreManager : MonoBehaviour {
 
     public static ScoreManager Instance { get; private set; }
 
+    // Survives scene transition to GameOverScene
+    public static ScoreBreakdown? LastBreakdown { get; private set; }
+
     [Tooltip("Tunable weights / base score. Required.")]
     [SerializeField] private ScoreConfig config;
 
@@ -137,7 +140,7 @@ public class ScoreManager : MonoBehaviour {
 
         total = Mathf.Max(minScore, total);
 
-        return new ScoreBreakdown {
+        var breakdown = new ScoreBreakdown {
             baseScore = baseScore,
             timePenalty = timePenalty,
             fuelPenalty = fuelPenalty,
@@ -148,6 +151,9 @@ public class ScoreManager : MonoBehaviour {
             fuelUsedPercent = fuelUsedPercent,
             damageTakenPercent = damageTakenPercent,
         };
+
+        LastBreakdown = breakdown;
+        return breakdown;
     }
 
     private float ComputeScore(float seconds, float fuelPct, float dmgPct, bool completed, bool died) {
