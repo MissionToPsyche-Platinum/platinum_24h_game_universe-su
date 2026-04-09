@@ -9,4 +9,5 @@ public class SceneNavigator : MonoBehaviour
     public void SetMissionFactsScene() => GameInput.Instance.SetMissionFactsScene();
     public void SetMissionDetailsScene() => GameInput.Instance.SetMissionDetailsScene();
     public void SetCreditsScene() => GameInput.Instance.SetCreditsScene();
+    public void SetSettingsScene() => GameInput.Instance.SetSettingsScene();
 }
