@@ -7,6 +7,7 @@ using UnityEngine;
 public class PsycheVictoryTrigger : MonoBehaviour
 {
     [SerializeField] private float victoryDistance;
+    [SerializeField] private ScoreBreakdownPopup victoryPopup;
 
     private Spacecraft spacecraft;
     private bool triggered = false;
@@ -27,7 +28,13 @@ public class PsycheVictoryTrigger : MonoBehaviour
         {
             triggered = true;
             Debug.Log("Victory!");
-            GameInput.Instance.SetGameOverScene(true);
+
+            var popup = victoryPopup != null ? victoryPopup : ScoreBreakdownPopup.Instance;
+            if (popup != null) {
+                popup.ShowVictory();
+            } else {
+                GameInput.Instance.SetGameOverScene(true);
+            }
         }
     }
 }
