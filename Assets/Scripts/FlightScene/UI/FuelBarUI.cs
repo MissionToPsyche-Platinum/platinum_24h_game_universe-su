@@ -1,113 +1,97 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
-/// <summary>
-/// UI component that displays the engine's fuel as a colored bar.
-/// Works similarly to HealthBarUI, but listens for fuel changes instead.
-/// </summary>
 [RequireComponent(typeof(Image))]
 public class FuelBarUI : MonoBehaviour
 {
-
-    [Tooltip("Optional: background image for the fuel bar container")]
     [SerializeField] private Image backgroundImage;
 
-    // Reference to the Image component that visually represents the fuel bar fill
     private Image fuelBarImage;
-
-    // Reference to the Engine that owns the fuel
-    private Engine engine;
-
-    // Tracks whether we have successfully subscribed to the engine's fuel event
+    private List<Engine> engines = new List<Engine>();
     private bool isSubscribed = false;
 
     private void Awake()
     {
-        // Cache the Image component on this GameObject
         fuelBarImage = GetComponent<Image>();
-        
-
-        // Initialize to full so the bar is visible immediately
         fuelBarImage.fillAmount = 1f;
     }
 
     private void Start()
     {
-        // Start coroutine to locate the Engine in the scene
-        StartCoroutine(FindEngineCoroutine());
+        StartCoroutine(FindEnginesCoroutine());
     }
 
-    // Continuously attempts to find the Engine object until it exists,
-    // then subscribes to its fuel change event.
-    private IEnumerator FindEngineCoroutine()
+    private IEnumerator FindEnginesCoroutine()
     {
-        // Keep trying to find the engine until found
-        while (engine == null)
+        while (engines.Count == 0)
         {
-            engine = FindFirstObjectByType<Engine>();
-
-            if (engine == null)
+            Engine[] found = FindObjectsByType<Engine>(FindObjectsSortMode.None);
+            if (found.Length > 0)
             {
-                // Wait briefly before trying again
+                engines.AddRange(found);
+            }
+            else
+            {
                 yield return new WaitForSeconds(0.1f);
             }
         }
 
-        // Once found, subscribe to the fuel change event
-        if (engine != null && !isSubscribed)
+        foreach (Engine engine in engines)
         {
             engine.OnFuelChanged += Engine_OnFuelChanged;
-            isSubscribed = true;
-
-            // Initialize fuel bar with current fuel level
-            UpdateFuelBar(engine.FuelPercentage);
-
-            Debug.Log("FuelBarUI: Successfully connected to Engine!");
         }
+        isSubscribed = true;
+
+        UpdateFuelBar(GetAverageFuel());
+        Debug.Log("FuelBarUI: Successfully connected to " + engines.Count + " engines!");
     }
 
-
-    // Called whenever the engine reports that fuel has changed.
     private void Engine_OnFuelChanged(object sender, float fuelPercentage)
     {
-        UpdateFuelBar(fuelPercentage);
+        UpdateFuelBar(GetAverageFuel());
     }
 
+    private float GetAverageFuel()
+    {
+        if (engines.Count == 0) return 0f;
+        float total = 0f;
+        foreach (Engine engine in engines)
+        {
+            if (engine != null) total += engine.FuelPercentage;
+        }
+        return total / engines.Count;
+    }
 
-    // Updates the visual fill amount of the fuel bar.
     private void UpdateFuelBar(float fuelPercentage)
     {
         if (fuelBarImage != null)
         {
-            // Clamp fuel percentage between 0 and 1
-            fuelPercentage = Mathf.Clamp01(fuelPercentage);
-
-            // Update the fill amount (0 = empty, 1 = full)
-            fuelBarImage.fillAmount = fuelPercentage;
+            fuelBarImage.fillAmount = Mathf.Clamp01(fuelPercentage);
         }
     }
 
     private void OnEnable()
     {
-        // When scene loads or object is re-enabled, try to reconnect
-        if (engine == null || !isSubscribed)
+        if (engines.Count == 0 || !isSubscribed)
         {
-            StartCoroutine(FindEngineCoroutine());
+            StartCoroutine(FindEnginesCoroutine());
         }
-        else if (engine != null && isSubscribed)
+        else
         {
-            // Update fuel bar immediately if already connected
-            UpdateFuelBar(engine.FuelPercentage);
+            UpdateFuelBar(GetAverageFuel());
         }
     }
 
     private void OnDestroy()
     {
-        // Unsubscribe from events to prevent memory leaks
-        if (engine != null && isSubscribed)
+        if (isSubscribed)
         {
-            engine.OnFuelChanged -= Engine_OnFuelChanged;
+            foreach (Engine engine in engines)
+            {
+                if (engine != null) engine.OnFuelChanged -= Engine_OnFuelChanged;
+            }
             isSubscribed = false;
         }
     }
