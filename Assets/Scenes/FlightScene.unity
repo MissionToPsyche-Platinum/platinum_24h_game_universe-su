@@ -1716,7 +1716,6 @@ GameObject:
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
   - component: {fileID: 519420034}
-  - component: {fileID: 519420035}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1902,21 +1901,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 18.5, y: 10.5}
   m_EdgeRadius: 0
---- !u!114 &519420035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c123c45eb3a07d14c95fe3b0ceaa60da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  zoomSpeed: 10
-  minZoom: 20
-  maxZoom: 150
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -3230,7 +3214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2307dd2ed846a4ccb8cfd3b9048ed94a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAsteroids: 7
+  maxAsteroids: 5
   minAsteroidSpeed: 1
   maxAsteroidSpeed: 10
   allAsteroidPrefabs:
