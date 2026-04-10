@@ -9,14 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb330e8931746bf99d864951b78e1c, type: 3}
-  m_Name: SatelliteDishPart
+  m_Script: {fileID: 11500000, guid: 3f04b09da45944847b675485f3c43f02, type: 3}
+  m_Name: ScoreConfig
   m_EditorClassIdentifier: 
-  part: {fileID: 2624134581080421435, guid: 525d5c850f752b84c98a3d3229271a61, type: 3}
-  partID: 7
-  mass: 1
-  connectingDirections:
-  - above
-  - below
-  - left
-  - right
+  baseScore: 10000
+  minScore: 0
+  timeWeightPerSecond: 10
+  fuelWeightPerPercent: 30
+  damageWeightPerPercent: 50
+  completionBonus: 0
+  zeroScoreOnDeath: 0

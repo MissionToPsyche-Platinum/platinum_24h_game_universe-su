@@ -11,22 +11,11 @@ using System.Linq;
 public class Spacecraft : MonoBehaviour {
     
     private static Spacecraft Instance;
-
     public static Spacecraft GetInstance() => Instance;
-
+    
     public static bool IsBuildMode { get; private set; }
     
     [SerializeField] private Rigidbody2D rb;
-    private FixedJoint2D[] partJoints;
-    private Rigidbody2D[] partRigidbodies;
-
-    // Layer names
-    private const string SpaceCraftLayer = "SpaceCraft";
-    private const string DefaultLayer = "Default";
-    
-    // Cache original joint connections to preserve part-to-part links
-    private Dictionary<FixedJoint2D, Rigidbody2D> originalJointConnections;
-
     [SerializeField] private OrbitAssist orbitAssist;
     
     // Health system
@@ -53,9 +42,7 @@ public class Spacecraft : MonoBehaviour {
     public float MaxEnergy => maxEnergy;
     public float CurrentEnergy => currentEnergy;
     public float EnergyPercentage => maxEnergy > 0 ? currentEnergy / maxEnergy : 0f;
-
-
-
+    
     private void Awake() {
         // Singleton pattern to prevent duplicate spacecrafts
         if (Instance != null && Instance != this) {
@@ -71,9 +58,6 @@ public class Spacecraft : MonoBehaviour {
         // Initialize health and energy
         currentHealth = maxHealth;
         currentEnergy = maxEnergy;
-        
-        // Cache original joint connections
-        CacheOriginalJointConnections();
     }
     
     private void Start() {
@@ -82,19 +66,6 @@ public class Spacecraft : MonoBehaviour {
 
         // Initialize physics mode based on current scene
         UpdatePhysicsMode();
-    }
-    
-    private void CacheOriginalJointConnections() {
-        if (originalJointConnections == null) {
-            originalJointConnections = new System.Collections.Generic.Dictionary<FixedJoint2D, Rigidbody2D>();
-        }
-        
-        FixedJoint2D[] joints = GetComponentsInChildren<FixedJoint2D>(true);
-        foreach (FixedJoint2D joint in joints) {
-            if (!originalJointConnections.ContainsKey(joint)) {
-                originalJointConnections[joint] = joint.connectedBody;
-            }
-        }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
@@ -123,37 +94,12 @@ public class Spacecraft : MonoBehaviour {
     private void SetBuildingMode() {
         IsBuildMode = true;
         
-        // Find all part rigidbodies, joints and engines
-        partRigidbodies = GetComponentsInChildren<Rigidbody2D>();
-        partJoints = GetComponentsInChildren<FixedJoint2D>();
         Engine[] engineScripts = GetComponentsInChildren<Engine>();
-
-        // Disable all joints first
-        foreach (FixedJoint2D joint in partJoints) {
-            joint.enabled = false;
-        }
         
         // Enable PartDrag components in build mode so parts can be dragged
         PartDrag[] partDrags = GetComponentsInChildren<PartDrag>();
         foreach (PartDrag partDrag in partDrags) {
             partDrag.enabled = true;
-        }
-        
-        // Get all colliders and ensure they're enabled for mouse events
-        Collider2D[] partColliders = GetComponentsInChildren<Collider2D>();
-        foreach (Collider2D collider in partColliders) {
-            collider.enabled = true;
-        }
-        
-        // Set all parts to Default layer for build mode (so drag/drop OverlapPoint works)
-        SetAllPartsLayer(DefaultLayer);
-
-        // Make all parts kinematic but keep simulation enabled for mouse events
-        foreach (Rigidbody2D partRb in partRigidbodies) {
-            if (partRb != rb) {
-                partRb.bodyType = RigidbodyType2D.Kinematic;
-                partRb.simulated = true;  // Keep simulated = true so mouse events work
-            }
         }
 
         // Set main spacecraft to kinematic but keep simulation enabled
@@ -175,19 +121,7 @@ public class Spacecraft : MonoBehaviour {
     private void SetFlightMode() {
         IsBuildMode = false;
         
-        // Update cached joints if needed
-        CacheOriginalJointConnections();
-        
-        // Find all part rigidbodies, joints and engines
-        partRigidbodies = GetComponentsInChildren<Rigidbody2D>();
-        partJoints = GetComponentsInChildren<FixedJoint2D>();
         Engine[] engineScripts = GetComponentsInChildren<Engine>();
-        
-        // Get all colliders
-        Collider2D[] partColliders = GetComponentsInChildren<Collider2D>();
-        
-        // Set all parts to the SpaceCraft damage layer
-        SetAllPartsLayer(SpaceCraftLayer);
 
         // DISABLE PartDrag components in flight mode so parts can't be dragged
         PartDrag[] partDrags = GetComponentsInChildren<PartDrag>();
@@ -195,67 +129,6 @@ public class Spacecraft : MonoBehaviour {
             partDrag.enabled = false;
         }
         
-        // Step 1: Ensure all bodies are kinematic/simulated OFF first
-        foreach (Rigidbody2D partRb in partRigidbodies) {
-            partRb.bodyType = RigidbodyType2D.Kinematic;
-            partRb.simulated = false;
-        }
-        rb.bodyType = RigidbodyType2D.Kinematic;
-        rb.simulated = false;
-        
-        // Step 2: Enable colliders and ensure they're not triggers
-        foreach (Collider2D collider in partColliders) {
-            collider.enabled = true;
-            collider.isTrigger = false;
-        }
-        
-        // Step 3: Restore joint connections from cache preserves part-to-part links
-        foreach (FixedJoint2D joint in partJoints) {
-            Rigidbody2D jointRb = joint.GetComponent<Rigidbody2D>();
-            if (jointRb == rb) {
-                // Skip joints on the main spacecraft Rigidbody2D
-                continue;
-            }
-            
-            // Restore original connection if cached, otherwise connect to main rb
-            if (originalJointConnections != null && originalJointConnections.ContainsKey(joint)) {
-                Rigidbody2D originalConnected = originalJointConnections[joint];
-                // If original was null or destroyed, fall back to main rb
-                if (originalConnected != null && originalConnected.gameObject.activeInHierarchy) {
-                    joint.connectedBody = originalConnected;
-                } else {
-                    joint.connectedBody = rb;
-                }
-            } else {
-                joint.connectedBody = rb; // Fallback if not cached
-            }
-            
-            joint.enableCollision = false;
-            joint.enabled = true;
-        }
-        
-        // Step 4: Sync transforms BEFORE enabling physics
-        Physics2D.SyncTransforms();
-        
-        // Step 5: Zero all velocities before enabling dynamics
-        foreach (Rigidbody2D partRb in partRigidbodies) {
-            partRb.linearVelocity = Vector2.zero;
-            partRb.angularVelocity = 0f;
-        }
-        rb.linearVelocity = Vector2.zero;
-        rb.angularVelocity = 0f;
-        
-        // Step 6: NOW enable physics for all parts (with interpolation for smooth rendering)
-        foreach (Rigidbody2D partRb in partRigidbodies) {
-            if (partRb != rb) {
-                partRb.simulated = true;
-                partRb.bodyType = RigidbodyType2D.Dynamic;
-                partRb.gravityScale = 0f;
-                partRb.excludeLayers = 0;
-                partRb.interpolation = RigidbodyInterpolation2D.Interpolate;
-            }
-        }
-
         // Enable main spacecraft physics
         rb.simulated = true;
         rb.bodyType = RigidbodyType2D.Dynamic;
@@ -263,10 +136,6 @@ public class Spacecraft : MonoBehaviour {
         rb.excludeLayers = 0;
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;
         
-        // Step 7: Wake up all Rigidbody2D components
-        foreach (Rigidbody2D partRb in partRigidbodies) {
-            partRb.WakeUp();
-        }
         rb.WakeUp();
 
         // Enable engines
@@ -330,23 +199,60 @@ public class Spacecraft : MonoBehaviour {
         currentEnergy = maxEnergy;
         OnEnergyChanged?.Invoke(this, EnergyPercentage);
     }
-    
-    private void SetAllPartsLayer(string layerName) {
-        int layer = LayerMask.NameToLayer(layerName);
-        gameObject.layer = layer;
-        foreach (Transform child in transform) {
-            child.gameObject.layer = layer;
+
+    public void PrepareForFlight() {
+        HandleSpacecraftMass();
+        SetPartRigidBodies(false);
+    }
+
+    private void HandleSpacecraftMass() {
+        SpacecraftPartDatabase partDb = SpacecraftPartDatabase.Instance;
+        
+        //To find center of mass, use equation (summation of mp) / totalMass.
+        //Where m is individual part mass and p is the individual part local position relative to the other parts. 
+        float partMass;
+        float totalMass = 0f;
+        Vector2 numerator = new Vector2(0, 0);
+        foreach (Transform part in transform) {
+            partMass = partDb.GetMass(partDb.GetPartGameObject(part.name));
+            totalMass += partMass;
+
+            numerator += partMass * (Vector2)part.localPosition;
+        }
+        
+        rb.mass = totalMass;
+        rb.centerOfMass = numerator / totalMass;
+    }
+
+    private void SetPartRigidBodies(bool enabled, RigidbodyType2D type = RigidbodyType2D.Dynamic,
+        Vector2 linearVelocity = default, bool noisyVelocity = false) {
+        
+        if (enabled) {
+            if(linearVelocity == default) linearVelocity = Vector2.zero;
+            
+            foreach (Transform child in transform) {
+                Rigidbody2D childRb = child.gameObject.AddComponent<Rigidbody2D>();
+                childRb.bodyType = type;
+                
+                if (noisyVelocity) {
+                    linearVelocity += new Vector2(UnityEngine.Random.Range(-5f, 5f),
+                        UnityEngine.Random.Range(-5f, 5f));
+                }
+                childRb.linearVelocity = linearVelocity;
+            }
+        } else {
+            foreach (Transform child in transform) {
+                Destroy(child.gameObject.GetComponent<Rigidbody2D>());
+            }
         }
     }
 
     private IEnumerator HandleDeath() {
         Debug.Log("Spacecraft destroyed!");
-        FixedJoint2D[] joints = GetComponentsInChildren<FixedJoint2D>();
-        foreach (FixedJoint2D joint in joints)
-        {
-            joint.enabled = false;
-        }
-        GetComponent<Rigidbody2D>().simulated = false;
+        
+        SetPartRigidBodies(true, RigidbodyType2D.Dynamic, rb.linearVelocity, true);
+        
+        rb.simulated = false;
         yield return new WaitForSeconds(3f);
         GameInput.Instance.SetGameOverScene(false);
     }

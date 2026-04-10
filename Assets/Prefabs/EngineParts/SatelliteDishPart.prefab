@@ -13,9 +13,8 @@ GameObject:
   - component: {fileID: 87098633644945888}
   - component: {fileID: 6773643651935359739}
   - component: {fileID: -8092308245803106723}
-  - component: {fileID: -3291575258287904876}
   - component: {fileID: 3457778687372409180}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SatelliteDishPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +45,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2624134581080421435}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -128,25 +127,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!255 &-3291575258287904876
-FixedJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2624134581080421435}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_BreakAction: 3
-  m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -1.1881146, y: 0.92709}
-  m_DampingRatio: 0
-  m_Frequency: 0
 --- !u!114 &3457778687372409180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,7 +150,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8145595897806028162}
   - component: {fileID: 228154062976764577}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SatelliteDishPartVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}

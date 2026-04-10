@@ -22,6 +22,7 @@ public class PartDrag : MonoBehaviour {
     private Color baseColor;
     private string midDragLayer = "MidDrag";
     private string defaultLayer = "Default";
+    private string spacecraftLayer = "SpaceCraft";
 
     private void Awake() {
         partCollider = GetComponent<Collider2D>();
@@ -33,8 +34,7 @@ public class PartDrag : MonoBehaviour {
         partDB = SpacecraftPartDatabase.Instance;
     }
 
-    void OnMouseDown()
-    {
+    private void OnMouseDown() {
         if (!Spacecraft.IsBuildMode) return;
 
         originalPosition = transform.position;
@@ -55,10 +55,6 @@ public class PartDrag : MonoBehaviour {
 
         SetSortingLayer(midDragLayer);
         SetLayer(midDragLayer);
-
-        // Temporarily disconnect from joints while dragging
-        FixedJoint2D joint = GetComponent<FixedJoint2D>();
-        if (joint != null) joint.enabled = false;
         
         // Enable physics temporarily for dragging
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
@@ -116,7 +112,7 @@ public class PartDrag : MonoBehaviour {
         if (shipGrid.GetGridCellValue(shipGrid.UnityPositionToGridCoordinates(gridSnapPosition)) == -1) {
             if (TryPlacePart(part, gridSnapPosition)) return;
         } else {
-            Collider2D partToBeSwapped = Physics2D.OverlapPoint(gridSnapPosition, LayerMask.GetMask(defaultLayer));
+            Collider2D partToBeSwapped = Physics2D.OverlapPoint(gridSnapPosition, LayerMask.GetMask(spacecraftLayer));
             if (partToBeSwapped != null && TrySwapPart(part, originalPosition, partToBeSwapped.gameObject, gridSnapPosition)) return;
         }
         
@@ -140,7 +136,7 @@ public class PartDrag : MonoBehaviour {
         shipGrid.SetPlacedPartAtWorldPosition(part.transform.position, part.gameObject);
 
         SetSortingLayer(defaultLayer);
-        SetLayer(defaultLayer);
+        SetLayer(spacecraftLayer);
 
         // Reconnect joint and disable physics
         ReconnectPart();
@@ -173,7 +169,7 @@ public class PartDrag : MonoBehaviour {
         if (nullableGridSnapPosition == null) return false;
         Vector3 gridSnapPosition = (Vector3)nullableGridSnapPosition;
         
-        Collider2D partToBeSwapped = Physics2D.OverlapPoint(gridSnapPosition, LayerMask.GetMask(defaultLayer));
+        Collider2D partToBeSwapped = Physics2D.OverlapPoint(gridSnapPosition, LayerMask.GetMask(spacecraftLayer));
         if (partToBeSwapped == null) return false;
 
         return CanSwapPart(draggedPart, draggedOGPosition, partToBeSwapped.gameObject, gridSnapPosition);
@@ -190,9 +186,6 @@ public class PartDrag : MonoBehaviour {
 
     private void ReconnectPart() {
         if (!Spacecraft.IsBuildMode) return;
-
-        FixedJoint2D joint = GetComponent<FixedJoint2D>();
-        if (joint != null) joint.enabled = true;
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null) {

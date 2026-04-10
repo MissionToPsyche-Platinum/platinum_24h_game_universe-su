@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6633535540196308366}
   - component: {fileID: 383230240694097690}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnginePartVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 4034743820963732585}
   - component: {fileID: 1098705586006279290}
   - component: {fileID: 274360879405199424}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 4898904928870803420}
   - component: {fileID: 6289198085043161166}
   - component: {fileID: 1516800545626777781}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,8 +338,7 @@ GameObject:
   - component: {fileID: 8090201097484984832}
   - component: {fileID: 8920606575649150497}
   - component: {fileID: 5853902191514795720}
-  - component: {fileID: -1368129002445174901}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TopEnginePart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -371,7 +370,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6762445239661676325}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -403,10 +402,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 50
-  engineRigidbody2D: {fileID: 398841305246215798}
   engineVisual: {fileID: 383230240694097690}
   idUI: {fileID: 1516800545626777781}
   maxFuel: 10
+  energyCostPerSecond: 2
   _engineID: 0
 --- !u!60 &8920606575649150497
 PolygonCollider2D:
@@ -472,22 +471,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedObject: {fileID: 6762445239661676325}
   objectVisual: {fileID: 1067822573587299252}
---- !u!255 &-1368129002445174901
-FixedJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6762445239661676325}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_BreakAction: 3
-  m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0}
-  m_DampingRatio: 0
-  m_Frequency: 0

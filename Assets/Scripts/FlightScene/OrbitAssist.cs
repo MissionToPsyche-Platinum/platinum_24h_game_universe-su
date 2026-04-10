@@ -1,7 +1,10 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
 public class OrbitAssist : MonoBehaviour {
+    public static event EventHandler OnEnteredOrbit;
+
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float orbitRadius;
     [SerializeField] private float transitionSpeed;
@@ -34,8 +37,9 @@ public class OrbitAssist : MonoBehaviour {
             psycheAsteroid.GetComponentInChildren<PlanetGravitySource>().enabled = false;
             Vector2 toShip = transform.position - psycheAsteroid.position;
             angle = Mathf.Atan2(toShip.y, toShip.x);
-            
+
             inOrbit = true;
+            OnEnteredOrbit?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -75,6 +79,7 @@ public class OrbitAssist : MonoBehaviour {
         if (Vector2.Distance(transform.position, orbitPos) < 0.05f) {
             angle = targetAngle;
             inOrbit = true;
+            OnEnteredOrbit?.Invoke(this, EventArgs.Empty);
             rb.linearDamping = nonOrbitAssistVelocityDamper;
             clockwiseOrbit = ClockwiseOrbit();
             rotationOffset = clockwiseOrbit ? 180 : -90;

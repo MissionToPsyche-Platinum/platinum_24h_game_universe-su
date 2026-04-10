@@ -61,7 +61,6 @@ public class ShipBuildingGrid : MonoBehaviour {
 
         // Mark the base tile as occupied in the int grid
         grid.SetValue(baseCoords.Item1, baseCoords.Item2, baseID);
-
     }
 
     public void SetGridCellValue((int, int) coordinates, int value) {
@@ -191,22 +190,6 @@ public class ShipBuildingGrid : MonoBehaviour {
         return false;
     }
 
-    private void ConnectPartToSpacecraft(GameObject part) {
-        FixedJoint2D joint = part.GetComponent<FixedJoint2D>();
-        if (joint != null) {
-            Rigidbody2D spacecraftRb = spacecraft.GetComponent<Rigidbody2D>();
-            joint.connectedBody = spacecraftRb;
-            joint.enableCollision = false;
-        }
-        
-        // Make part kinematic during building phase but keep simulation enabled for mouse events
-        Rigidbody2D partRb = part.GetComponent<Rigidbody2D>();
-        if (partRb != null) {
-            partRb.bodyType = RigidbodyType2D.Kinematic;
-            partRb.simulated = true; 
-        }
-    }
-
     //Ex: If part is bottomEngine, and the connectingDirection is "above" it can connect
     private bool PartCanConnect(int partID, string connectingDirection) {
         if (partID < 0) return false;
@@ -246,9 +229,6 @@ public class ShipBuildingGrid : MonoBehaviour {
         spacecraftPart.SetActive(true);
         spacecraftPart.transform.position = GridCoordinatesToUnityPosition(coordinates);
         CacheOriginalSpriteColors(spacecraftPart);
-
-        // Connect physics/joint
-        ConnectPartToSpacecraft(spacecraftPart);
 
         // Track in dictionary
         placedParts[coordinates] = spacecraftPart;

@@ -33,6 +33,10 @@ public class PanelPartDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         buildFactsPopup = GameObject.Find("BuildFactsPopup").GetComponent<BuildFactsPopup>();
     }
     public void OnBeginDrag(PointerEventData eventData) {
+        // Notify the drag hint to stop
+        DragHintAnimator hint = FindAnyObjectByType<DragHintAnimator>();
+        if (hint != null) hint.StopHint();
+
         ghostPreview = Instantiate(partData.part);
         ghostPreview.name = "GhostPreview";
         ghostSprite = ghostPreview.GetComponentInChildren<SpriteRenderer>();
