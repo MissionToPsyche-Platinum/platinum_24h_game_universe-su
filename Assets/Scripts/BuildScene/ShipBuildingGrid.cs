@@ -55,7 +55,6 @@ public class ShipBuildingGrid : MonoBehaviour {
         highlight = GameObject.Find("Highlight");
         highlightSprite = highlight.GetComponent<SpriteRenderer>();
         highlightSprite.color = colorHighlightInvisible;
-        Debug.Log(colorblindMode);
         highlightSprite.sprite = colorblindMode ? colorblindHighlight : baseHighlightSprite;
 
         gameInput.OnDeletePartPerformedAction += GameInput_OnDeletePartPerformedAction;
