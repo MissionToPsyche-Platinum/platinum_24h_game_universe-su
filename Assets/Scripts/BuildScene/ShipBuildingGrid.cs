@@ -71,6 +71,25 @@ public class ShipBuildingGrid : MonoBehaviour {
         grid.SetValue(baseCoords.Item1, baseCoords.Item2, baseID);
     }
 
+    public void ResetGrid() {
+        foreach (var placedPart in placedParts) {
+            GameObject partObject = placedPart.Value;
+            if (partObject == null || partObject == spacecraft) continue;
+            Destroy(partObject);
+        }
+
+        placedParts.Clear();
+        originalSpriteColors.Clear();
+
+        for (int x = 0; x < gridWidth; x++) {
+            for (int y = 0; y < gridHeight; y++) {
+                grid.SetValue(x, y, -1);
+            }
+        }
+        CreateSpacecraft();
+        DeselectPart();
+    }
+
     public void SetGridCellValue((int, int) coordinates, int value) {
         grid.SetValue(coordinates.Item1, coordinates.Item2, value);
     }

@@ -120,8 +120,6 @@ public class GameInput : MonoBehaviour {
 
             if (ShipBuildingGrid.Instance != null && ShipBuildingGrid.Instance.HighlightDisconnectedParts())
                 DisconnectedPartsWarningManager.Instance.DisplayWarning();
-            else SetFlightFactsScene(); // or SetFlightScene()
-            
             return;
         }
 
