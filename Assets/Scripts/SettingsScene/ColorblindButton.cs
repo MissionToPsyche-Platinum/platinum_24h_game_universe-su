@@ -9,6 +9,13 @@ public class ColorblindButton : MonoBehaviour
     void Start()
     {
         settingsInstance = Settings.instance;
+        if (settingsInstance.colorblindMode)
+        {
+            text.text = "ON";
+        } else
+        {
+            text.text = "OFF";
+        }
     }
 
     public void toggleColorblindMode()

@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEditor;
+using UnityEditor.U2D;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
@@ -8,9 +10,15 @@ public class PartDrag : MonoBehaviour {
     [SerializeField] private GameObject selectedObject;
     [SerializeField] private GameObject objectVisual;
     
+    [SerializeField] private GameObject highlight;
+    private SpriteRenderer highlightSprite;
+
+    [SerializeField] private Sprite colorblindValid;
+    [SerializeField] private Sprite colorblindInvalid;
     private static readonly Color colorValid   = new Color(0.3f, 1f, 0.3f, 0.6f);
     private static readonly Color colorInvalid = new Color(1f, 0.3f, 0.3f, 0.6f);
 
+    private bool colorblindMode;
     private Vector3 screenPoint;
     private Vector3 offset;
     private Vector3 originalPosition;
@@ -20,6 +28,7 @@ public class PartDrag : MonoBehaviour {
     private SpacecraftPartDatabase partDB;
     private SpriteRenderer objectSprite;
     private Color baseColor;
+    private Sprite baseHighlightSprite;
     private string midDragLayer = "MidDrag";
     private string defaultLayer = "Default";
     private string spacecraftLayer = "SpaceCraft";
@@ -31,11 +40,23 @@ public class PartDrag : MonoBehaviour {
         lockedRotation = transform.rotation;
         
         shipGrid = ShipBuildingGrid.Instance;
+        highlight = GameObject.Find("Highlight");
+        highlightSprite = highlight.GetComponent<SpriteRenderer>();
+        baseHighlightSprite = highlightSprite.sprite;
         partDB = SpacecraftPartDatabase.Instance;
+
+        colorblindMode = Settings.instance.colorblindMode;
     }
 
     private void OnMouseDown() {
         if (!Spacecraft.IsBuildMode) return;
+
+        if (highlight == null)
+        {
+            highlight = GameObject.Find("Highlight");
+            highlightSprite = highlight.GetComponent<SpriteRenderer>();
+            colorblindMode = Settings.instance.colorblindMode;
+        }
 
         originalPosition = transform.position;
         baseColor = objectSprite.color;
@@ -81,12 +102,19 @@ public class PartDrag : MonoBehaviour {
                 GameObject part = partDB.GetPartGameObject(selectedObject.name);
                 bool valid = shipGrid.CanPlacePart(part, coords) || CanSwapPart(part, originalPosition);
                 objectSprite.color = valid ? colorValid : colorInvalid;
+                highlight.transform.position = transform.position;
+                highlightSprite.color = colorblindMode ? Color.white : ShipBuildingGrid.colorHighlightInvisible;
+                if (colorblindMode) highlightSprite.sprite = valid ? colorblindValid : colorblindInvalid;
             } else {
                 transform.position = curPosition;
+                highlight.transform.position = curPosition;
+                highlightSprite.color = ShipBuildingGrid.colorHighlightInvisible;
                 objectSprite.color = new Color(baseColor.r, baseColor.g, baseColor.b, 0.5f);
             }
         } else {
             transform.position = curPosition;
+            highlight.transform.position = curPosition;
+            highlightSprite.color = ShipBuildingGrid.colorHighlightInvisible;
         }
     }
 
@@ -117,6 +145,8 @@ public class PartDrag : MonoBehaviour {
         }
         
         PlacePart(gameObject, originalPosition);
+        shipGrid.HandleLeftClick();
+        highlightSprite.color = ShipBuildingGrid.colorHighlight;
     }
 
     private bool TryPlacePart(GameObject part, Vector3 worldPosition) {
