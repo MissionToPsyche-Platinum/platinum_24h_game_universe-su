@@ -1,19 +1,20 @@
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// UI indicator that sits on the screen edge and points toward the Psyche asteroid
-/// when it is off-screen. Hides automatically when Psyche is visible.
+/// UI indicator that sits on the screen edge and points toward a world-space target
+/// when it is off-screen. Hides automatically when the target is visible.
 /// </summary>
-public class PsycheIndicatorUI : MonoBehaviour {
+public class OffScreenIndicatorUI : MonoBehaviour {
+
+    [Tooltip("World-space target this indicator points to")]
+    [SerializeField] private Transform target;
 
     [Tooltip("Padding in pixels from screen edge")]
     [SerializeField] private float edgePadding = 50f;
 
     private RectTransform indicator;
     private Image indicatorImage;
-    private Transform psycheAsteroid;
     private Camera mainCamera;
     private RectTransform canvasRect;
 
@@ -24,25 +25,17 @@ public class PsycheIndicatorUI : MonoBehaviour {
         canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
     }
 
-    private void Start() {
-        FindPsyche();
-    }
-
-    private void FindPsyche() {
-        GameObject[] allGravitySources = GameObject.FindGameObjectsWithTag("Gravity");
-        GameObject psycheGravity = allGravitySources.FirstOrDefault(g => g.name == "PsycheGravity");
-        if (psycheGravity != null) {
-            psycheAsteroid = psycheGravity.transform.parent;
-        }
+    public void SetTarget(Transform newTarget) {
+        target = newTarget;
     }
 
     private void Update() {
-        if (psycheAsteroid == null || mainCamera == null) {
+        if (target == null || mainCamera == null) {
             indicatorImage.enabled = false;
             return;
         }
 
-        Vector3 screenPos = mainCamera.WorldToScreenPoint(psycheAsteroid.position);
+        Vector3 screenPos = mainCamera.WorldToScreenPoint(target.position);
 
         bool isOnScreen = screenPos.x > 0 && screenPos.x < Screen.width &&
                           screenPos.y > 0 && screenPos.y < Screen.height &&
@@ -52,7 +45,7 @@ public class PsycheIndicatorUI : MonoBehaviour {
 
         if (isOnScreen) return;
 
-        // Get screen center and direction to Psyche in screen space
+        // Get screen center and direction to target in screen space
         Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
         Vector2 dir = ((Vector2)screenPos - screenCenter).normalized;
 
@@ -72,7 +65,7 @@ public class PsycheIndicatorUI : MonoBehaviour {
             canvasRect, edgePos, null, out Vector2 localPoint);
         indicator.localPosition = localPoint;
 
-        // Rotate so the indicator points toward Psyche
+        // Rotate so the indicator points toward the target
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         indicator.localRotation = Quaternion.Euler(0, 0, angle);
     }
