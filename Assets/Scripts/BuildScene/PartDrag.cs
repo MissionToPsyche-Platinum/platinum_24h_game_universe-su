@@ -94,6 +94,7 @@ public class PartDrag : MonoBehaviour {
 
         // Snap to grid and show valid/invalid placement color feedback
         if (shipGrid == null) shipGrid = ShipBuildingGrid.Instance;
+        if (highlight == null) highlight = GameObject.Find("Highlight");
         if (shipGrid != null) {
             Vector3? snapPos = shipGrid.PostionToGridPosition(curPosition);
             if (snapPos != null) {

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class EnergyBarUI : MonoBehaviour {
 
-    [Tooltip("Optional: background image for the energy bar container")]
+    [Tooltip("Background image for the energy bar container")]
     [SerializeField] private Image backgroundImage;
 
     private Image energyBarImage;

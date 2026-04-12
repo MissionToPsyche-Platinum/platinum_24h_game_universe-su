@@ -39,9 +39,15 @@ public class Spacecraft : MonoBehaviour {
 
     public event EventHandler<float> OnEnergyChanged; // Passes current energy percentage (0-1)
 
-    public float MaxEnergy => maxEnergy;
-    public float CurrentEnergy => currentEnergy;
+    // Energy system
+    [Header("Fuel Settings")]
+    [SerializeField] private float fuelPerTank = 50f;
+    private float maxFuel = 0f;
+    [SerializeField] private float currentFuel;
+
+    public event EventHandler<float> OnFuelChanged; // Passes current fuel percentage (0-1)
     public float EnergyPercentage => maxEnergy > 0 ? currentEnergy / maxEnergy : 0f;
+    public float FuelPercentage => maxFuel > 0 ? currentFuel / maxFuel : 0f;
     
     private void Awake() {
         // Singleton pattern to prevent duplicate spacecrafts
@@ -69,7 +75,9 @@ public class Spacecraft : MonoBehaviour {
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        if(scene.name == "FlightScene") orbitAssist.FindPsycheAsteroid();
+        if(scene.name == "FlightScene") {
+            orbitAssist.FindPsycheAsteroid();
+        }
         
         // Delay physics update to next frame to ensure all children are initialized
         StartCoroutine(UpdatePhysicsModeDelayed());
@@ -149,9 +157,14 @@ public class Spacecraft : MonoBehaviour {
             panel.enabled = true;
         }
 
+        // Set max fuel based on tanks
+        FuelTank[] fuelTanks = GetComponentsInChildren<FuelTank>();
+        maxFuel = fuelPerTank * fuelTanks.Length;
+
         // Reset health and energy when entering flight mode
         ResetHealth();
         ResetEnergy();
+        ResetFuel();
     }
 
     public void TakeDamage(float damage) {
@@ -198,6 +211,18 @@ public class Spacecraft : MonoBehaviour {
     public void ResetEnergy() {
         currentEnergy = maxEnergy;
         OnEnergyChanged?.Invoke(this, EnergyPercentage);
+    }
+
+    public bool TryConsumeFuel(float amount) {
+        if (amount <= 0f || currentFuel < amount) return false;
+        currentFuel -= amount;
+        OnFuelChanged?.Invoke(this, FuelPercentage);
+        return true;
+    }
+
+    public void ResetFuel() {
+        currentFuel = maxFuel;
+        OnFuelChanged?.Invoke(this, FuelPercentage);
     }
 
     public void PrepareForFlight() {

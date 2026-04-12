@@ -20,7 +20,6 @@ public class Settings : MonoBehaviour
     public bool toggleColorblindMode()
     {
         colorblindMode = !colorblindMode;
-        Debug.Log(colorblindMode);
         return colorblindMode;
     }
 }

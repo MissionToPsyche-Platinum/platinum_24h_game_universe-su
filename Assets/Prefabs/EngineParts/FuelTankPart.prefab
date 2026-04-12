@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: -6725471293297042678}
   - component: {fileID: 631398984511321396}
   - component: {fileID: 2606864848460444891}
+  - component: {fileID: -1234813427447263554}
   m_Layer: 0
   m_Name: FuelTankPart
   m_TagString: Untagged
@@ -183,6 +184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedObject: {fileID: 6185069549927734299}
   objectVisual: {fileID: 5791201175396930333}
+  highlight: {fileID: 0}
   colorblindValid: {fileID: 21300000, guid: ae673aca304d84144b31cd1cc0bdb981, type: 3}
   colorblindInvalid: {fileID: 21300000, guid: 27410deb8893e984e880da0c4fe8c771, type: 3}
 --- !u!50 &631398984511321396
@@ -231,3 +233,15 @@ FixedJoint2D:
   m_ConnectedAnchor: {x: -2, y: -2.5}
   m_DampingRatio: 0
   m_Frequency: 0
+--- !u!114 &-1234813427447263554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6185069549927734299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 895c411599837684fa309c4acfdb0693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

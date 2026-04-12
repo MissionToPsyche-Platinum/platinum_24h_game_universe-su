@@ -101,7 +101,6 @@ public class PanelPartDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 GameObject part = partData.part;
                 bool valid = shipGrid.CanPlacePart(part, coords);
                 ghostSprite.color = valid ? colorValid : colorInvalid;
-                Debug.Log(colorblindMode);
                 highlight.transform.position = ghostPreview.transform.position;
                 highlightSprite.color = colorblindMode ? Color.white : ShipBuildingGrid.colorHighlightInvisible;
                 if (colorblindMode) highlightSprite.sprite = valid ? colorblindValid : colorblindInvalid;
