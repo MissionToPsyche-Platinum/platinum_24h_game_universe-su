@@ -69,7 +69,7 @@ public class Spacecraft : MonoBehaviour {
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        if(scene.name == "FlightScene") orbitAssist.FindPsycheAsteroid();
+        if(scene.name == "FlightScene") orbitAssist.GetPsycheAsteroid();
         
         // Delay physics update to next frame to ensure all children are initialized
         StartCoroutine(UpdatePhysicsModeDelayed());
