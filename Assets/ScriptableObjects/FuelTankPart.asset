@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   part: {fileID: 6185069549927734299, guid: fcbda86eec24ffe479dc90fad9947b2d, type: 3}
   partID: 12
+  mass: 0
   connectingDirections:
   - above
+  - below
