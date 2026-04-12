@@ -834,15 +834,6 @@
             "id": "ec1eda59-e4ba-4877-8e94-fdb8513a0193",
             "actions": [
                 {
-                    "name": "SceneSwitch",
-                    "type": "Button",
-                    "id": "91650f0f-6fda-4c2c-bdc5-3b48f3091b4c",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "ReturnToMenu",
                     "type": "Button",
                     "id": "56a25aff-367d-4d80-8b43-1aef3202a37b",
@@ -853,17 +844,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "08ff6a4f-3111-46af-abd3-12dff3c74986",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "SceneSwitch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "10191e28-6130-4925-bc17-34a62e625343",
