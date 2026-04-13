@@ -920,15 +920,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             ""id"": ""ec1eda59-e4ba-4877-8e94-fdb8513a0193"",
             ""actions"": [
                 {
-                    ""name"": ""SceneSwitch"",
-                    ""type"": ""Button"",
-                    ""id"": ""91650f0f-6fda-4c2c-bdc5-3b48f3091b4c"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""ReturnToMenu"",
                     ""type"": ""Button"",
                     ""id"": ""56a25aff-367d-4d80-8b43-1aef3202a37b"",
@@ -939,17 +930,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""08ff6a4f-3111-46af-abd3-12dff3c74986"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""SceneSwitch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""10191e28-6130-4925-bc17-34a62e625343"",
@@ -1281,7 +1261,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         // General
         m_General = asset.FindActionMap("General", throwIfNotFound: true);
-        m_General_SceneSwitch = m_General.FindAction("SceneSwitch", throwIfNotFound: true);
         m_General_ReturnToMenu = m_General.FindAction("ReturnToMenu", throwIfNotFound: true);
         // SpacecraftBuilding
         m_SpacecraftBuilding = asset.FindActionMap("SpacecraftBuilding", throwIfNotFound: true);
@@ -1746,7 +1725,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     // General
     private readonly InputActionMap m_General;
     private List<IGeneralActions> m_GeneralActionsCallbackInterfaces = new List<IGeneralActions>();
-    private readonly InputAction m_General_SceneSwitch;
     private readonly InputAction m_General_ReturnToMenu;
     /// <summary>
     /// Provides access to input actions defined in input action map "General".
@@ -1759,10 +1737,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
         public GeneralActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
-        /// <summary>
-        /// Provides access to the underlying input action "General/SceneSwitch".
-        /// </summary>
-        public InputAction @SceneSwitch => m_Wrapper.m_General_SceneSwitch;
         /// <summary>
         /// Provides access to the underlying input action "General/ReturnToMenu".
         /// </summary>
@@ -1793,9 +1767,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_GeneralActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_GeneralActionsCallbackInterfaces.Add(instance);
-            @SceneSwitch.started += instance.OnSceneSwitch;
-            @SceneSwitch.performed += instance.OnSceneSwitch;
-            @SceneSwitch.canceled += instance.OnSceneSwitch;
             @ReturnToMenu.started += instance.OnReturnToMenu;
             @ReturnToMenu.performed += instance.OnReturnToMenu;
             @ReturnToMenu.canceled += instance.OnReturnToMenu;
@@ -1810,9 +1781,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="GeneralActions" />
         private void UnregisterCallbacks(IGeneralActions instance)
         {
-            @SceneSwitch.started -= instance.OnSceneSwitch;
-            @SceneSwitch.performed -= instance.OnSceneSwitch;
-            @SceneSwitch.canceled -= instance.OnSceneSwitch;
             @ReturnToMenu.started -= instance.OnReturnToMenu;
             @ReturnToMenu.performed -= instance.OnReturnToMenu;
             @ReturnToMenu.canceled -= instance.OnReturnToMenu;
@@ -2258,13 +2226,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     /// <seealso cref="GeneralActions.RemoveCallbacks(IGeneralActions)" />
     public interface IGeneralActions
     {
-        /// <summary>
-        /// Method invoked when associated input action "SceneSwitch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSceneSwitch(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "ReturnToMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

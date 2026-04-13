@@ -19,8 +19,8 @@ public class OrbitAssist : MonoBehaviour {
     private Quaternion targetRotation;
     private int rotationOffset;
     private int nonOrbitAssistVelocityDamper = 10;
-
-    public void Start() {
+    
+    private void Start() {
         GameInput.Instance.OnEnginePerformedAction += GameInput_OnEngineAction;
         GameInput.Instance.OnEngineCanceledAction += GameInput_OnEngineAction;
     }
@@ -41,14 +41,6 @@ public class OrbitAssist : MonoBehaviour {
             inOrbit = true;
             OnEnteredOrbit?.Invoke(this, EventArgs.Empty);
         }
-    }
-    
-    public void FindPsycheAsteroid() {
-        GameObject[] allGravitySources = GameObject.FindGameObjectsWithTag("Gravity");
-        GameObject psycheGravity = allGravitySources.FirstOrDefault(gravity => gravity.name == "PsycheGravity");
-        psycheAsteroid = psycheGravity.GetComponentInParent<Transform>();
-
-        psycheGravity.GetComponent<PlanetGravitySource>().OnEnterGravityRange += PlanetGravitySource_OnGravityCrossBorder;
     }
 
     void TransitionToOrbit() {
@@ -115,6 +107,12 @@ public class OrbitAssist : MonoBehaviour {
         return movementDir.x < spacecraftToPsyche.x;
     }
 
+    public void GetPsycheAsteroid() {
+        psycheAsteroid = PsycheAsteroid.Instance.transform;
+        
+        PlanetGravitySource psycheGravity = psycheAsteroid.GetComponentInChildren<PlanetGravitySource>();
+        psycheGravity.OnEnterGravityRange += PlanetGravitySource_OnGravityCrossBorder;
+    }
     private void GameInput_OnEngineAction(object sender, GameInput.EngineEventArgs e) {
         if (!inOrbit) return;
 
