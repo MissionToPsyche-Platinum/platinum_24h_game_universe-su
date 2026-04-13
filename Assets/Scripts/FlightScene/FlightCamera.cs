@@ -21,18 +21,27 @@ public class FlightCamera : MonoBehaviour {
             this.isEntering = isEntering;
         }
     }
-    
-    [Header("Follow Settings")]
-    [Tooltip("The target to follow (will auto-find Spacecraft if not assigned)")]
-    [SerializeField] private Transform target;
+
+    [SerializeField] private float transitionToPsycheSpeed;
     
     [Tooltip("Offset from the target position")]
-    [SerializeField] private Vector3 offset = new Vector3(0, 0, -10);
+    [SerializeField] private Vector3 offset;
+    
+    private Transform spacecraft;
+    private Transform psycheAsteroid;
+    private Transform target;
+    private bool transitionToPsyche = false;
     
     private void Awake() {
-        target = Spacecraft.GetInstance().transform;
+        spacecraft = Spacecraft.GetInstance().transform;
+        psycheAsteroid = PsycheAsteroid.Instance.transform;
+        target = spacecraft;
         
         SetColliderSize();
+    }
+    
+    private void Start() {
+        OrbitAssist.OnEnteredOrbit += OrbitAssist_OnEnteredOrbit;
     }
     
     private void SetColliderSize() {
@@ -46,8 +55,20 @@ public class FlightCamera : MonoBehaviour {
     }
     
     private void LateUpdate() {
-        if (target == null) return;
+        if (transitionToPsyche) {
+            TransitionToPsyche();
+            return;
+        }
+        
         transform.position = target.position + offset;
+    }
+
+    private void TransitionToPsyche() {
+        Vector3 targetPos = target.position + offset;
+        
+        transform.position = Vector3.Lerp(transform.position, targetPos, transitionToPsycheSpeed * Time.deltaTime);
+        
+        if (Vector3.Distance(transform.position, targetPos) <= .05f) transitionToPsyche = false;
     }
 
     private void OnTriggerEnter2D(Collider2D objectCollider) {
@@ -66,6 +87,11 @@ public class FlightCamera : MonoBehaviour {
         if (otherObject.GetComponent<AsteroidFlight>() == null) return; 
         
         OnAsteroidPassing?.Invoke(this, new AsteroidPassingEventArgs(otherObject, false));
+    }
+    
+    private void OrbitAssist_OnEnteredOrbit(object sender, System.EventArgs e) {
+        target = psycheAsteroid;
+        transitionToPsyche = true;
     }
 
     public float GetCameraWidth() => GetComponent<Camera>().orthographicSize * DEFAULT_CAM_WIDTH;

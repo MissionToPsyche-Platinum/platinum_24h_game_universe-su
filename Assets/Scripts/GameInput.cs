@@ -28,6 +28,7 @@ public class GameInput : MonoBehaviour {
     }
     
     public void Awake() {
+        Debug.Log("Awake");
         if (Instance != null) {
             Destroy(gameObject);
             return;
@@ -55,8 +56,7 @@ public class GameInput : MonoBehaviour {
 
         inputActions.SpacecraftBuilding.DeletePart.performed += DeletePart_performed;
         inputActions.SpacecraftBuilding.LeftMouseClick.performed += LeftMouseClick_performed;
-    
-        inputActions.General.SceneSwitch.performed += SceneSwitch_performed;
+        
         inputActions.General.ReturnToMenu.performed += ReturnToMenu_performed;
     }
     
@@ -105,33 +105,6 @@ public class GameInput : MonoBehaviour {
         OnLeftMouseClickPerformedAction?.Invoke(this, EventArgs.Empty); 
     }
 
-    private void SceneSwitch_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        string sceneName = SceneManager.GetActiveScene().name;
-        Debug.Log("SceneSwitch pressed in: " + sceneName);
-
-        if (sceneName == "BuildScene") {
-            BuildRequirements requirements = BuildRequirements.Instance;
-
-            bool ready = requirements.IsReadyForFlight(out string message);
-            Debug.Log("ReadyForFlight? " + ready + " | " + message);
-
-            if (!ready) return;
-
-            if (ShipBuildingGrid.Instance != null && ShipBuildingGrid.Instance.HighlightDisconnectedParts())
-                DisconnectedPartsWarningManager.Instance.DisplayWarning();
-            return;
-        }
-
-        if (sceneName == "FlightScene") {
-            return;
-        }
-        else
-        {
-            SetFlightFactsScene();
-        }
-    }
-
     private void ReturnToMenu_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
         if (SceneManager.GetActiveScene().name == "FlightScene") {
             return;
@@ -159,7 +132,7 @@ public class GameInput : MonoBehaviour {
                 Debug.Log("Warning: Some ship parts are not connected to the spacecraft core.");
             }
         }
-
+        
         // Passed requirements -> go to FlightScene
         SceneManager.LoadScene("FlightScene");
         Spacecraft.GetInstance().PrepareForFlight();
@@ -208,6 +181,7 @@ public class GameInput : MonoBehaviour {
 
     public void SetMainMenuScene() {
         SceneManager.LoadScene("MainMenuScene");
+        
 
         inputActions.Spacecraft.Disable();
         inputActions.SpacecraftBuilding.Disable();
