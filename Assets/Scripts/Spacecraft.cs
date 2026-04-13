@@ -224,16 +224,19 @@ public class Spacecraft : MonoBehaviour {
         rb.centerOfMass = numerator / totalMass;
     }
 
-    private void SetPartRigidBodies(bool enabled, RigidbodyType2D type = RigidbodyType2D.Dynamic,
+    public void SetPartRigidBodies(bool enabled, RigidbodyType2D type = RigidbodyType2D.Dynamic,
         Vector2 linearVelocity = default, bool noisyVelocity = false) {
         
         if (enabled) {
             if(linearVelocity == default) linearVelocity = Vector2.zero;
             
             foreach (Transform child in transform) {
-                Rigidbody2D childRb = child.gameObject.AddComponent<Rigidbody2D>();
-                childRb.bodyType = type;
+                Rigidbody2D childRb;
+                if(!child.gameObject.TryGetComponent<Rigidbody2D>(out childRb)) {
+                    childRb = child.gameObject.AddComponent<Rigidbody2D>();
+                }
                 
+                childRb.bodyType = type;
                 if (noisyVelocity) {
                     linearVelocity += new Vector2(UnityEngine.Random.Range(-5f, 5f),
                         UnityEngine.Random.Range(-5f, 5f));

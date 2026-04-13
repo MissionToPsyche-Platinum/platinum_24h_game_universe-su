@@ -9,8 +9,15 @@ public class SpacecraftPartDatabase : MonoBehaviour {
     [SerializeField] private PartScriptableObject[] allParts;
 
     public static SpacecraftPartDatabase Instance;
+    public bool hasSavedGridState = false;
+    public int[,] gridState;
 
     public void Awake() {
+        if (Instance != null && Instance != this) {
+            Destroy(gameObject);
+            return;
+        }
+        
         Instance = this;
         DontDestroyOnLoad(Instance);
     }

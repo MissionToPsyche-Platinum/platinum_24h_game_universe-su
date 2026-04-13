@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Collider2D))]
 
@@ -16,7 +17,7 @@ public class PartDrag : MonoBehaviour {
     private Vector3 originalPosition;
     private Collider2D partCollider;
     private Quaternion lockedRotation;
-    private ShipBuildingGrid shipGrid;
+    [SerializeField] private ShipBuildingGrid shipGrid;
     private SpacecraftPartDatabase partDB;
     private SpriteRenderer objectSprite;
     private Color baseColor;
@@ -30,12 +31,22 @@ public class PartDrag : MonoBehaviour {
         
         lockedRotation = transform.rotation;
         
-        shipGrid = ShipBuildingGrid.Instance;
         partDB = SpacecraftPartDatabase.Instance;
     }
 
+    private void Start() {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnEnable() {
+        shipGrid = ShipBuildingGrid.Instance;
+    }
+
     private void OnMouseDown() {
+        Debug.Log("mouse down");
         if (!Spacecraft.IsBuildMode) return;
+        
+        Debug.Log("mouse down works");
 
         originalPosition = transform.position;
         baseColor = objectSprite.color;
@@ -65,7 +76,9 @@ public class PartDrag : MonoBehaviour {
     }
 
     void OnMouseDrag() {
+        Debug.Log("mouse drag ");
         if (!Spacecraft.IsBuildMode) return;
+        Debug.Log("mouse drag works");
 
         Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
         Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
@@ -90,8 +103,11 @@ public class PartDrag : MonoBehaviour {
     }
 
     void OnMouseUp() {
+        Debug.Log("mouse up ");
+        Debug.Log($"shipgrid: {shipGrid}, partCollider: {partCollider}");
         if (!Spacecraft.IsBuildMode) return;
         if (shipGrid == null || partCollider == null) return;
+        Debug.Log("mouse up works");
 
         objectSprite.color = baseColor;
 
@@ -206,5 +222,11 @@ public class PartDrag : MonoBehaviour {
     
     private void Update() {
         if (transform.rotation != lockedRotation) transform.rotation = lockedRotation;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        if (scene.name == "BuildScene") {
+            shipGrid = ShipBuildingGrid.Instance;
+        }
     }
 }

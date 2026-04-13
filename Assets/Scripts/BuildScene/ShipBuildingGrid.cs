@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+
 /// <summary>
 /// Class that controls the ship building grid. allows the user to place objects and connect them to the base part.
 /// </summary>
@@ -9,10 +9,11 @@ public class ShipBuildingGrid : MonoBehaviour {
     public static ShipBuildingGrid Instance { get; private set; }
     
     [SerializeField] private GameInput gameInput;
-    [SerializeField] private GameObject spacecraft;
+    //[SerializeField] private GameObject spacecraft;
     [SerializeField] private GridVisualizer gridVisualizer;
     [SerializeField] private GameObject highlightTransform;
 
+    private GameObject spacecraft;
     private Grid grid;
     private int gridWidth = 5;
     private int gridHeight = 7;
@@ -36,27 +37,44 @@ public class ShipBuildingGrid : MonoBehaviour {
         Instance = this;
         
         grid = new Grid(gridWidth, gridHeight, cellSize, gridOriginPosition);
-        partDB = SpacecraftPartDatabase.Instance;
         highlightSprite = highlightTransform.GetComponent<SpriteRenderer>();
         highlightSprite.color = colorHighlightInvisible;
-
-        CreateSpacecraft();
-        gridVisualizer.VisualizeGrid(grid, gridWidth, gridHeight, cellSize, gridOriginPosition);
-    } 
+    }
     
     private void Start() {
         gameInput.OnDeletePartPerformedAction += GameInput_OnDeletePartPerformedAction;
         gameInput.OnLeftMouseClickPerformedAction += GameInput_OnLeftMouseClickAction;
+        
+        gridVisualizer.VisualizeGrid(grid, gridWidth, gridHeight, cellSize, gridOriginPosition);
+        
+        spacecraft = Spacecraft.GetInstance().gameObject;
+        partDB = SpacecraftPartDatabase.Instance;
+        
+        if(partDB.hasSavedGridState) LoadSpacecraft();
+        else CreateSpacecraft();
     }
-
+    
     private void CreateSpacecraft() {
         spacecraft.transform.position = GridCoordinatesToUnityPosition(gridWidth / 2, gridHeight / 2);
-
+        
         int baseID = partDB.GetPartID(partDB.GetPartGameObject(0));
         (int, int) baseCoords = (gridWidth / 2, gridHeight / 2);
 
         // Mark the base tile as occupied in the int grid
         grid.SetValue(baseCoords.Item1, baseCoords.Item2, baseID);
+    }
+
+    private void LoadSpacecraft() {
+        grid.LoadGridState();
+
+        Rigidbody2D spacecraftRB = spacecraft.GetComponent<Rigidbody2D>();
+        spacecraftRB.linearVelocity = Vector2.zero;
+        spacecraftRB.angularVelocity = 0f;
+        
+        spacecraft.transform.rotation = Quaternion.Euler(0, 0, 0);
+        spacecraft.transform.position = GridCoordinatesToUnityPosition(gridWidth / 2, gridHeight / 2);
+        
+        spacecraft.GetComponent<Spacecraft>().SetPartRigidBodies(true, RigidbodyType2D.Kinematic);
     }
 
     public void ResetGrid() {
@@ -107,7 +125,6 @@ public class ShipBuildingGrid : MonoBehaviour {
 
         return (x, y);
     }
-
 
     private void GameInput_OnDeletePartPerformedAction(object sender, System.EventArgs e) {
         if (!someTileSelected) return;
@@ -424,4 +441,7 @@ public class ShipBuildingGrid : MonoBehaviour {
             }
         }
     }
+    private void SaveGridState() => grid.SaveGridState();
+    
+    private void OnDisable() => SaveGridState();
 }

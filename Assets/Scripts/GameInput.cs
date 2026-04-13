@@ -28,7 +28,6 @@ public class GameInput : MonoBehaviour {
     }
     
     public void Awake() {
-        Debug.Log("Awake");
         if (Instance != null) {
             Destroy(gameObject);
             return;
@@ -145,7 +144,7 @@ public class GameInput : MonoBehaviour {
 
     public void SetFlightFactsScene() {
         SceneManager.LoadScene("FlightFactsScene");
-
+        
         inputActions.Spacecraft.Disable();
         inputActions.SpacecraftBuilding.Disable();
     }
@@ -181,7 +180,6 @@ public class GameInput : MonoBehaviour {
 
     public void SetMainMenuScene() {
         SceneManager.LoadScene("MainMenuScene");
-        
 
         inputActions.Spacecraft.Disable();
         inputActions.SpacecraftBuilding.Disable();
@@ -198,9 +196,6 @@ public class GameInput : MonoBehaviour {
         inputActions.Spacecraft.Disable();
         inputActions.SpacecraftBuilding.Disable();
     }
-
-
-
 
     private void OnDisable() {
         // Disable input actions when the component is disabled
