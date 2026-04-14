@@ -9,10 +9,10 @@ public class Engine : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI idUI;
     
     [Header("Fuel Settings")]
-    [SerializeField] private float maxFuel = 10f;
+    [SerializeField] float fuelCostPerSecond = 1f;
 
     [Header("Energy Settings")]
-    [SerializeField] private float energyCostPerSecond = 2f;
+    [SerializeField] private float energyCostPerSecond = 1f;
 
     [SerializeField] private int _engineID;
     public int engineID {
@@ -36,30 +36,19 @@ public class Engine : MonoBehaviour {
     public void Awake() {
         totalEngineCount++;
         engineID = totalEngineCount;
-        
-        fuelAmount = maxFuel;
+
         gameInput = GameInput.Instance;
         spacecraft = Spacecraft.GetInstance();
         spacecraftRB = spacecraft.gameObject.GetComponent<Rigidbody2D>();
-        
-        OnFuelChanged?.Invoke(this, FuelPercentage);
     }
 
     public void Start() {
         gameInput.OnEnginePerformedAction += GameInput_OnEngineAction; //Adds GameInput_OnEngineAction() as a listener to the OnEngineAction event. 
         gameInput.OnEngineCanceledAction += GameInput_OnEngineAction;
     }
-
-    public float FuelPercentage {
-        get {
-            if (maxFuel <= 0f) return 0f;
-            
-            return fuelAmount / maxFuel;
-        }
-    }
     
     private void FixedUpdate() {
-        if (active && TryConsumeFuel() && TryConsumeEnergy()) ActivateEngine();
+        if (active && TryConsumeEnergy() && tryConsumeFuel()) ActivateEngine();
     }
 
     private void ActivateEngine() => spacecraftRB.AddForceAtPosition(transform.up * speed, transform.position);
@@ -70,26 +59,11 @@ public class Engine : MonoBehaviour {
         if (active) engineVisual.color = Color.red;
         else engineVisual.color = Color.yellow;
     }
-    
-    public void AddFuel(float amount) {
-        if (amount <= 0f) return;
-        fuelAmount = Mathf.Min(fuelAmount + amount, maxFuel);
-        OnFuelChanged?.Invoke(this, FuelPercentage);
-    }
 
-    private bool TryConsumeFuel() {
-        float fuelConsumptionRate = 1f; // consumption rate
-        fuelAmount -= fuelConsumptionRate * Time.fixedDeltaTime;
-
-        // Clamp
-        if (fuelAmount < 0f) {
-            fuelAmount = 0f;
-            return false;
-        }
-        
-        OnFuelChanged?.Invoke(this, FuelPercentage);
-
-        return true;
+    private bool tryConsumeFuel() {
+        if (spacecraft == null) return false;
+        float fuelCost = fuelCostPerSecond * Time.fixedDeltaTime;
+        return spacecraft.TryConsumeFuel(fuelCost);
     }
     
     private void AdjustEngineIDsForDeletion(GameObject engineToBeDeleted) {

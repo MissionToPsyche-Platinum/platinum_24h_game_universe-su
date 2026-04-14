@@ -18,6 +18,8 @@ public class BuildRequirements : MonoBehaviour {
     
     private void Awake() => Instance = this;
 
+    private void Start() => shipRoot = GameObject.Find("SpacecraftStart").transform;
+
     public bool IsReadyForFlight(out string message) {
         if (bypassBuildRequirements) {
             message = "Ready for flight!";

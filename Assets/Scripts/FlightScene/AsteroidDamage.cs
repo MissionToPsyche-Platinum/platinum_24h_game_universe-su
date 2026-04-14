@@ -77,8 +77,6 @@ public class AsteroidDamage : MonoBehaviour {
         // Deal damage to the spacecraft
         spacecraft.TakeDamage(damage);
         lastDamageTime = Time.time;
-
-        Debug.Log($"Asteroid dealt {damage} damage to spacecraft! Health: {spacecraft.CurrentHealth}/{spacecraft.MaxHealth}");
     }
     
     public void SetDamage(float newDamage) {

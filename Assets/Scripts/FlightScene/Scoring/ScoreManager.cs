@@ -70,16 +70,15 @@ public class ScoreManager : MonoBehaviour {
         // Engine is built at runtime from parts, so wait until both exist.
         yield return new WaitForSeconds(hookupDelay);
 
-        while (spacecraft == null || engine == null) {
+        while (spacecraft == null) {
             spacecraft = Spacecraft.GetInstance();
-            engine = FindFirstObjectByType<Engine>();
-            if (spacecraft == null || engine == null) yield return new WaitForSeconds(0.1f);
+            if (spacecraft == null) yield return new WaitForSeconds(0.1f);
         }
 
-        lastFuelPercent01 = engine.FuelPercentage;
+        lastFuelPercent01 = spacecraft.FuelPercentage;
         lastHealthPercent01 = spacecraft.HealthPercentage;
 
-        engine.OnFuelChanged += Engine_OnFuelChanged;
+        spacecraft.OnFuelChanged += Spacecraft_OnFuelChanged;
         subscribedToEngine = true;
 
         spacecraft.OnHealthChanged += Spacecraft_OnHealthChanged;
@@ -100,7 +99,7 @@ public class ScoreManager : MonoBehaviour {
         isTracking = false;
     }
 
-    private void Engine_OnFuelChanged(object sender, float fuelPercent01) {
+    private void Spacecraft_OnFuelChanged(object sender, float fuelPercent01) {
         if (!isTracking) { lastFuelPercent01 = fuelPercent01; return; }
         float delta = lastFuelPercent01 - fuelPercent01; // positive = consumed
         if (delta > 0f) fuelUsedPercent += delta * 100f;
@@ -169,7 +168,7 @@ public class ScoreManager : MonoBehaviour {
 
     private void OnDestroy() {
         OrbitAssist.OnEnteredOrbit -= OrbitAssist_OnEnteredOrbit;
-        if (subscribedToEngine && engine != null) engine.OnFuelChanged -= Engine_OnFuelChanged;
+        if (subscribedToEngine && engine != null) engine.OnFuelChanged -= Spacecraft_OnFuelChanged;
         if (subscribedToSpacecraft && spacecraft != null) spacecraft.OnHealthChanged -= Spacecraft_OnHealthChanged;
         if (Instance == this) Instance = null;
     }

@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEditor;
+using UnityEditor.U2D;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,18 +11,25 @@ public class PartDrag : MonoBehaviour {
     [SerializeField] private GameObject selectedObject;
     [SerializeField] private GameObject objectVisual;
     
+    [SerializeField] private GameObject highlight;
+    private SpriteRenderer highlightSprite;
+
+    [SerializeField] private Sprite colorblindValid;
+    [SerializeField] private Sprite colorblindInvalid;
     private static readonly Color colorValid   = new Color(0.3f, 1f, 0.3f, 0.6f);
     private static readonly Color colorInvalid = new Color(1f, 0.3f, 0.3f, 0.6f);
 
+    private bool colorblindMode;
     private Vector3 screenPoint;
     private Vector3 offset;
     private Vector3 originalPosition;
     private Collider2D partCollider;
     private Quaternion lockedRotation;
-    [SerializeField] private ShipBuildingGrid shipGrid;
+    private ShipBuildingGrid shipGrid;
     private SpacecraftPartDatabase partDB;
     private SpriteRenderer objectSprite;
     private Color baseColor;
+    private Sprite baseHighlightSprite;
     private string midDragLayer = "MidDrag";
     private string defaultLayer = "Default";
     private string spacecraftLayer = "SpaceCraft";
@@ -31,7 +40,13 @@ public class PartDrag : MonoBehaviour {
         
         lockedRotation = transform.rotation;
         
+        shipGrid = ShipBuildingGrid.Instance;
+        highlight = GameObject.Find("Highlight");
+        highlightSprite = highlight.GetComponent<SpriteRenderer>();
+        baseHighlightSprite = highlightSprite.sprite;
         partDB = SpacecraftPartDatabase.Instance;
+
+        colorblindMode = Settings.instance.colorblindMode;
     }
 
     private void Start() {
@@ -43,10 +58,14 @@ public class PartDrag : MonoBehaviour {
     }
 
     private void OnMouseDown() {
-        Debug.Log("mouse down");
         if (!Spacecraft.IsBuildMode) return;
-        
-        Debug.Log("mouse down works");
+
+        if (highlight == null)
+        {
+            highlight = GameObject.Find("Highlight");
+            highlightSprite = highlight.GetComponent<SpriteRenderer>();
+            colorblindMode = Settings.instance.colorblindMode;
+        }
 
         originalPosition = transform.position;
         baseColor = objectSprite.color;
@@ -76,15 +95,15 @@ public class PartDrag : MonoBehaviour {
     }
 
     void OnMouseDrag() {
-        Debug.Log("mouse drag ");
         if (!Spacecraft.IsBuildMode) return;
-        Debug.Log("mouse drag works");
 
         Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
         Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
         transform.rotation = lockedRotation;
 
         // Snap to grid and show valid/invalid placement color feedback
+        if (shipGrid == null) shipGrid = ShipBuildingGrid.Instance;
+        if (highlight == null) highlight = GameObject.Find("Highlight");
         if (shipGrid != null) {
             Vector3? snapPos = shipGrid.PostionToGridPosition(curPosition);
             if (snapPos != null) {
@@ -93,21 +112,25 @@ public class PartDrag : MonoBehaviour {
                 GameObject part = partDB.GetPartGameObject(selectedObject.name);
                 bool valid = shipGrid.CanPlacePart(part, coords) || CanSwapPart(part, originalPosition);
                 objectSprite.color = valid ? colorValid : colorInvalid;
+                highlight.transform.position = transform.position;
+                highlightSprite.color = colorblindMode ? Color.white : ShipBuildingGrid.colorHighlightInvisible;
+                if (colorblindMode) highlightSprite.sprite = valid ? colorblindValid : colorblindInvalid;
             } else {
                 transform.position = curPosition;
+                highlight.transform.position = curPosition;
+                highlightSprite.color = ShipBuildingGrid.colorHighlightInvisible;
                 objectSprite.color = new Color(baseColor.r, baseColor.g, baseColor.b, 0.5f);
             }
         } else {
             transform.position = curPosition;
+            highlight.transform.position = curPosition;
+            highlightSprite.color = ShipBuildingGrid.colorHighlightInvisible;
         }
     }
 
     void OnMouseUp() {
-        Debug.Log("mouse up ");
-        Debug.Log($"shipgrid: {shipGrid}, partCollider: {partCollider}");
         if (!Spacecraft.IsBuildMode) return;
         if (shipGrid == null || partCollider == null) return;
-        Debug.Log("mouse up works");
 
         objectSprite.color = baseColor;
 
@@ -132,6 +155,8 @@ public class PartDrag : MonoBehaviour {
         }
         
         PlacePart(gameObject, originalPosition);
+        shipGrid.HandleLeftClick();
+        highlightSprite.color = ShipBuildingGrid.colorHighlight;
     }
 
     private bool TryPlacePart(GameObject part, Vector3 worldPosition) {

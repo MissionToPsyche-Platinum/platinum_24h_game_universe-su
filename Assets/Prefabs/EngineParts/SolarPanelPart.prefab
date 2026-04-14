@@ -138,6 +138,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedObject: {fileID: 7421062647158426556}
   objectVisual: {fileID: 4620690964985610815}
+  colorblindValid: {fileID: 21300000, guid: ae673aca304d84144b31cd1cc0bdb981, type: 3}
+  colorblindInvalid: {fileID: 21300000, guid: 27410deb8893e984e880da0c4fe8c771, type: 3}
 --- !u!114 &6556024218918548376
 MonoBehaviour:
   m_ObjectHideFlags: 0

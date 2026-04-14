@@ -9,9 +9,10 @@ public class ShipBuildingGrid : MonoBehaviour {
     public static ShipBuildingGrid Instance { get; private set; }
     
     [SerializeField] private GameInput gameInput;
-    //[SerializeField] private GameObject spacecraft;
     [SerializeField] private GridVisualizer gridVisualizer;
-    [SerializeField] private GameObject highlightTransform;
+    [SerializeField] private GameObject highlight;
+
+    private bool colorblindMode = false;
 
     private GameObject spacecraft;
     private Grid grid;
@@ -19,9 +20,11 @@ public class ShipBuildingGrid : MonoBehaviour {
     private int gridHeight = 7;
     private float cellSize = 1f;
     private Vector3 gridOriginPosition = new(-2.5f, -4f);
-    private static readonly Color colorHighlight   = new Color(1f, 1f, 0.3f, 0.4f);
-    private static readonly Color colorHighlightInvisible   = new Color(1f, 1f, 0.3f, 0f);
-    private static readonly Color colorDisconnected = new Color(1f, 0.4f, 0.4f, 1f);
+    [SerializeField] private Sprite baseHighlightSprite;
+    public static readonly Color colorHighlight   = new Color(1f, 1f, 0.3f, 0.4f);
+    [SerializeField] private Sprite colorblindHighlight;
+    public static readonly Color colorHighlightInvisible   = new Color(1f, 1f, 0.3f, 0f);
+    private static Color colorDisconnected = new Color(1f, 0.4f, 0.4f, 1f);
     private readonly Dictionary<SpriteRenderer, Color> originalSpriteColors = new();
 
 
@@ -37,11 +40,19 @@ public class ShipBuildingGrid : MonoBehaviour {
         Instance = this;
         
         grid = new Grid(gridWidth, gridHeight, cellSize, gridOriginPosition);
-        highlightSprite = highlightTransform.GetComponent<SpriteRenderer>();
-        highlightSprite.color = colorHighlightInvisible;
-    }
+        partDB = SpacecraftPartDatabase.Instance;
+
+        colorblindMode = Settings.instance.colorblindMode;
+        colorDisconnected = colorblindMode ? Color.black : new Color(1f, 0.4f, 0.4f, 1f);
+    } 
     
     private void Start() {
+        gameInput = GameObject.Find("GameInput").GetComponent<GameInput>();
+        highlight = GameObject.Find("Highlight");
+        highlightSprite = highlight.GetComponent<SpriteRenderer>();
+        highlightSprite.color = colorHighlightInvisible;
+        highlightSprite.sprite = colorblindMode ? colorblindHighlight : baseHighlightSprite;
+
         gameInput.OnDeletePartPerformedAction += GameInput_OnDeletePartPerformedAction;
         gameInput.OnLeftMouseClickPerformedAction += GameInput_OnLeftMouseClickAction;
         
@@ -151,7 +162,7 @@ public class ShipBuildingGrid : MonoBehaviour {
         HandleLeftClick();
     }
     
-    private void HandleLeftClick() {
+    public void HandleLeftClick() {
         Vector3 mousePosition = Mouse.GetMouseWorldPosition();
 
         (int, int) clickCoords;
@@ -168,8 +179,14 @@ public class ShipBuildingGrid : MonoBehaviour {
             return;
         }
 
-        highlightTransform.transform.position = snapped.Value;
+        if (highlight == null) {
+            highlight = GameObject.Find("Highlight");
+            highlightSprite = highlight.GetComponent<SpriteRenderer>();
+        }
+
+        highlight.transform.position = snapped.Value;
         highlightSprite.color = colorHighlight;
+        if (colorblindMode) highlightSprite.sprite = colorblindHighlight;
 
         someTileSelected = true;
         selectedTileCoords = clickCoords;
