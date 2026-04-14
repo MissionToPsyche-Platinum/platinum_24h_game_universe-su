@@ -28,7 +28,6 @@ public class GameInput : MonoBehaviour {
     }
     
     public void Awake() {
-        Debug.Log("Awake");
         if (Instance != null) {
             Destroy(gameObject);
             return;

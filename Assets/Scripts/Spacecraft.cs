@@ -194,7 +194,6 @@ public class Spacecraft : MonoBehaviour {
 
     public void AddEnergy(float amount) {
         if (amount <= 0f) return;
-        Debug.Log($"AddEnergy called: amount={amount:F6}, current={currentEnergy:F2}, max={maxEnergy:F2}");
         currentEnergy = Mathf.Min(currentEnergy + amount, maxEnergy);
         OnEnergyChanged?.Invoke(this, EnergyPercentage);
     }
@@ -271,8 +270,6 @@ public class Spacecraft : MonoBehaviour {
     }
 
     private IEnumerator HandleDeath() {
-        Debug.Log("Spacecraft destroyed!");
-        
         SetPartRigidBodies(true, RigidbodyType2D.Dynamic, rb.linearVelocity, true);
         
         rb.simulated = false;

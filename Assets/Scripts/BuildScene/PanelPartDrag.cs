@@ -35,14 +35,14 @@ public class PanelPartDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private void Awake() {
         SpriteRenderer sr = partData.part.GetComponentInChildren<SpriteRenderer>();
         if (sr != null) baseColor = sr.color;
-        highlight = GameObject.Find("Highlight");
-        highlightSprite = highlight.GetComponent<SpriteRenderer>();
-
-        colorblindMode = Settings.instance.colorblindMode;
     }
 
     private void Start() {
         buildFactsPopup = GameObject.Find("BuildFactsPopup").GetComponent<BuildFactsPopup>();
+        highlight = GameObject.Find("Highlight");
+        highlightSprite = highlight.GetComponent<SpriteRenderer>();
+
+        colorblindMode = Settings.instance.colorblindMode;
     }
     public void OnBeginDrag(PointerEventData eventData) {
         // Notify the drag hint to stop

@@ -6,7 +6,6 @@ public class Settings : MonoBehaviour
 
     private float volume = 1f;
     public bool colorblindMode {get; private set;} = false;
-
     void Awake()
     {
         if (instance != null && instance != this) {
