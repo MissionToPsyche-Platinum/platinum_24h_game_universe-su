@@ -2294,7 +2294,7 @@ MonoBehaviour:
   useInverseSquare: 0
   affectedLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 320
 --- !u!58 &860476552
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2717,7 +2717,7 @@ MonoBehaviour:
   useInverseSquare: 0
   affectedLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 320
 --- !u!58 &1174055042
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4350,7 +4350,7 @@ MonoBehaviour:
   useInverseSquare: 0
   affectedLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 320
 --- !u!58 &2084250063
 CircleCollider2D:
   m_ObjectHideFlags: 0
