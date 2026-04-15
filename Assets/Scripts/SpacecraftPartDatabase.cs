@@ -10,7 +10,8 @@ public class SpacecraftPartDatabase : MonoBehaviour {
 
     public static SpacecraftPartDatabase Instance;
     public bool hasSavedGridState = false;
-    public int[,] gridState;
+    public int[,] savedGridState;
+    public Dictionary<(int, int), GameObject> savedPlacedParts;
 
     public void Awake() {
         if (Instance != null && Instance != this) {

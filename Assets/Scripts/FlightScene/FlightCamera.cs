@@ -59,7 +59,8 @@ public class FlightCamera : MonoBehaviour {
             TransitionToPsyche();
             return;
         }
-        
+
+        if (!target) return;
         transform.position = target.position + offset;
     }
 

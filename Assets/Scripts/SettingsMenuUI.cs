@@ -36,6 +36,8 @@ public class SettingsMenuUI : MonoBehaviour
     public void GoToMainMenu() {
         Time.timeScale = 1f;
         GameInput.Instance.SetMainMenuScene();
+        
+        ShipBuildingGrid.Instance.SaveGridState(false);
     }
 
     public void GoToBuildScene() {

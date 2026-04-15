@@ -134,9 +134,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameInput: {fileID: 4522898562806366028, guid: 84ec20dbd36a842dda99de7800ff4019, type: 3}
-  spacecraft: {fileID: 499618537254225703, guid: 9e60a0dfb52404fe7b326eee4562bc72, type: 3}
   gridVisualizer: {fileID: 7294185051476616455}
-  highlightTransform: {fileID: 224355140052370650}
+  highlight: {fileID: 224355140052370650}
+  baseHighlightSprite: {fileID: 7482667652216324306, guid: 434375d52f7f69649ac53dc14d197a44, type: 3}
+  colorblindHighlight: {fileID: 21300000, guid: 9ec082f9e799222479446eba27c65312, type: 3}
 --- !u!114 &7294185051476616455
 MonoBehaviour:
   m_ObjectHideFlags: 0

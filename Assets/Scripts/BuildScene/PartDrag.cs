@@ -46,7 +46,7 @@ public class PartDrag : MonoBehaviour {
         baseHighlightSprite = highlightSprite.sprite;
         partDB = SpacecraftPartDatabase.Instance;
 
-        colorblindMode = Settings.instance.colorblindMode;
+        colorblindMode = Settings.Instance.colorblindMode;
     }
 
     private void Start() {
@@ -64,7 +64,7 @@ public class PartDrag : MonoBehaviour {
         {
             highlight = GameObject.Find("Highlight");
             highlightSprite = highlight.GetComponent<SpriteRenderer>();
-            colorblindMode = Settings.instance.colorblindMode;
+            colorblindMode = Settings.Instance.colorblindMode;
         }
 
         originalPosition = transform.position;

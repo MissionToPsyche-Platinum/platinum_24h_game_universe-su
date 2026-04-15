@@ -68,15 +68,21 @@ public class Grid {
     
     private bool IsInGridRange(int x, int y) => (x >= 0 && y >= 0 && x < width && y < height);
     
-    public void SaveGridState() {
+    public void SaveGridState(bool save = true) {
         SpacecraftPartDatabase partDB = SpacecraftPartDatabase.Instance;
-        partDB.gridState = gridArray;
-        partDB.hasSavedGridState = true;
+        Debug.Log(save);
+        if (save) {
+            partDB.savedGridState = gridArray;
+            partDB.hasSavedGridState = true;
+        } else {
+            partDB.savedGridState = null;
+            partDB.hasSavedGridState = false;
+        }
     }
     
     public void LoadGridState() {
         SpacecraftPartDatabase partDB = SpacecraftPartDatabase.Instance;
         
-        if(partDB.hasSavedGridState) gridArray = partDB.gridState;
+        if(partDB.hasSavedGridState) gridArray = partDB.savedGridState;
     }
 }

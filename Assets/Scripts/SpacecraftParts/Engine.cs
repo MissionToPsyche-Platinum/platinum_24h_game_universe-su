@@ -71,7 +71,7 @@ public class Engine : MonoBehaviour {
         int engineID = deletedEngine.engineID;
         int totalEngines = totalEngineCount;
 
-        totalEngineCount--;
+        totalEngineCount = Math.Max(0, totalEngineCount - 1);
 
         if (engineID == totalEngines) return;
         if (spacecraft == null) return;

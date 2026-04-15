@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class Settings : MonoBehaviour
 {
-    public static Settings instance;
+    public static Settings Instance;
 
     private float volume = 1f;
     public bool colorblindMode {get; private set;} = false;
     void Awake()
     {
-        if (instance != null && instance != this) {
+        if (Instance != null && Instance != this) {
             Destroy(gameObject);
             return;
         }
-        instance = this;
+        Instance = this;
         DontDestroyOnLoad(this);
     }
 

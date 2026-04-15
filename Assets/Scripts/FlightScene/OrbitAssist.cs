@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OrbitAssist : MonoBehaviour {
     public static event EventHandler OnEnteredOrbit;
@@ -23,6 +24,7 @@ public class OrbitAssist : MonoBehaviour {
     private void Start() {
         GameInput.Instance.OnEnginePerformedAction += GameInput_OnEngineAction;
         GameInput.Instance.OnEngineCanceledAction += GameInput_OnEngineAction;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
     
     void Update() {
@@ -121,5 +123,12 @@ public class OrbitAssist : MonoBehaviour {
     
     private void PlanetGravitySource_OnGravityCrossBorder(object sender, PlanetGravitySource.GravityEventArgs e) {
         if (e.entering) transitioningToOrbit = true;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        if (scene.name != "FlightScene") {
+            transitioningToOrbit = false;
+            inOrbit = false;
+        }
     }
 }

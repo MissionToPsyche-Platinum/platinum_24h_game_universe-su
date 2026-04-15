@@ -42,7 +42,7 @@ public class PanelPartDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         highlight = GameObject.Find("Highlight");
         highlightSprite = highlight.GetComponent<SpriteRenderer>();
 
-        colorblindMode = Settings.instance.colorblindMode;
+        colorblindMode = Settings.Instance.colorblindMode;
     }
     public void OnBeginDrag(PointerEventData eventData) {
         // Notify the drag hint to stop

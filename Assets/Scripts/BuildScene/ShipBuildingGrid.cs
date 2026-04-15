@@ -30,21 +30,23 @@ public class ShipBuildingGrid : MonoBehaviour {
 
     private GameObject selectedPart;
     private (int, int) selectedTileCoords;
-    private readonly Dictionary<(int, int), GameObject> placedParts = new();
+    private Dictionary<(int, int), GameObject> placedParts = new();
     private bool someTileSelected = false;
     private SpriteRenderer highlightSprite;
     
     private SpacecraftPartDatabase partDB;
     
     private void Awake() {
+        if (Instance != null && Instance != this) {
+            Destroy(gameObject);
+            return;
+        }
+        
         Instance = this;
         
         grid = new Grid(gridWidth, gridHeight, cellSize, gridOriginPosition);
         partDB = SpacecraftPartDatabase.Instance;
-
-        colorblindMode = Settings.instance.colorblindMode;
-        colorDisconnected = colorblindMode ? Color.black : new Color(1f, 0.4f, 0.4f, 1f);
-    } 
+    }
     
     private void Start() {
         gameInput = GameObject.Find("GameInput").GetComponent<GameInput>();
@@ -60,6 +62,9 @@ public class ShipBuildingGrid : MonoBehaviour {
         
         spacecraft = Spacecraft.GetInstance().gameObject;
         partDB = SpacecraftPartDatabase.Instance;
+        
+        colorblindMode = Settings.Instance.colorblindMode;
+        colorDisconnected = colorblindMode ? Color.black : new Color(1f, 0.4f, 0.4f, 1f);
         
         if(partDB.hasSavedGridState) LoadSpacecraft();
         else CreateSpacecraft();
@@ -77,6 +82,7 @@ public class ShipBuildingGrid : MonoBehaviour {
 
     private void LoadSpacecraft() {
         grid.LoadGridState();
+        placedParts = partDB.savedPlacedParts;
 
         Rigidbody2D spacecraftRB = spacecraft.GetComponent<Rigidbody2D>();
         spacecraftRB.linearVelocity = Vector2.zero;
@@ -458,7 +464,16 @@ public class ShipBuildingGrid : MonoBehaviour {
             }
         }
     }
-    private void SaveGridState() => grid.SaveGridState();
+    
+    public void SaveGridState(bool save = true) {
+        grid.SaveGridState(save);
+        partDB.savedPlacedParts = placedParts;
+    }
     
     private void OnDisable() => SaveGridState();
+    
+    private void OnDestroy() {
+        gameInput.OnDeletePartPerformedAction -= GameInput_OnDeletePartPerformedAction;
+        gameInput.OnLeftMouseClickPerformedAction -= GameInput_OnLeftMouseClickAction;
+    }
 }
