@@ -33,6 +33,7 @@ public class AsteroidFlight : MonoBehaviour {
 
     private void Awake() {
         speed = UnityEngine.Random.Range(.5f, 8f);
+        GetComponent<Rigidbody2D>().angularVelocity = UnityEngine.Random.Range(15f, 100f);
     }
 
     private void Start() {
