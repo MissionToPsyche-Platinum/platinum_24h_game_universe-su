@@ -140,8 +140,8 @@ public class PartDrag : MonoBehaviour {
 
         Vector3? nullableGridSnapPosition = shipGrid.PostionToGridPosition(transform.position);
         if (nullableGridSnapPosition == null) {
-            // Put it back and re-register it
-            PlacePart(gameObject, originalPosition);
+            PlacePart(gameObject, originalPosition); //Place part bc the part needs to be placed to be deleted
+            shipGrid.DeletePart(shipGrid.UnityPositionToGridCoordinates(originalPosition));
             return;
         }
 

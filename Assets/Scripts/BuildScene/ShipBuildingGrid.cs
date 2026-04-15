@@ -149,7 +149,7 @@ public class ShipBuildingGrid : MonoBehaviour {
         DeletePart(selectedTileCoords);
     }
 
-    private void DeletePart((int, int) partCoords) {
+    public void DeletePart((int, int) partCoords) {
         // Find the real part object in this tile
         if (!placedParts.TryGetValue(partCoords, out GameObject partToDelete) || partToDelete == null) return;
 
