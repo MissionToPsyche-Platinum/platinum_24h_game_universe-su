@@ -48,6 +48,7 @@ public class Spacecraft : MonoBehaviour {
     public event EventHandler<float> OnFuelChanged; // Passes current fuel percentage (0-1)
     public float EnergyPercentage => maxEnergy > 0 ? currentEnergy / maxEnergy : 0f;
     public float FuelPercentage => maxFuel > 0 ? currentFuel / maxFuel : 0f;
+    public Vector3 centerOfMass;
     
     private void Awake() {
         // Singleton pattern to prevent duplicate spacecrafts
@@ -241,9 +242,15 @@ public class Spacecraft : MonoBehaviour {
 
             numerator += partMass * (Vector2)part.localPosition;
         }
-        
+
         rb.mass = totalMass;
-        rb.centerOfMass = numerator / totalMass;
+        centerOfMass = numerator / totalMass;
+
+        foreach (Transform part in transform) {
+            part.position -= centerOfMass;
+        }
+
+        rb.centerOfMass = Vector2.zero;
     }
 
     public void SetPartRigidBodies(bool enabled, RigidbodyType2D type = RigidbodyType2D.Dynamic,

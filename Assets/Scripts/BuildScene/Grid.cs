@@ -70,7 +70,7 @@ public class Grid {
     
     public void SaveGridState(bool save = true) {
         SpacecraftPartDatabase partDB = SpacecraftPartDatabase.Instance;
-        Debug.Log(save);
+
         if (save) {
             partDB.savedGridState = gridArray;
             partDB.hasSavedGridState = true;

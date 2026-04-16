@@ -88,8 +88,13 @@ public class ShipBuildingGrid : MonoBehaviour {
         spacecraftRB.linearVelocity = Vector2.zero;
         spacecraftRB.angularVelocity = 0f;
         
-        spacecraft.transform.rotation = Quaternion.Euler(0, 0, 0);
-        spacecraft.transform.position = GridCoordinatesToUnityPosition(gridWidth / 2, gridHeight / 2);
+        Transform shipTransform = spacecraft.transform;
+        shipTransform.rotation = Quaternion.Euler(0, 0, 0);
+        shipTransform.position = GridCoordinatesToUnityPosition(gridWidth / 2, gridHeight / 2);
+        
+        foreach (Transform part in shipTransform) {
+            part.position += spacecraft.GetComponent<Spacecraft>().centerOfMass;
+        }
         
         spacecraft.GetComponent<Spacecraft>().SetPartRigidBodies(true, RigidbodyType2D.Kinematic);
     }

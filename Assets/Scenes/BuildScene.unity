@@ -3062,10 +3062,11 @@ MonoBehaviour:
   orbitAssist: {fileID: 1823052792}
   maxHealth: 100
   currentHealth: 0
-  maxEnergy: 10
+  maxEnergy: 100
   currentEnergy: 0
   fuelPerTank: 50
   currentFuel: 0
+  positionOffset: {x: 0, y: 0, z: 0}
 --- !u!50 &1823052791
 Rigidbody2D:
   serializedVersion: 5

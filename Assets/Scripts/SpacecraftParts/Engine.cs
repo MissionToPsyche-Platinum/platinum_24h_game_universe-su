@@ -48,7 +48,7 @@ public class Engine : MonoBehaviour {
     }
     
     private void FixedUpdate() {
-        if (active && TryConsumeEnergy() && tryConsumeFuel()) ActivateEngine();
+        if (active && TryConsumeEnergy() && TryConsumeFuel()) ActivateEngine();
     }
 
     private void ActivateEngine() => spacecraftRB.AddForceAtPosition(transform.up * speed, transform.position);
@@ -60,7 +60,7 @@ public class Engine : MonoBehaviour {
         else engineVisual.color = Color.yellow;
     }
 
-    private bool tryConsumeFuel() {
+    private bool TryConsumeFuel() {
         if (spacecraft == null) return false;
         float fuelCost = fuelCostPerSecond * Time.fixedDeltaTime;
         return spacecraft.TryConsumeFuel(fuelCost);
