@@ -1,16 +1,41 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-//Class defines the behavior of the satellite dish part. 
+public class SatelliteDish : MonoBehaviour {
+    
+    [SerializeField] private float facingThreshold;
 
-public class SatelliteDish : MonoBehaviour
-{
-    [SerializeField] private Spacecraft spacecraft;
+    private GameInput gameInput;
+    private Spacecraft spacecraft;
 
-    public void Awake() => enabled = false;
+    public void Awake() {
+        gameInput = GameInput.Instance;
+        spacecraft = Spacecraft.GetInstance();
+    }
+    
+    public void Start() {
+        gameInput.OnRepairShipPerformedAction += GameInput_OnRepairShipPerformedAction;
+        gameInput.OnRepairShipCanceledAction += GameInput_OnRepairShipCanceledAction;
+    }
 
-    // No behavior yet � just a marker component.
-    void Update()
-    {
+    private bool IsFacingEarth() {
+        Vector2 directionToEarth = (Earth.Instance.transform.position - transform.position).normalized;
+        float dot = Vector2.Dot(transform.up, directionToEarth);
 
+        return dot > facingThreshold;
+    }
+
+    private void GameInput_OnRepairShipPerformedAction(object sender, System.EventArgs e) {
+        Debug.Log($"Satellite facing earth: {IsFacingEarth()}");
+    }
+    
+    private void GameInput_OnRepairShipCanceledAction(object sender, System.EventArgs e) {
+        Debug.Log("Done repairing ship");
+    }
+    
+    
+    private void OnDestroy() {
+        gameInput.OnRepairShipPerformedAction -= GameInput_OnRepairShipPerformedAction;
+        gameInput.OnRepairShipCanceledAction -= GameInput_OnRepairShipCanceledAction;
     }
 }
