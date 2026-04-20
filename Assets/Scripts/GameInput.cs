@@ -134,20 +134,6 @@ public class GameInput : MonoBehaviour {
     }
 
     public void SetFlightScene() {
-        // Only enforce requirements if we are currently in the BuildScene
-        if (SceneManager.GetActiveScene().name == "BuildScene") {
-            BuildRequirements requirements = BuildRequirements.Instance;
-
-            if (!requirements.IsReadyForFlight(out string message)) {
-                Debug.Log(message); // Example: "Missing parts: SolarPanel, SatelliteDish"
-                return; // Stop here -> do NOT load FlightScene
-            }
-            if (ShipBuildingGrid.Instance != null && ShipBuildingGrid.Instance.HighlightDisconnectedParts()) {
-                Debug.Log("Warning: Some ship parts are not connected to the spacecraft core.");
-            }
-        }
-        
-        // Passed requirements -> go to FlightScene
         SceneManager.LoadScene("FlightScene");
         Spacecraft.GetInstance().PrepareForFlight();
         
@@ -158,6 +144,21 @@ public class GameInput : MonoBehaviour {
     }
 
     public void SetFlightFactsScene() {
+        // Only enforce requirements if we are currently in the BuildScene
+        if (SceneManager.GetActiveScene().name == "BuildScene") {
+            BuildRequirements requirements = BuildRequirements.Instance;
+
+            if (!requirements.IsReadyForFlight(out string message)) {
+                Debug.Log(message); // Example: "Missing parts: SolarPanel, SatelliteDish"
+                return; // Stop here -> do NOT load FlightScene
+            }
+            if (ShipBuildingGrid.Instance != null && ShipBuildingGrid.Instance.HighlightDisconnectedParts()) {
+                Debug.Log("Warning: Some ship parts are not connected to the spacecraft core.");
+                return; // Stop here -> do NOT load FlightScene
+            }
+        }
+        
+        // Passed requirements -> go to FlightFactsScene
         SceneManager.LoadScene("FlightFactsScene");
         
         inputActions.Spacecraft.Disable();

@@ -1145,6 +1145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundImage: {fileID: 1819003843}
+  tickWidth: 2
+  tickColor: {r: 0, g: 0, b: 0, a: 0.7}
 --- !u!1 &291862267
 GameObject:
   m_ObjectHideFlags: 0
