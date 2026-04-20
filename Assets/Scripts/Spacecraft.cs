@@ -70,6 +70,7 @@ public class Spacecraft : MonoBehaviour {
     private void Start() {
         // Listen for scene changes to update physics mode
         SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
 
         // Initialize physics mode based on current scene
         UpdatePhysicsMode();
@@ -80,6 +81,10 @@ public class Spacecraft : MonoBehaviour {
         
         // Delay physics update to next frame to ensure all children are initialized
         StartCoroutine(UpdatePhysicsModeDelayed());
+    }
+
+    private void OnSceneUnloaded(Scene scene) {
+        if (scene.name == "BuildScene") IsBuildMode = false;
     }
 
     private System.Collections.IEnumerator UpdatePhysicsModeDelayed() {
@@ -129,7 +134,7 @@ public class Spacecraft : MonoBehaviour {
         IsBuildMode = false;
         
         Engine[] engineScripts = GetComponentsInChildren<Engine>();
-
+        
         // DISABLE PartDrag components in flight mode so parts can't be dragged
         PartDrag[] partDrags = GetComponentsInChildren<PartDrag>();
         foreach (PartDrag partDrag in partDrags) {
