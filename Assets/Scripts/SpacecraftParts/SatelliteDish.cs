@@ -4,18 +4,17 @@ using UnityEngine.SceneManagement;
 public class SatelliteDish : MonoBehaviour {
     
     [SerializeField] private float facingThreshold;
-
+    private RepairQuickTimeUI repairQuickTimeUI;
+    
     private GameInput gameInput;
-    private Spacecraft spacecraft;
+    private bool doQuickTime = false;
 
-    public void Awake() {
+    private void Awake() {
         gameInput = GameInput.Instance;
-        spacecraft = Spacecraft.GetInstance();
     }
     
-    public void Start() {
+    private void Start() {
         gameInput.OnRepairShipPerformedAction += GameInput_OnRepairShipPerformedAction;
-        gameInput.OnRepairShipCanceledAction += GameInput_OnRepairShipCanceledAction;
     }
 
     private bool IsFacingEarth() {
@@ -27,15 +26,10 @@ public class SatelliteDish : MonoBehaviour {
 
     private void GameInput_OnRepairShipPerformedAction(object sender, System.EventArgs e) {
         Debug.Log($"Satellite facing earth: {IsFacingEarth()}");
+        RepairQuickTimeUI.Instance.gameObject.SetActive(IsFacingEarth());
     }
-    
-    private void GameInput_OnRepairShipCanceledAction(object sender, System.EventArgs e) {
-        Debug.Log("Done repairing ship");
-    }
-    
     
     private void OnDestroy() {
         gameInput.OnRepairShipPerformedAction -= GameInput_OnRepairShipPerformedAction;
-        gameInput.OnRepairShipCanceledAction -= GameInput_OnRepairShipCanceledAction;
     }
 }

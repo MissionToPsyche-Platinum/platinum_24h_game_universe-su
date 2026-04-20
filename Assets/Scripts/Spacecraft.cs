@@ -184,6 +184,8 @@ public class Spacecraft : MonoBehaviour {
     public void Heal(float healAmount) {
         if (healAmount <= 0) return;
         
+        Debug.Log($"Healing {healAmount}");
+        
         currentHealth = Mathf.Min(maxHealth, currentHealth + healAmount);
         OnHealthChanged?.Invoke(this, HealthPercentage);
     }

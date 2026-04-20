@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   facingThreshold: 0
+  repairQuickTimeUI: {fileID: 7473417725410852117, guid: 7ac9c5cf252654359a5c7b11791e6440, type: 3}
 --- !u!58 &-8092308245803106723
 CircleCollider2D:
   m_ObjectHideFlags: 0
