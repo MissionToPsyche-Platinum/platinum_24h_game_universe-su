@@ -14,6 +14,7 @@ public class Spacecraft : MonoBehaviour {
     public static Spacecraft GetInstance() => Instance;
     
     public static bool IsBuildMode { get; private set; }
+    public static bool IsFlightMode { get; private set; }
     
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private OrbitAssist orbitAssist;
@@ -76,6 +77,10 @@ public class Spacecraft : MonoBehaviour {
         UpdatePhysicsMode();
     }
 
+    private void Update() {
+       if(IsFlightMode) SpacecraftMotionUI.Instance.UpdateMotion(rb.linearVelocity.magnitude, rb.linearVelocity.normalized);
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         if(scene.name == "FlightScene") orbitAssist.GetPsycheAsteroid();
         
@@ -85,6 +90,7 @@ public class Spacecraft : MonoBehaviour {
 
     private void OnSceneUnloaded(Scene scene) {
         if (scene.name == "BuildScene") IsBuildMode = false;
+        else if (scene.name == "FlightScene") IsFlightMode = false;
     }
 
     private System.Collections.IEnumerator UpdatePhysicsModeDelayed() {
@@ -104,7 +110,9 @@ public class Spacecraft : MonoBehaviour {
     }
     
     private void SetBuildingMode() {
+        Debug.Log("BuildingMode");
         IsBuildMode = true;
+        IsFlightMode = false;
         
         Engine[] engineScripts = GetComponentsInChildren<Engine>();
         
@@ -132,6 +140,7 @@ public class Spacecraft : MonoBehaviour {
     
     private void SetFlightMode() {
         IsBuildMode = false;
+        IsFlightMode = true;
         
         Engine[] engineScripts = GetComponentsInChildren<Engine>();
         
@@ -247,7 +256,7 @@ public class Spacecraft : MonoBehaviour {
             partMass = partDb.GetMass(partDb.GetPartGameObject(part.name));
             totalMass += partMass;
 
-            numerator += partMass * (Vector2)part.localPosition;
+            numerator += partMass * (Vector2)part.position;
         }
 
         rb.mass = totalMass;
